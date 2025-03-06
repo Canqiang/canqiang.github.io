@@ -122,3 +122,15 @@ index:
   slogan:
     enable: true
     text: 在代码的星河与思维的洪流间，寻觅人工智能与人类意识共舞的奇点
+
+
+footer:
+  statistics:
+    enable: false
+    source: "busuanzi"  # 可选 leancloud | busuanzi  根据自己需求选择
+    pv_format: "总访问量 {} 次"  # 显示的文本，{}是数字的占位符（必须包含)，下同
+    uv_format: "总访客数 {} 人"
+
+web_analytics:  # 网页访问统计
+  enable: true # 默认为false，启用网页统计改为true即可
+  baidu: ac2559fe71d82eda0e6372616e40089e # 百度统计的Key，参见 https://tongji.baidu.com/sc-web/10000033910/home/site/getjs?siteId=13751376 代码获取中 hm.js? 后边的字符串
