@@ -27,10 +27,9 @@
 <meta property="og:description" content="具身智能：智能不只存在于头脑中 当我们谈论智能时，通常会想到大脑或计算机——那些能够思考和解决问题的系统。但具身智能（Embodied Intelligence）告诉我们：真正的智能不仅仅存在于大脑或处理器中，而是存在于身体、大脑和环境的互动之中。">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2025-02-06T08:30:00.000Z">
-<meta property="article:modified_time" content="2025-03-06T13:18:24.189Z">
+<meta property="article:modified_time" content="2025-03-06T14:46:55.341Z">
 <meta property="article:author" content="Xander Xu">
 <meta property="article:tag" content="人工智能">
-<meta property="article:tag" content="认知科学">
 <meta property="article:tag" content="具身智能">
 <meta name="twitter:card" content="summary_large_image">
   
@@ -586,8 +585,6 @@
       
         <a href="/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/" class="print-no-link">#人工智能</a>
       
-        <a href="/tags/%E8%AE%A4%E7%9F%A5%E7%A7%91%E5%AD%A6/" class="print-no-link">#认知科学</a>
-      
         <a href="/tags/%E5%85%B7%E8%BA%AB%E6%99%BA%E8%83%BD/" class="print-no-link">#具身智能</a>
       
     </div>
@@ -649,8 +646,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2023/06/06/AI%E7%9A%84%E6%B7%B1%E5%B1%82%E6%9C%AC%E8%B4%A8/" title="AI的深层本质">
-                        <span class="hidden-mobile">AI的深层本质</span>
+                      <a href="/2024/04/26/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%9A%84%E6%80%9D%E8%80%83/" title="强化学习的思考">
+                        <span class="hidden-mobile">强化学习的思考</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
@@ -735,6 +732,12 @@
 
 
   
+
+
+  
+  
+
+
 
 
 
@@ -953,6 +956,49 @@
 
 
   <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
 
   <script  src="/js/local-search.js" ></script>
 
