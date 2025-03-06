@@ -109,7 +109,16 @@ deploy:
   branch: main  # 或者根据你的 GitHub Pages 设置选择分支
 
 about:
+  avatar: /img/avatar.jpg
+  name: "Xander Xu"
+  intro: "在代码的星河与思维的洪流间，寻觅人工智能与人类意识共舞的奇点"
   icons:
     - { class: 'iconfont icon-github-fill', link: 'https://github.com/Canqiang', tip: 'GitHub' }
     # - { class: 'iconfont icon-douban-fill', link: 'https://douban.com', tip: '豆瓣' }
-    # - { class: 'iconfont icon-wechat-fill', qrcode: '/img/favicon.png' }
+    - { class: 'iconfont icon-wechat-fill', qrcode: '/img/wechat-qrcode.jpg' }
+
+
+index:
+  slogan:
+    enable: true
+    text: 在代码的星河与思维的洪流间，寻觅人工智能与人类意识共舞的奇点
