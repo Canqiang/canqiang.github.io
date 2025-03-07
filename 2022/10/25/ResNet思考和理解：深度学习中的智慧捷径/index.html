@@ -1,0 +1,1507 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/logo.svg">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Xander Xu">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="在深度学习的发展历程中，有一些关键的架构突破推动了整个领域的飞跃。残差网络（ResNet）无疑是其中最具影响力的创新之一。本文将从本质出发，深入浅出地探索ResNet的核心思想、技术细节和哲学意义。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ResNet思考和理解：深度学习中的智慧捷径">
+<meta property="og:url" content="http://xcq.ink/2022/10/25/ResNet%E6%80%9D%E8%80%83%E5%92%8C%E7%90%86%E8%A7%A3%EF%BC%9A%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E4%B8%AD%E7%9A%84%E6%99%BA%E6%85%A7%E6%8D%B7%E5%BE%84/index.html">
+<meta property="og:site_name" content="人菜瘾大的小强">
+<meta property="og:description" content="在深度学习的发展历程中，有一些关键的架构突破推动了整个领域的飞跃。残差网络（ResNet）无疑是其中最具影响力的创新之一。本文将从本质出发，深入浅出地探索ResNet的核心思想、技术细节和哲学意义。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-10-25T09:53:04.000Z">
+<meta property="article:modified_time" content="2025-03-07T10:20:52.181Z">
+<meta property="article:author" content="Xander Xu">
+<meta property="article:tag" content="深度学习">
+<meta property="article:tag" content="ResNet">
+<meta property="article:tag" content="神经网络">
+<meta property="article:tag" content="残差网络">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>ResNet思考和理解：深度学习中的智慧捷径 - 人菜瘾大的小强</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"xcq.ink","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":"ac2559fe71d82eda0e6372616e40089e","google":"G-L228BYNZ7T","tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>人菜瘾大的小强</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="ResNet思考和理解：深度学习中的智慧捷径"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-10-25 17:53" pubdate>
+          2022年10月25日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          3.8k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          32 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">ResNet思考和理解：深度学习中的智慧捷径</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="1-深度网络的悖论"><a href="#1-深度网络的悖论" class="headerlink" title="1. 深度网络的悖论"></a>1. 深度网络的悖论</h2><p>神经网络的强大之处在于其层级结构能够逐层提取特征，理论上讲，网络越深，提取的特征应该越抽象，表达能力应该越强。然而，实践中研究人员发现了一个令人困惑的现象：</p>
+<blockquote>
+<p>当网络深度增加到一定程度后，性能不升反降。</p>
+</blockquote>
+<p>这种现象不是由过拟合引起的——即使在训练集上，深层网络的表现也不如浅层网络。这个违反直觉的问题被称为<strong>退化问题(degradation problem)</strong>。</p>
+<svg width="700" height="400" viewBox="0 0 700 400" xmlns="http://www.w3.org/2000/svg">
+  <!-- 背景矩形和网格 -->
+  <rect width="700" height="400" fill="#f8f9fa" rx="10" ry="10"/>
+  <!-- 图表标题 -->
+  <text x="350" y="40" font-family="Arial, sans-serif" font-size="22" font-weight="bold" text-anchor="middle" fill="#333">
+    网络深度与错误率关系对比
+  </text>
+  <text x="350" y="70" font-family="Arial, sans-serif" font-size="16" text-anchor="middle" fill="#666">
+    ResNet 与传统深度网络性能对比
+  </text>
+  <!-- 图表区域背景 -->
+  <rect x="80" y="100" width="550" height="220" fill="white" stroke="#ddd" stroke-width="1" rx="5" ry="5"/>
+  <!-- 网格线 -->
+  <g stroke="#eee" stroke-width="1" stroke-dasharray="3,3">
+    <!-- 水平网格线 -->
+    <line x1="80" y1="155" x2="630" y2="155"/>
+    <line x1="80" y1="210" x2="630" y2="210"/>
+    <line x1="80" y1="265" x2="630" y2="265"/>
+    <line x1="80" y1="320" x2="630" y2="320"/>
+    <!-- 垂直网格线 -->
+    <line x1="171" y1="100" x2="171" y2="320"/>
+    <line x1="262" y1="100" x2="262" y2="320"/>
+    <line x1="353" y1="100" x2="353" y2="320"/>
+    <line x1="444" y1="100" x2="444" y2="320"/>
+    <line x1="535" y1="100" x2="535" y2="320"/>
+    <line x1="626" y1="100" x2="626" y2="320"/>
+  </g>
+  <!-- 坐标轴 -->
+  <line x1="80" y1="320" x2="630" y2="320" stroke="#333" stroke-width="2.5"/>
+  <line x1="80" y1="100" x2="80" y2="320" stroke="#333" stroke-width="2.5"/>
+  <!-- X轴标签 -->
+  <g font-family="Arial, sans-serif" font-size="13" text-anchor="middle" fill="#555">
+    <text x="80" y="345">0</text>
+    <text x="171" y="345">20</text>
+    <text x="262" y="345">40</text>
+    <text x="353" y="345">60</text>
+    <text x="444" y="345">100</text>
+    <text x="535" y="345">150</text>
+    <text x="626" y="345">200</text>
+    <text x="350" y="375" font-weight="bold" font-size="16">网络深度（层数）</text>
+  </g>
+  <!-- Y轴标签 -->
+  <g font-family="Arial, sans-serif" font-size="13" text-anchor="end" fill="#555">
+    <text x="75" y="320">0%</text>
+    <text x="75" y="265">10%</text>
+    <text x="75" y="210">20%</text>
+    <text x="75" y="155">30%</text>
+    <text x="75" y="100">40%</text>
+    <text x="40" y="210" font-weight="bold" font-size="16" transform="rotate(-90, 40, 210)">错误率</text>
+  </g>
+  <!-- 数据点 -->
+  <g>
+    <!-- 传统网络数据点 -->
+    <circle cx="80" cy="300" r="5" fill="#e74c3c"/>
+    <circle cx="171" cy="265" r="5" fill="#e74c3c"/>
+    <circle cx="262" cy="220" r="5" fill="#e74c3c"/>
+    <circle cx="353" cy="255" r="5" fill="#e74c3c"/>
+    <circle cx="444" cy="290" r="5" fill="#e74c3c"/>
+    <circle cx="535" cy="300" r="5" fill="#e74c3c"/>
+    <!-- ResNet数据点 -->
+    <circle cx="80" cy="300" r="5" fill="#2196F3"/>
+    <circle cx="171" cy="255" r="5" fill="#2196F3"/>
+    <circle cx="262" cy="190" r="5" fill="#2196F3"/>
+    <circle cx="353" cy="160" r="5" fill="#2196F3"/>
+    <circle cx="444" cy="140" r="5" fill="#2196F3"/>
+    <circle cx="535" cy="130" r="5" fill="#2196F3"/>
+    <circle cx="626" cy="125" r="5" fill="#2196F3"/>
+  </g>
+  <!-- 曲线 - 使用平滑贝塞尔曲线 -->
+  <!-- 传统网络性能曲线 -->
+  <path d="M 80 300 
+           C 100 290, 140 270, 171 265 
+           S 230 230, 262 220 
+           S 320 235, 353 255 
+           S 420 300, 444 290
+           S 520 305, 535 300" 
+        stroke="#e74c3c" stroke-width="3.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- ResNet性能曲线 -->
+  <path d="M 80 300 
+           C 110 285, 140 265, 171 255 
+           S 230 205, 262 190 
+           S 320 170, 353 160 
+           S 420 145, 444 140
+           S 520 135, 535 130
+           S 600 125, 626 125" 
+        stroke="#2196F3" stroke-width="3.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- 曲线下方的渐变区域 -->
+  <!-- 传统网络曲线下方区域 -->
+  <path d="M 80 300 
+           C 100 290, 140 270, 171 265 
+           S 230 230, 262 220 
+           S 320 235, 353 255 
+           S 420 300, 444 290
+           S 520 305, 535 300
+           L 535 320
+           L 80 320
+           Z" 
+        fill="#e74c3c" fill-opacity="0.1"/>
+  <!-- ResNet曲线下方区域 -->
+  <path d="M 80 300 
+           C 110 285, 140 265, 171 255 
+           S 230 205, 262 190 
+           S 320 170, 353 160 
+           S 420 145, 444 140
+           S 520 135, 535 130
+           S 600 125, 626 125
+           L 626 320
+           L 80 320
+           Z" 
+        fill="#2196F3" fill-opacity="0.1"/>
+  <!-- 图例 -->
+  <g transform="translate(520, 120)">
+    <rect width="150" height="70" fill="white" stroke="#ddd" stroke-width="1" rx="5" ry="5" opacity="0.9"/>
+    <!-- 传统网络图例 -->
+    <line x1="10" y1="20" x2="30" y2="20" stroke="#e74c3c" stroke-width="3.5" stroke-linecap="round"/>
+    <circle cx="20" cy="20" r="4" fill="#e74c3c"/>
+    <text x="40" y="25" font-family="Arial, sans-serif" font-size="14" fill="#333">传统深度网络</text>
+    <!-- ResNet图例 -->
+    <line x1="10" y1="50" x2="30" y2="50" stroke="#2196F3" stroke-width="3.5" stroke-linecap="round"/>
+    <circle cx="20" cy="50" r="4" fill="#2196F3"/>
+    <text x="40" y="55" font-family="Arial, sans-serif" font-size="14" fill="#333">ResNet</text>
+  </g>
+  <!-- 关键点标注 -->
+  <g>
+    <!-- 传统网络的性能退化点 -->
+    <path d="M 353 255 L 380 230" stroke="#e74c3c" stroke-width="1.5" stroke-dasharray="3,2"/>
+    <circle cx="380" cy="230" r="24" fill="white" stroke="#e74c3c" stroke-width="1.5" opacity="0.9"/>
+    <text x="380" y="227" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#e74c3c">性能</text>
+    <text x="380" y="241" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#e74c3c">退化点</text>
+    <!-- ResNet的持续改进点 -->
+    <path d="M 535 130 L 500 100" stroke="#2196F3" stroke-width="1.5" stroke-dasharray="3,2"/>
+    <circle cx="500" cy="100" r="24" fill="white" stroke="#2196F3" stroke-width="1.5" opacity="0.9"/>
+    <text x="500" y="97" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#2196F3">深度</text>
+    <text x="500" y="111" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#2196F3">优势点</text>
+  </g>
+</svg>
+
+
+<p>退化问题的根源在于两个主要挑战：<br><strong>梯度消失&#x2F;爆炸问题</strong></p>
+<p>在反向传播过程中，梯度需要从输出层传回到输入层。在深层网络中，由于连续的矩阵乘法，梯度会呈指数级衰减或增长：</p>
+<ul>
+<li><strong>梯度消失</strong>：当网络深度增加，浅层网络的梯度变得极小，几乎为零，导致这些层停止学习。</li>
+<li><strong>梯度爆炸</strong>：相反，某些情况下梯度会变得极大，导致学习不稳定。</li>
+</ul>
+<p>虽然批量归一化(Batch Normalization)等技术可以在一定程度上缓解这些问题，但并不能从根本上解决深层网络的退化问题。</p>
+<p><strong>恒等映射难以学习</strong></p>
+<p>何恺明等人提出了一个关键洞察：如果深层网络难以超越浅层网络，那么理想情况下，多余的层应该至少学会”什么都不做”——即恒等映射(Identity Mapping)。</p>
+<p>然而，对于传统网络架构来说，学习恒等映射并不容易。多层非线性网络需要精确调整权重以模拟恒等函数，这在实践中非常困难。</p>
+<h2 id="2-ResNet的核心思想：残差学习"><a href="#2-ResNet的核心思想：残差学习" class="headerlink" title="2. ResNet的核心思想：残差学习"></a>2. ResNet的核心思想：残差学习</h2><p>2015年，何恺明、张翔、任少卿和孙剑在论文《Deep Residual Learning for Image Recognition》中提出了一个优雅的解决方案——残差网络(ResNet)。</p>
+<h3 id="2-1-残差映射的本质"><a href="#2-1-残差映射的本质" class="headerlink" title="2.1 残差映射的本质"></a>2.1 残差映射的本质</h3><p>ResNet的核心创新在于，不再让每一层直接学习期望的输出映射H(x)，而是学习输入与输出之间的<strong>差异</strong>(残差)F(x)：</p>
+<p>$$F(x) &#x3D; H(x) - x$$</p>
+<p>这样，期望的输出可以表示为：</p>
+<p>$$H(x) &#x3D; F(x) + x$$</p>
+<svg width="700" height="360" viewBox="0 0 700 360" xmlns="http://www.w3.org/2000/svg">
+  <!-- 背景 -->
+  <rect width="700" height="360" fill="#f8f9fa" rx="12" ry="12"/>
+  <!-- 标题 -->
+  <text x="350" y="40" font-family="Arial, sans-serif" font-size="22" font-weight="bold" text-anchor="middle" fill="#333">
+    ResNet 残差学习的核心思想
+  </text>
+  <!-- 主要公式区域 -->
+  <rect x="100" y="70" width="500" height="100" rx="12" ry="12" fill="white" stroke="#3498db" stroke-width="2" filter="drop-shadow(0px 3px 5px rgba(0,0,0,0.1))"/>
+  <!-- 左侧公式 -->
+  <g transform="translate(150, 120)">
+    <!-- 公式 -->
+    <text font-family="'Times New Roman', serif" font-size="32" font-weight="bold" text-anchor="middle" fill="#2c3e50">
+      <tspan>F(</tspan>
+      <tspan fill="#e74c3c">x</tspan>
+      <tspan>) + </tspan>
+      <tspan fill="#e74c3c">x</tspan>
+      <tspan> = H(</tspan>
+      <tspan fill="#e74c3c">x</tspan>
+      <tspan>)</tspan>
+    </text>
+  </g>
+  <!-- 右侧说明 -->
+  <g transform="translate(420, 120)">
+    <text font-family="Arial, sans-serif" font-size="22" text-anchor="middle" fill="#2c3e50">
+      <tspan>而不是直接学习 H(</tspan>
+      <tspan fill="#e74c3c">x</tspan>
+      <tspan>)</tspan>
+    </text>
+  </g>
+  <!-- 分隔线 -->
+  <line x1="300" y1="90" x2="300" y2="150" stroke="#ddd" stroke-width="1.5" stroke-dasharray="4,3"/>
+  <!-- 形象化解释区域 -->
+  <g transform="translate(350, 230)">
+    <!-- 输入 x -->
+    <g transform="translate(-250, 0)">
+      <!-- 图像形象表示 -->
+      <rect x="-40" y="-35" width="80" height="70" rx="8" ry="8" fill="#e74c3c" fill-opacity="0.1" stroke="#e74c3c" stroke-width="1.5"/>
+      <!-- 特征表示 -->
+      <rect x="-30" y="-25" width="60" height="10" rx="2" ry="2" fill="#e74c3c" fill-opacity="0.6"/>
+      <rect x="-30" y="-10" width="40" height="10" rx="2" ry="2" fill="#e74c3c" fill-opacity="0.5"/>
+      <rect x="-30" y="5" width="50" height="10" rx="2" ry="2" fill="#e74c3c" fill-opacity="0.4"/>
+      <rect x="-30" y="20" width="30" height="10" rx="2" ry="2" fill="#e74c3c" fill-opacity="0.7"/>
+      <!-- 符号 -->
+      <text x="0" y="55" font-family="'Times New Roman', serif" font-size="20" font-weight="bold" text-anchor="middle" fill="#e74c3c">x</text>
+      <text x="0" y="75" font-family="Arial, sans-serif" font-size="16" text-anchor="middle" fill="#555">输入</text>
+    </g>
+    <!-- 残差映射 F(x) -->
+    <g transform="translate(0, 0)">
+      <!-- 学习的过程表示 -->
+      <rect x="-40" y="-35" width="80" height="70" rx="8" ry="8" fill="#3498db" fill-opacity="0.1" stroke="#3498db" stroke-width="1.5"/>
+      <!-- 神经网络层 -->
+      <rect x="-30" y="-20" width="60" height="14" rx="2" ry="2" fill="#3498db" fill-opacity="0.4"/>
+      <text x="0" y="-9" font-size="8" text-anchor="middle" fill="#fff">卷积层</text>
+      <rect x="-30" y="0" width="60" height="14" rx="2" ry="2" fill="#3498db" fill-opacity="0.6"/>
+      <text x="0" y="11" font-size="8" text-anchor="middle" fill="#fff">卷积层</text>
+      <rect x="-30" y="20" width="60" height="14" rx="2" ry="2" fill="#3498db" fill-opacity="0.8"/>
+      <text x="0" y="31" font-size="8" text-anchor="middle" fill="#fff">激活函数</text>
+      <!-- 符号 -->
+      <text x="0" y="55" font-family="'Times New Roman', serif" font-size="20" font-weight="bold" text-anchor="middle" fill="#3498db">F(x)</text>
+      <text x="0" y="105" font-family="Arial, sans-serif" font-size="16" text-anchor="middle" fill="#555">残差映射</text>
+    </g>
+    <!-- 期望输出 H(x) -->
+    <g transform="translate(250, 0)">
+      <!-- 图像形象表示 -->
+      <rect x="-40" y="-35" width="80" height="70" rx="8" ry="8" fill="#2ecc71" fill-opacity="0.1" stroke="#2ecc71" stroke-width="1.5"/>
+      <!-- 改变后的特征表示 -->
+      <rect x="-30" y="-25" width="60" height="10" rx="2" ry="2" fill="#2ecc71" fill-opacity="0.8"/>
+      <rect x="-30" y="-10" width="55" height="10" rx="2" ry="2" fill="#2ecc71" fill-opacity="0.6"/>
+      <rect x="-30" y="5" width="35" height="10" rx="2" ry="2" fill="#2ecc71" fill-opacity="0.7"/>
+      <rect x="-30" y="20" width="50" height="10" rx="2" ry="2" fill="#2ecc71" fill-opacity="0.5"/>
+      <!-- 符号 -->
+      <text x="0" y="55" font-family="'Times New Roman', serif" font-size="20" font-weight="bold" text-anchor="middle" fill="#2ecc71">H(x)</text>
+      <text x="0" y="75" font-family="Arial, sans-serif" font-size="16" text-anchor="middle" fill="#555">期望输出</text>
+    </g>
+    <!-- 连接箭头和加号 -->
+    <line x1="-190" y1="0" x2="-60" y2="0" stroke="#666" stroke-width="2" marker-end="url(#arrowhead)"/>
+    <!-- 加号 -->
+    <circle cx="-120" cy="0" r="16" fill="#f39c12" fill-opacity="0.2" stroke="#f39c12" stroke-width="1.5"/>
+    <text x="-120" y="5" font-size="20" font-weight="bold" text-anchor="middle" fill="#f39c12">+</text>
+    <line x1="50" y1="0" x2="180" y2="0" stroke="#666" stroke-width="2" marker-end="url(#arrowhead)"/>
+  </g>
+  <!-- 底部解释文字 -->
+  <text x="350" y="310" font-family="Arial, sans-serif" font-size="15" text-anchor="middle" fill="#555">
+    <tspan x="350" y="310">学习</tspan>
+    <tspan fill="#3498db">输入与输出的差异</tspan>
+    <tspan>，而不是从零开始学习整个映射</tspan>
+  </text>
+  <!-- 箭头定义 -->
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#666"/>
+    </marker>
+  </defs>
+</svg>
+
+<p>这种设计的巧妙之处在于：如果最优函数接近于恒等映射，神经网络只需将F(x)拟合为接近于零的函数，这比直接拟合一个恒等映射要容易得多。</p>
+<h3 id="2-2-残差块的结构"><a href="#2-2-残差块的结构" class="headerlink" title="2.2 残差块的结构"></a>2.2 残差块的结构</h3><p>ResNet通过引入”残差块”来实现这一思想。残差块的基本结构如下：</p>
+<svg width="700" height="400" viewBox="0 0 700 400" xmlns="http://www.w3.org/2000/svg">
+  <!-- 背景 -->
+  <rect width="700" height="400" fill="#ffffff"/>
+  <!-- 标题 -->
+  <text x="350" y="45" font-family="Arial, sans-serif" font-size="24" font-weight="bold" text-anchor="middle" fill="#333333">
+    残差块 (Residual Block)
+  </text>
+  <!-- 框架 -->
+  <rect x="125" y="70" width="450" height="280" rx="2" ry="2" fill="#f9f9f9" stroke="#dddddd" stroke-width="1"/>
+  <!-- 主干线 - 垂直对齐核心 -->
+  <line x1="200" y1="120" x2="200" y2="320" stroke="#666666" stroke-width="2"/>
+  <line x1="500" y1="120" x2="500" y2="320" stroke="#666666" stroke-width="2"/>
+  <line x1="200" y1="120" x2="500" y2="120" stroke="#666666" stroke-width="2"/>
+  <line x1="200" y1="320" x2="500" y2="320" stroke="#666666" stroke-width="2"/>
+  <!-- 输入 -->
+  <circle cx="150" cy="120" r="20" fill="#2c3e50" stroke="#34495e" stroke-width="1"/>
+  <text x="150" y="125" font-family="Arial, sans-serif" font-size="16" text-anchor="middle" fill="white">x</text>
+  <!-- 输入连接线 -->
+  <line x1="170" y1="120" x2="200" y2="120" stroke="#666666" stroke-width="2"/>
+  <!-- 主路径组件 - 垂直居中对齐 -->
+  <!-- 第一个卷积层 -->
+  <rect x="250" y="95" width="100" height="50" rx="2" ry="2" fill="#3498db" stroke="#2980b9" stroke-width="1"/>
+  <text x="300" y="125" font-family="Arial, sans-serif" font-size="16" text-anchor="middle" fill="white">卷积层</text>
+  <!-- 第一个卷积层连接线 -->
+  <line x1="200" y1="120" x2="250" y2="120" stroke="#666666" stroke-width="2"/>
+  <line x1="350" y1="120" x2="400" y2="120" stroke="#666666" stroke-width="2"/>
+  <!-- 激活函数 -->
+  <rect x="400" y="95" width="100" height="50" rx="2" ry="2" fill="#9b59b6" stroke="#8e44ad" stroke-width="1"/>
+  <text x="450" y="125" font-family="Arial, sans-serif" font-size="16" text-anchor="middle" fill="white">ReLU</text>
+  <!-- 激活函数到连接线 -->
+  <line x1="500" y1="120" x2="550" y2="120" stroke="#666666" stroke-width="2"/>
+  <!-- 主路径垂直下降 -->
+  <line x1="550" y1="120" x2="550" y2="220" stroke="#666666" stroke-width="2"/>
+  <line x1="550" y1="220" x2="500" y2="220" stroke="#666666" stroke-width="2"/>
+  <!-- 第二个卷积层 -->
+  <rect x="400" y="195" width="100" height="50" rx="2" ry="2" fill="#3498db" stroke="#2980b9" stroke-width="1"/>
+  <text x="450" y="225" font-family="Arial, sans-serif" font-size="16" text-anchor="middle" fill="white">卷积层</text>
+  <!-- 第二个卷积层连接线 -->
+  <line x1="400" y1="220" x2="200" y2="220" stroke="#666666" stroke-width="2"/>
+  <!-- 残差连接 - 保持直线 -->
+  <path d="M 200 120 L 200 320" stroke="#e74c3c" stroke-width="2.5" stroke-dasharray="5,3" fill="none"/>
+  <text x="160" y="220" font-family="Arial, sans-serif" font-size="14" text-anchor="end" fill="#c0392b">恒等映射 (x)</text>
+  <!-- 加法节点 - 放在底部中央 -->
+  <circle cx="350" cy="320" r="20" fill="#f39c12" stroke="#d35400" stroke-width="1"/>
+  <text x="350" y="325" font-family="Arial, sans-serif" font-size="18" font-weight="bold" text-anchor="middle" fill="white">+</text>
+  <!-- 输出 -->
+  <line x1="350" y1="340" x2="350" y2="370" stroke="#666666" stroke-width="2"/>
+  <circle cx="350" cy="390" r="20" fill="#2c3e50" stroke="#34495e" stroke-width="1"/>
+  <text x="350" y="395" font-family="Arial, sans-serif" font-size="16" text-anchor="middle" fill="white">H(x)</text>
+  <!-- 标注 -->
+  <g font-family="Arial, sans-serif" fill="#555555">
+    <!-- F(x)标注 -->
+    <text x="340" y="185" font-size="16" font-weight="bold" fill="#3498db">F(x): 残差映射</text>
+    <line x1="300" y1="185" x2="280" y2="185" stroke="#3498db" stroke-width="1" stroke-dasharray="2,2"/>
+    <line x1="280" y1="185" x2="280" y2="220" stroke="#3498db" stroke-width="1" stroke-dasharray="2,2"/>
+    <!-- 输出标注 -->
+    <text x="550" y="320" font-size="16" font-weight="bold" fill="#f39c12">H(x) = F(x) + x</text>
+    <line x1="530" y1="320" x2="370" y2="320" stroke="#f39c12" stroke-width="1" stroke-dasharray="2,2"/>
+  </g>
+  <!-- 右侧解释 -->
+  <g transform="translate(600, 200)" font-family="Arial, sans-serif" font-size="14" fill="#555555">
+    <text x="0" y="0" font-weight="bold">关键特点：</text>
+    <text x="0" y="25">· 直接恒等映射</text>
+    <text x="0" y="50">· 学习残差而非整体</text>
+    <text x="0" y="75">· 解决梯度消失问题</text>
+  </g>
+</svg>
+
+<p>一个标准的残差块包含：</p>
+<ol>
+<li><strong>主路径</strong>：通常包含两个3×3的卷积层，每层后面跟着批量归一化(BN)和ReLU激活函数</li>
+<li><strong>捷径连接(shortcut connection)</strong>：直接将输入加到主路径的输出上</li>
+<li><strong>元素级加法</strong>：将主路径输出和捷径连接的输出相加</li>
+</ol>
+<p>值得注意的是，对于维度不匹配的情况，可以通过在捷径连接上添加1×1卷积来调整维度。</p>
+<h2 id="3-为什么残差连接如此有效？"><a href="#3-为什么残差连接如此有效？" class="headerlink" title="3. 为什么残差连接如此有效？"></a>3. 为什么残差连接如此有效？</h2><p>ResNet的成功不仅仅是一个工程技巧，它解决了深度神经网络的根本性问题：</p>
+<h3 id="3-1-梯度畅通无阻的反向传播"><a href="#3-1-梯度畅通无阻的反向传播" class="headerlink" title="3.1 梯度畅通无阻的反向传播"></a>3.1 梯度畅通无阻的反向传播</h3><p>残差连接最重要的贡献是为梯度提供了一条畅通无阻的路径：</p>
+<p>$$\frac{\partial \mathcal{L}}{\partial x_l} &#x3D; \frac{\partial \mathcal{L}}{\partial x_{l+1}} \cdot (1 + \frac{\partial F(x_l, W_l)}{\partial x_l})$$</p>
+<p>从这个公式可以看出，即使F(x)的梯度接近于零，梯度仍然可以通过恒等映射（乘以1）传递回去。这就像在一座高层建筑中安装了直达电梯，保证了信息可以快速、无损地从顶层传回底层。</p>
+<svg width="900" height="500" viewBox="0 0 900 500" xmlns="http://www.w3.org/2000/svg">
+  <!-- 定义滤镜和渐变 -->
+  <defs>
+    <!-- 发光效果 -->
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="2" result="blur"/>
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
+    <!-- 阴影效果 -->
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="140%">
+      <feDropShadow dx="2" dy="2" stdDeviation="2" flood-opacity="0.3"/>
+    </filter>
+    <!-- 输入层渐变 -->
+    <linearGradient id="inputGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#42a5f5"/>
+      <stop offset="100%" stop-color="#1976d2"/>
+    </linearGradient>
+    <!-- 隐藏层渐变 -->
+    <linearGradient id="hiddenGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#66bb6a"/>
+      <stop offset="100%" stop-color="#388e3c"/>
+    </linearGradient>
+    <!-- 输出层渐变 -->
+    <linearGradient id="outputGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ff7043"/>
+      <stop offset="100%" stop-color="#e64a19"/>
+    </linearGradient>
+    <!-- 前向传播箭头标记 -->
+    <marker id="forwardArrow" viewBox="0 0 10 10" refX="8" refY="5" 
+            markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#1976d2"/>
+    </marker>
+    <!-- 反向传播箭头标记 - 传统网络 -->
+    <marker id="backwardArrow1" viewBox="0 0 10 10" refX="8" refY="5" 
+            markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#d32f2f"/>
+    </marker>
+    <marker id="backwardArrow2" viewBox="0 0 10 10" refX="8" refY="5" 
+            markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#d32f2f"/>
+    </marker>
+    <marker id="backwardArrow3" viewBox="0 0 10 10" refX="8" refY="5" 
+            markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#d32f2f"/>
+    </marker>
+    <marker id="backwardArrow4" viewBox="0 0 10 10" refX="8" refY="5" 
+            markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#d32f2f"/>
+    </marker>
+    <!-- 反向传播箭头标记 - ResNet -->
+    <marker id="resnetBackArrow" viewBox="0 0 10 10" refX="8" refY="5" 
+            markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#d32f2f"/>
+    </marker>
+    <!-- 残差连接箭头标记 -->
+    <marker id="skipArrow" viewBox="0 0 10 10" refX="8" refY="5" 
+            markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#ff9800"/>
+    </marker>
+    <!-- 数据动画 - 前向传播 -->
+    <circle id="forwardData" r="4" fill="#1976d2">
+      <animate attributeName="opacity" values="0;1;0" dur="3s" repeatCount="indefinite"/>
+    </circle>
+    <!-- 数据动画 - 反向传播 -->
+    <circle id="backwardData" r="4" fill="#d32f2f">
+      <animate attributeName="opacity" values="0;1;0" dur="3s" repeatCount="indefinite"/>
+    </circle>
+    <!-- 数据动画 - 跳跃连接 -->
+    <circle id="skipData" r="4" fill="#ff9800">
+      <animate attributeName="opacity" values="0;1;0" dur="2s" repeatCount="indefinite"/>
+    </circle>
+  </defs>
+  <!-- 背景 -->
+  <rect width="900" height="500" fill="#f8f9fa"/>
+  <!-- 标题区域 -->
+  <rect x="0" y="0" width="900" height="70" fill="#263238" filter="url(#shadow)"/>
+  <text x="450" y="45" font-family="Arial, sans-serif" font-size="26" font-weight="bold" text-anchor="middle" fill="white">
+    传统深度网络 vs ResNet: 梯度流动对比
+  </text>
+  <!-- 模型标题 -->
+  <g font-family="Arial, sans-serif" font-weight="bold" text-anchor="middle" fill="#263238">
+    <text x="225" y="100" font-size="22">传统深度网络</text>
+    <text x="675" y="100" font-size="22">ResNet</text>
+  </g>
+  <!-- 分隔线 -->
+  <line x1="450" y1="85" x2="450" y2="480" stroke="#cfd8dc" stroke-width="2" stroke-dasharray="8,4"/>
+  <!-- 传统网络 -->
+  <g>
+    <!-- 层结构 -->
+    <rect x="150" y="130" width="150" height="45" rx="6" fill="url(#inputGradient)" filter="url(#shadow)"/>
+    <text x="225" y="159" font-family="Arial, sans-serif" font-size="17" font-weight="bold" text-anchor="middle" fill="white">输入层</text>
+    <rect x="150" y="200" width="150" height="45" rx="6" fill="url(#hiddenGradient)" filter="url(#shadow)"/>
+    <text x="225" y="229" font-family="Arial, sans-serif" font-size="17" font-weight="bold" text-anchor="middle" fill="white">隐藏层 1</text>
+    <rect x="150" y="270" width="150" height="45" rx="6" fill="url(#hiddenGradient)" filter="url(#shadow)"/>
+    <text x="225" y="299" font-family="Arial, sans-serif" font-size="17" font-weight="bold" text-anchor="middle" fill="white">隐藏层 2</text>
+    <rect x="150" y="340" width="150" height="45" rx="6" fill="url(#hiddenGradient)" filter="url(#shadow)"/>
+    <text x="225" y="369" font-family="Arial, sans-serif" font-size="17" font-weight="bold" text-anchor="middle" fill="white">隐藏层 3</text>
+    <rect x="150" y="410" width="150" height="45" rx="6" fill="url(#outputGradient)" filter="url(#shadow)"/>
+    <text x="225" y="439" font-family="Arial, sans-serif" font-size="17" font-weight="bold" text-anchor="middle" fill="white">输出层</text>
+    <!-- 前向传播连接 -->
+    <g>
+      <line x1="225" y1="175" x2="225" y2="200" stroke="#1976d2" stroke-width="3" marker-end="url(#forwardArrow)">
+        <animate attributeName="stroke-dashoffset" from="30" to="0" dur="3s" repeatCount="indefinite"/>
+      </line>
+      <line x1="225" y1="245" x2="225" y2="270" stroke="#1976d2" stroke-width="3" marker-end="url(#forwardArrow)">
+        <animate attributeName="stroke-dashoffset" from="30" to="0" dur="3s" repeatCount="indefinite"/>
+      </line>
+      <line x1="225" y1="315" x2="225" y2="340" stroke="#1976d2" stroke-width="3" marker-end="url(#forwardArrow)">
+        <animate attributeName="stroke-dashoffset" from="30" to="0" dur="3s" repeatCount="indefinite"/>
+      </line>
+      <line x1="225" y1="385" x2="225" y2="410" stroke="#1976d2" stroke-width="3" marker-end="url(#forwardArrow)">
+        <animate attributeName="stroke-dashoffset" from="30" to="0" dur="3s" repeatCount="indefinite"/>
+      </line>
+    </g>
+    <!-- 反向传播连接 - 渐变粗细 -->
+    <g>
+      <line x1="195" y1="410" x2="195" y2="385" stroke="#d32f2f" stroke-width="6" marker-end="url(#backwardArrow1)">
+        <animate attributeName="stroke-dashoffset" from="30" to="0" dur="3s" repeatCount="indefinite"/>
+      </line>
+      <line x1="195" y1="340" x2="195" y2="315" stroke="#d32f2f" stroke-width="4" marker-end="url(#backwardArrow2)">
+        <animate attributeName="stroke-dashoffset" from="30" to="0" dur="3s" repeatCount="indefinite"/>
+      </line>
+      <line x1="195" y1="270" x2="195" y2="245" stroke="#d32f2f" stroke-width="2.5" marker-end="url(#backwardArrow3)">
+        <animate attributeName="stroke-dashoffset" from="30" to="0" dur="3s" repeatCount="indefinite"/>
+      </line>
+      <line x1="195" y1="200" x2="195" y2="175" stroke="#d32f2f" stroke-width="1.5" marker-end="url(#backwardArrow4)">
+        <animate attributeName="stroke-dashoffset" from="30" to="0" dur="3s" repeatCount="indefinite"/>
+      </line>
+    </g>
+    <!-- 数据流动动画 - 前向传播 -->
+    <use href="#forwardData">
+      <animateMotion path="M 225 175 L 225 200 L 225 245 L 225 270 L 225 315 L 225 340 L 225 385 L 225 410" dur="6s" repeatCount="indefinite"/>
+    </use>
+    <!-- 数据流动动画 - 反向传播 -->
+    <use href="#backwardData">
+      <animateMotion path="M 195 410 L 195 385 L 195 340 L 195 315 L 195 270 L 195 245 L 195 200 L 195 175" dur="6s" repeatCount="indefinite" begin="3s"/>
+    </use>
+    <!-- 梯度变弱标签 -->
+    <g transform="translate(120, 290)">
+      <rect x="-80" y="-15" width="70" height="30" rx="5" fill="#d32f2f" fill-opacity="0.1" stroke="#d32f2f" stroke-width="1"/>
+      <text x="-45" y="5" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#d32f2f" text-anchor="middle">梯度变弱</text>
+      <path d="M -10 0 L 0 0" stroke="#d32f2f" stroke-width="1.5" marker-end="url(#backwardArrow1)"/>
+    </g>
+    <!-- 箭头示意标注 -->
+    <g fill="#455a64" font-family="Arial, sans-serif" font-size="14">
+      <text x="255" y="188" text-anchor="start">前向传播</text>
+      <path d="M 255 183 L 240 177" stroke="#1976d2" stroke-width="1.5" stroke-dasharray="3,2"/>
+      <text x="120" y="390" text-anchor="end">反向传播</text>
+      <path d="M 120 385 L 180 385" stroke="#d32f2f" stroke-width="1.5" stroke-dasharray="3,2"/>
+    </g>
+  </g>
+  <!-- ResNet网络 -->
+  <g>
+    <!-- 层结构 -->
+    <rect x="600" y="130" width="150" height="45" rx="6" fill="url(#inputGradient)" filter="url(#shadow)"/>
+    <text x="675" y="159" font-family="Arial, sans-serif" font-size="17" font-weight="bold" text-anchor="middle" fill="white">输入层</text>
+    <rect x="600" y="200" width="150" height="45" rx="6" fill="url(#hiddenGradient)" filter="url(#shadow)"/>
+    <text x="675" y="229" font-family="Arial, sans-serif" font-size="17" font-weight="bold" text-anchor="middle" fill="white">隐藏层 1</text>
+    <rect x="600" y="270" width="150" height="45" rx="6" fill="url(#hiddenGradient)" filter="url(#shadow)"/>
+    <text x="675" y="299" font-family="Arial, sans-serif" font-size="17" font-weight="bold" text-anchor="middle" fill="white">隐藏层 2</text>
+    <rect x="600" y="340" width="150" height="45" rx="6" fill="url(#hiddenGradient)" filter="url(#shadow)"/>
+    <text x="675" y="369" font-family="Arial, sans-serif" font-size="17" font-weight="bold" text-anchor="middle" fill="white">隐藏层 3</text>
+    <rect x="600" y="410" width="150" height="45" rx="6" fill="url(#outputGradient)" filter="url(#shadow)"/>
+    <text x="675" y="439" font-family="Arial, sans-serif" font-size="17" font-weight="bold" text-anchor="middle" fill="white">输出层</text>
+    <!-- 前向传播连接 -->
+    <g>
+      <line x1="675" y1="175" x2="675" y2="200" stroke="#1976d2" stroke-width="3" marker-end="url(#forwardArrow)">
+        <animate attributeName="stroke-dashoffset" from="30" to="0" dur="3s" repeatCount="indefinite"/>
+      </line>
+      <line x1="675" y1="245" x2="675" y2="270" stroke="#1976d2" stroke-width="3" marker-end="url(#forwardArrow)">
+        <animate attributeName="stroke-dashoffset" from="30" to="0" dur="3s" repeatCount="indefinite"/>
+      </line>
+      <line x1="675" y1="315" x2="675" y2="340" stroke="#1976d2" stroke-width="3" marker-end="url(#forwardArrow)">
+        <animate attributeName="stroke-dashoffset" from="30" to="0" dur="3s" repeatCount="indefinite"/>
+      </line>
+      <line x1="675" y1="385" x2="675" y2="410" stroke="#1976d2" stroke-width="3" marker-end="url(#forwardArrow)">
+        <animate attributeName="stroke-dashoffset" from="30" to="0" dur="3s" repeatCount="indefinite"/>
+      </line>
+    </g>
+    <!-- 反向传播连接 - 一致粗细 -->
+    <g>
+      <line x1="645" y1="410" x2="645" y2="385" stroke="#d32f2f" stroke-width="3" marker-end="url(#resnetBackArrow)">
+        <animate attributeName="stroke-dashoffset" from="30" to="0" dur="3s" repeatCount="indefinite"/>
+      </line>
+      <line x1="645" y1="340" x2="645" y2="315" stroke="#d32f2f" stroke-width="3" marker-end="url(#resnetBackArrow)">
+        <animate attributeName="stroke-dashoffset" from="30" to="0" dur="3s" repeatCount="indefinite"/>
+      </line>
+      <line x1="645" y1="270" x2="645" y2="245" stroke="#d32f2f" stroke-width="3" marker-end="url(#resnetBackArrow)">
+        <animate attributeName="stroke-dashoffset" from="30" to="0" dur="3s" repeatCount="indefinite"/>
+      </line>
+      <line x1="645" y1="200" x2="645" y2="175" stroke="#d32f2f" stroke-width="3" marker-end="url(#resnetBackArrow)">
+        <animate attributeName="stroke-dashoffset" from="30" to="0" dur="3s" repeatCount="indefinite"/>
+      </line>
+    </g>
+    <!-- 残差连接 - 前向 -->
+    <g stroke="#ff9800" stroke-width="2.5" fill="none">
+      <!-- 残差连接前向传播 -->
+      <path d="M 750 152.5 C 780 152.5, 780 222.5, 750 222.5" marker-end="url(#skipArrow)">
+        <animate attributeName="stroke-dashoffset" from="50" to="0" dur="2s" repeatCount="indefinite"/>
+      </path>
+      <path d="M 750 222.5 C 780 222.5, 780 292.5, 750 292.5" marker-end="url(#skipArrow)">
+        <animate attributeName="stroke-dashoffset" from="50" to="0" dur="2s" repeatCount="indefinite"/>
+      </path>
+      <path d="M 750 292.5 C 780 292.5, 780 362.5, 750 362.5" marker-end="url(#skipArrow)">
+        <animate attributeName="stroke-dashoffset" from="50" to="0" dur="2s" repeatCount="indefinite"/>
+      </path>
+    </g>
+    <!-- 快速梯度通道 - 反向 -->
+    <path d="M 790 362.5 C 830 362.5, 830 152.5, 790 152.5" stroke="#d32f2f" stroke-width="3" stroke-dasharray="6,3" fill="none">
+      <animate attributeName="stroke-dashoffset" from="50" to="0" dur="4s" repeatCount="indefinite"/>
+    </path>
+    <!-- 梯度直通标签 -->
+    <g transform="translate(830, 260)">
+      <rect x="-15" y="-50" width="30" height="100" rx="15" fill="#d32f2f" fill-opacity="0.1" stroke="#d32f2f" stroke-width="1"/>
+      <text x="0" y="0" font-family="Arial, sans-serif" font-size="15" font-weight="bold" fill="#d32f2f" text-anchor="middle" transform="rotate(90)">梯度直通</text>
+      <path d="M 0 -50 L 0 -65 L -25 -65" stroke="#d32f2f" stroke-width="1.5" stroke-dasharray="3,2"/>
+    </g>
+    <!-- 数据流动动画 - 前向传播 -->
+    <use href="#forwardData">
+      <animateMotion path="M 675 175 L 675 200 L 675 245 L 675 270 L 675 315 L 675 340 L 675 385 L 675 410" dur="6s" repeatCount="indefinite"/>
+    </use>
+    <!-- 数据流动动画 - 反向传播 -->
+    <use href="#backwardData">
+      <animateMotion path="M 645 410 L 645 385 L 645 340 L 645 315 L 645 270 L 645 245 L 645 200 L 645 175" dur="6s" repeatCount="indefinite" begin="3s"/>
+    </use>
+    <!-- 数据流动动画 - 残差连接 -->
+    <use href="#skipData">
+      <animateMotion path="M 750 152.5 C 780 152.5, 780 222.5, 750 222.5 C 780 222.5, 780 292.5, 750 292.5 C 780 292.5, 780 362.5, 750 362.5" dur="4s" repeatCount="indefinite"/>
+    </use>
+    <!-- 数据流动动画 - 梯度直通 -->
+    <use href="#backwardData">
+      <animateMotion path="M 790 362.5 C 830 362.5, 830 152.5, 790 152.5" dur="3s" repeatCount="indefinite" begin="4s"/>
+    </use>
+  </g>
+  <!-- 底部说明 -->
+  <g transform="translate(450, 480)">
+    <rect x="-350" y="-15" width="700" height="30" rx="5" fill="#eceff1" stroke="#b0bec5" stroke-width="1"/>
+    <text x="0" y="5" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" fill="#37474f">
+      ResNet通过残差连接（跳跃连接）为梯度提供了直接传递通道，有效解决了深层网络的梯度消失问题
+    </text>
+  </g>
+</svg>
+
+<h3 id="3-2-加法操作的优势"><a href="#3-2-加法操作的优势" class="headerlink" title="3.2 加法操作的优势"></a>3.2 加法操作的优势</h3><p>残差块采用元素级加法而非拼接(concatenation)，这种选择非常重要：</p>
+<ol>
+<li><strong>参数效率</strong>：与拼接相比，加法不增加特征图的通道数，保持了参数数量的高效性</li>
+<li><strong>计算轻量</strong>：加法操作计算开销很小</li>
+<li><strong>数学优雅</strong>：加法操作使得残差学习的数学表达更为简洁和优雅</li>
+</ol>
+<h3 id="3-3-优化的几何解释"><a href="#3-3-优化的几何解释" class="headerlink" title="3.3 优化的几何解释"></a>3.3 优化的几何解释</h3><p>从优化角度看，残差连接重新塑造了损失函数的景观：</p>
+<p>在传统神经网络中，损失函数可能包含许多局部极小值，使得优化算法难以找到全局最优解。而在ResNet中，残差连接创建了更平滑的优化路径，使得网络更容易找到全局或更优的局部极小值。</p>
+<h2 id="4-ResNet的技术细节与变体"><a href="#4-ResNet的技术细节与变体" class="headerlink" title="4. ResNet的技术细节与变体"></a>4. ResNet的技术细节与变体</h2><h3 id="4-1-基本架构设计"><a href="#4-1-基本架构设计" class="headerlink" title="4.1 基本架构设计"></a>4.1 基本架构设计</h3><p>原始ResNet有多个变体，包括ResNet-18&#x2F;34&#x2F;50&#x2F;101&#x2F;152，数字表示层数。其中：</p>
+<ul>
+<li><strong>ResNet-18&#x2F;34</strong>：使用基本残差块(Basic Block)</li>
+<li><strong>ResNet-50&#x2F;101&#x2F;152</strong>：使用瓶颈残差块(Bottleneck Block)</li>
+</ul>
+<p>瓶颈残差块通过1×1卷积层压缩和恢复维度，在降低计算复杂度的同时保持性能：</p>
+<figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs scss">输入 → <span class="hljs-number">1</span>×<span class="hljs-number">1</span>卷积(降维) → <span class="hljs-number">3</span>×<span class="hljs-number">3</span>卷积 → <span class="hljs-number">1</span>×<span class="hljs-number">1</span>卷积(升维) → 输出<br></code></pre></td></tr></table></figure>
+
+<h3 id="4-2-重要的技术细节"><a href="#4-2-重要的技术细节" class="headerlink" title="4.2 重要的技术细节"></a>4.2 重要的技术细节</h3><p>ResNet的成功不仅仅在于其残差学习的思想，还在于许多关键的实现细节：</p>
+<ol>
+<li><strong>批量归一化(Batch Normalization)</strong>：每个卷积层后都有BN层，有助于稳定训练</li>
+<li><strong>权重初始化</strong>：采用”He初始化”，有助于深层网络的训练</li>
+<li><strong>降采样策略</strong>：通过带步长的卷积而非池化来降低特征图尺寸</li>
+<li><strong>全局平均池化</strong>：在全连接分类层前使用全局平均池化，减少参数数量</li>
+</ol>
+<h3 id="4-3-主要变体"><a href="#4-3-主要变体" class="headerlink" title="4.3 主要变体"></a>4.3 主要变体</h3><p>自ResNet提出后，研究人员开发了许多变体，每一个都有其独特的贡献：</p>
+<h4 id="4-3-1-Pre-activation-ResNet"><a href="#4-3-1-Pre-activation-ResNet" class="headerlink" title="4.3.1 Pre-activation ResNet"></a>4.3.1 Pre-activation ResNet</h4><p>何恺明等人在2016年提出了一种改进，将激活函数放在卷积层前面：</p>
+<figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs mipsasm"><span class="hljs-keyword">BN </span>→ ReLU → 卷积 → <span class="hljs-keyword">BN </span>→ ReLU → 卷积<br></code></pre></td></tr></table></figure>
+
+<p>这种设计提供了更好的表达能力和训练稳定性。</p>
+<h4 id="4-3-2-Wide-ResNet"><a href="#4-3-2-Wide-ResNet" class="headerlink" title="4.3.2 Wide ResNet"></a>4.3.2 Wide ResNet</h4><p>通过增加每一层的宽度（通道数）而不是深度，Wide ResNet在某些任务上取得了更好的性能和更快的训练速度。</p>
+<h4 id="4-3-3-ResNeXt"><a href="#4-3-3-ResNeXt" class="headerlink" title="4.3.3 ResNeXt"></a>4.3.3 ResNeXt</h4><p>引入了”cardinality”（基数）的概念，将残差函数分解为多个并行路径，是一种聚合转换(aggregated transformation)思想。</p>
+<h4 id="4-3-4-DenseNet"><a href="#4-3-4-DenseNet" class="headerlink" title="4.3.4 DenseNet"></a>4.3.4 DenseNet</h4><p>虽然不严格是ResNet的变体，但DenseNet受到了ResNet的启发，通过密集连接(dense connections)进一步加强了特征重用和梯度流。</p>
+<h2 id="5-ResNet的理论基础与启示"><a href="#5-ResNet的理论基础与启示" class="headerlink" title="5. ResNet的理论基础与启示"></a>5. ResNet的理论基础与启示</h2><h3 id="5-1-集成学习的视角"><a href="#5-1-集成学习的视角" class="headerlink" title="5.1 集成学习的视角"></a>5.1 集成学习的视角</h3><p>从集成学习的角度，ResNet可以被看作是许多浅层网络的隐式集成。每个残差块学习一个增量变换，这些变换被组合成一个强大的整体。</p>
+<p>论文《Residual Networks Behave Like Ensembles of Relatively Shallow Networks》证明了这一观点，他们发现：</p>
+<ol>
+<li>ResNet中的信息通常沿着少数几条”高速公路”传播</li>
+<li>删除单个残差块对性能影响很小</li>
+<li>整个网络的表现类似于多个浅层网络的集成</li>
+</ol>
+<h3 id="5-2-信息论解释"><a href="#5-2-信息论解释" class="headerlink" title="5.2 信息论解释"></a>5.2 信息论解释</h3><p>从信息论角度，残差连接有助于信息的高效传递。传统深度网络中，信息在层间传递中可能会丢失，而残差连接允许原始信息与处理后的信息并行传输，减少了信息丢失。</p>
+<h3 id="5-3-优化理论视角"><a href="#5-3-优化理论视角" class="headerlink" title="5.3 优化理论视角"></a>5.3 优化理论视角</h3><p>在优化理论中，残差学习可以被看作是一种”路径最小化”策略。通过学习与恒等映射的偏差，网络实际上寻找的是一条从输入到输出的”最小变化路径”。</p>
+<h2 id="6-ResNet的影响与应用"><a href="#6-ResNet的影响与应用" class="headerlink" title="6. ResNet的影响与应用"></a>6. ResNet的影响与应用</h2><p>ResNet的影响远超计算机视觉领域：</p>
+<h3 id="6-1-在计算机视觉中的应用"><a href="#6-1-在计算机视觉中的应用" class="headerlink" title="6.1 在计算机视觉中的应用"></a>6.1 在计算机视觉中的应用</h3><ul>
+<li><strong>图像分类</strong>：ResNet在ImageNet等数据集上实现了突破性的精度</li>
+<li><strong>目标检测</strong>：Faster R-CNN结合ResNet骨干网络大幅提高了检测性能</li>
+<li><strong>图像分割</strong>：DeepLab等模型采用ResNet提取特征，提高了分割精度</li>
+<li><strong>视频理解</strong>：许多视频分析模型建立在ResNet架构之上</li>
+</ul>
+<h3 id="6-2-跨领域影响"><a href="#6-2-跨领域影响" class="headerlink" title="6.2 跨领域影响"></a>6.2 跨领域影响</h3><p>残差学习的思想已扩展到多个领域：</p>
+<ul>
+<li><strong>自然语言处理</strong>：Transformer架构中的残差连接借鉴了ResNet的思想</li>
+<li><strong>图神经网络</strong>：许多GNN架构采用残差连接以支持更深的网络</li>
+<li><strong>语音识别</strong>：现代语音识别系统广泛采用残差结构</li>
+<li><strong>强化学习</strong>：深度强化学习算法中的价值网络和策略网络常使用ResNet架构</li>
+</ul>
+<h2 id="7-未来展望与思考"><a href="#7-未来展望与思考" class="headerlink" title="7. 未来展望与思考"></a>7. 未来展望与思考</h2><h3 id="7-1-ResNet的局限性"><a href="#7-1-ResNet的局限性" class="headerlink" title="7.1 ResNet的局限性"></a>7.1 ResNet的局限性</h3><p>尽管ResNet解决了深度网络的许多问题，但它仍然面临一些挑战：</p>
+<ul>
+<li><strong>计算效率</strong>：虽然比同等深度的传统网络更易训练，但深层ResNet仍然需要大量计算资源</li>
+<li><strong>过参数化</strong>：某些研究表明，ResNet中的许多参数可能是冗余的</li>
+<li><strong>泛化性</strong>：尽管ResNet在特定数据集上表现出色，但在领域迁移和对抗样本上的鲁棒性仍有待提高</li>
+<li><strong>模型体积</strong>：深层ResNet模型参数量大，不适合资源受限的设备</li>
+</ul>
+<h3 id="7-2-未来研究方向"><a href="#7-2-未来研究方向" class="headerlink" title="7.2 未来研究方向"></a>7.2 未来研究方向</h3><p>ResNet的成功启发了许多新的研究方向：</p>
+<h4 id="7-2-1-动态残差网络"><a href="#7-2-1-动态残差网络" class="headerlink" title="7.2.1 动态残差网络"></a>7.2.1 动态残差网络</h4><p>传统ResNet对所有输入应用相同的残差块。动态残差网络根据输入内容调整网络流程，实现了更高的计算效率和更好的性能。代表工作包括：</p>
+<ul>
+<li><strong>SkipNet</strong>：学习动态跳过某些层，为不同输入提供不同深度的处理</li>
+<li><strong>Dynamic Routing</strong>：根据样本难度自适应选择执行路径</li>
+</ul>
+<h4 id="7-2-2-轻量级设计"><a href="#7-2-2-轻量级设计" class="headerlink" title="7.2.2 轻量级设计"></a>7.2.2 轻量级设计</h4><p>针对计算资源受限的场景，研究人员开发了多种轻量级ResNet变体：</p>
+<ul>
+<li><strong>ShuffleNet</strong>：结合点分组卷积和通道重排，大幅降低计算复杂度</li>
+<li><strong>MobileNetV2</strong>：引入倒置残差结构，适合移动设备部署</li>
+<li><strong>EfficientNet</strong>：通过复合缩放法优化深度、宽度和分辨率的平衡</li>
+</ul>
+<h4 id="7-2-3-自动架构搜索"><a href="#7-2-3-自动架构搜索" class="headerlink" title="7.2.3 自动架构搜索"></a>7.2.3 自动架构搜索</h4><p>神经架构搜索(NAS)技术被用来自动发现比人工设计更优的残差网络变体：</p>
+<ul>
+<li><strong>EfficientNet</strong>：使用NAS搜索基础模型，然后应用复合缩放</li>
+<li><strong>RegNet</strong>：通过系统分析残差网络设计空间，发现高效结构规律</li>
+</ul>
+<h4 id="7-2-4-可解释性研究"><a href="#7-2-4-可解释性研究" class="headerlink" title="7.2.4 可解释性研究"></a>7.2.4 可解释性研究</h4><p>理解ResNet的内部工作机制仍是一个活跃的研究领域：</p>
+<ul>
+<li><strong>特征可视化</strong>：探索不同深度层提取的特征含义</li>
+<li><strong>剪枝研究</strong>：分析哪些连接和层对性能至关重要</li>
+<li><strong>知识蒸馏</strong>：从深层ResNet中提取关键知识到更简单的模型中</li>
+</ul>
+<h3 id="7-3-哲学思考：ResNet的启示"><a href="#7-3-哲学思考：ResNet的启示" class="headerlink" title="7.3 哲学思考：ResNet的启示"></a>7.3 哲学思考：ResNet的启示</h3><p>ResNet的成功超越了技术层面，它提供了解决复杂问题的思考框架：</p>
+<svg width="600" height="400" viewBox="0 0 600 400">
+  <!-- 背景 -->
+  <rect width="600" height="400" fill="#f9f9f9" rx="10" ry="10"/>
+  <!-- 标题 -->
+  <text x="300" y="50" font-size="24" font-weight="bold" text-anchor="middle" fill="#333">
+    ResNet的哲学启示
+  </text>
+  <!-- 左侧思考 -->
+  <g transform="translate(100, 120)">
+    <circle cx="0" cy="0" r="70" fill="#e3f2fd" stroke="#2196F3" stroke-width="2"/>
+    <text x="0" y="-20" font-size="16" font-weight="bold" text-anchor="middle">渐进式改进</text>
+    <text x="0" y="10" font-size="14" text-anchor="middle" width="120">
+      <tspan x="0" dy="0">改变不必推倒重来，</tspan>
+      <tspan x="0" dy="20">可以基于现有基础</tspan>
+      <tspan x="0" dy="20">增量构建</tspan>
+    </text>
+  </g>
+  <!-- 右上思考 -->
+  <g transform="translate(400, 150)">
+    <circle cx="0" cy="0" r="70" fill="#e8f5e9" stroke="#4CAF50" stroke-width="2"/>
+    <text x="0" y="-20" font-size="16" font-weight="bold" text-anchor="middle">知识传承</text>
+    <text x="0" y="10" font-size="14" text-anchor="middle" width="120">
+      <tspan x="0" dy="0">新知识建立在已有</tspan>
+      <tspan x="0" dy="20">知识基础上，而非</tspan>
+      <tspan x="0" dy="20">完全替代它</tspan>
+    </text>
+  </g>
+  <!-- 左下思考 -->
+  <g transform="translate(150, 280)">
+    <circle cx="0" cy="0" r="70" fill="#fff3e0" stroke="#FF9800" stroke-width="2"/>
+    <text x="0" y="-20" font-size="16" font-weight="bold" text-anchor="middle">简化复杂性</text>
+    <text x="0" y="10" font-size="14" text-anchor="middle" width="120">
+      <tspan x="0" dy="0">将复杂问题分解为</tspan>
+      <tspan x="0" dy="20">已解决部分与需要</tspan>
+      <tspan x="0" dy="20">关注的残差部分</tspan>
+    </text>
+  </g>
+  <!-- 右下思考 -->
+  <g transform="translate(450, 280)">
+    <circle cx="0" cy="0" r="70" fill="#f3e5f5" stroke="#9C27B0" stroke-width="2"/>
+    <text x="0" y="-20" font-size="16" font-weight="bold" text-anchor="middle">反馈与连接</text>
+    <text x="0" y="10" font-size="14" text-anchor="middle" width="120">
+      <tspan x="0" dy="0">建立直接反馈通道，</tspan>
+      <tspan x="0" dy="20">确保信息在复杂系统</tspan>
+      <tspan x="0" dy="20">中高效流动</tspan>
+    </text>
+  </g>
+  <!-- 连接线 -->
+  <line x1="150" y1="200" x2="350" y2="150" stroke="#666" stroke-width="1" stroke-dasharray="5,3"/>
+  <line x1="150" y1="200" x2="200" y2="280" stroke="#666" stroke-width="1" stroke-dasharray="5,3"/>
+  <line x1="350" y1="150" x2="400" y2="280" stroke="#666" stroke-width="1" stroke-dasharray="5,3"/>
+  <line x1="200" y1="280" x2="400" y2="280" stroke="#666" stroke-width="1" stroke-dasharray="5,3"/>
+  <!-- 中心思想 -->
+  <g transform="translate(300, 200)">
+    <circle cx="0" cy="0" r="40" fill="#e1bee7" stroke="#673AB7" stroke-width="3"/>
+    <text x="0" y="0" font-size="14" font-weight="bold" text-anchor="middle" fill="#333">思考</text>
+    <text x="0" y="20" font-size="14" font-weight="bold" text-anchor="middle" fill="#333">方式</text>
+  </g>
+</svg>
+
+<h4 id="7-3-1-渐进式改进而非推倒重来"><a href="#7-3-1-渐进式改进而非推倒重来" class="headerlink" title="7.3.1 渐进式改进而非推倒重来"></a>7.3.1 渐进式改进而非推倒重来</h4><p>在科技和社会发展中，我们常常面临是”推倒重来”还是”在现有基础上改进”的选择。ResNet表明，有时通过建立巧妙的连接和增量修改，我们可以在保留已有结构价值的同时，突破发展瓶颈。</p>
+<h4 id="7-3-2-简化而非复杂化"><a href="#7-3-2-简化而非复杂化" class="headerlink" title="7.3.2 简化而非复杂化"></a>7.3.2 简化而非复杂化</h4><p>面对复杂问题，我们的本能可能是增加复杂度。然而，ResNet的设计告诉我们，有时最优雅的解决方案是简化问题 - 不是学习整个复杂映射，而是学习与简单参考点的偏差。</p>
+<h4 id="7-3-3-反思现有假设"><a href="#7-3-3-反思现有假设" class="headerlink" title="7.3.3 反思现有假设"></a>7.3.3 反思现有假设</h4><p>ResNet挑战了”更深的网络应该能学到更多”的假设，发现深度网络面临的根本问题在于优化难度而非表达能力。这提醒我们在面对瓶颈时，要审视基本假设，找出真正的限制因素<br>。</p>
+<h2 id="8-结语：从简单出发的深刻变革"><a href="#8-结语：从简单出发的深刻变革" class="headerlink" title="8. 结语：从简单出发的深刻变革"></a>8. 结语：从简单出发的深刻变革</h2><p>ResNet作为深度学习领域的里程碑，其价值不仅在于解决了特定的技术问题，更在于它以优雅的方式展示了复杂问题可以通过巧妙的设计得到简化。</p>
+<p>残差学习的核心思想简洁明了：将复杂目标分解为已知部分与未知增量的组合。这个思想在自然界中随处可见：从物种进化到科学发展，都体现了在已有基础上渐进增量的特点。</p>
+<blockquote>
+<p>“一切应该尽可能简单，但不能过于简单。” —— 阿尔伯特·爱因斯坦</p>
+</blockquote>
+<p>ResNet的成功提醒我们，有时候，最深刻的创新不是来自于增加复杂性，而是通过重新思考问题的本质，找到一种更简单、更优雅的解决方案。无论是在算法设计、科学研究还是生活问题解决中，这种思考方式都具有普遍的适用价值。</p>
+<h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><ol>
+<li><p>He, K., Zhang, X., Ren, S., &amp; Sun, J. (2016). Deep residual learning for image recognition. In Proceedings of the IEEE conference on computer vision and pattern recognition (pp. 770-778).</p>
+</li>
+<li><p>He, K., Zhang, X., Ren, S., &amp; Sun, J. (2016). Identity mappings in deep residual networks. In European conference on computer vision (pp. 630-645).</p>
+</li>
+<li><p>Veit, A., Wilber, M. J., &amp; Belongie, S. (2016). Residual networks behave like ensembles of relatively shallow networks. Advances in neural information processing systems, 29.</p>
+</li>
+<li><p>Zagoruyko, S., &amp; Komodakis, N. (2016). Wide residual networks. arXiv preprint arXiv:1605.07146.</p>
+</li>
+<li><p>Xie, S., Girshick, R., Dollár, P., Tu, Z., &amp; He, K. (2017). Aggregated residual transformations for deep neural networks. In Proceedings of the IEEE conference on computer vision and pattern recognition (pp. 1492-1500).</p>
+</li>
+<li><p>Huang, G., Liu, Z., Van Der Maaten, L., &amp; Weinberger, K. Q. (2017). Densely connected convolutional networks. In Proceedings of the IEEE conference on computer vision and pattern recognition (pp. 4700-4708).</p>
+</li>
+<li><p>Tan, M., &amp; Le, Q. (2019). Efficientnet: Rethinking model scaling for convolutional neural networks. In International conference on machine learning (pp. 6105-6114).</p>
+</li>
+<li><p>Sandler, M., Howard, A., Zhu, M., Zhmoginov, A., &amp; Chen, L. C. (2018). Mobilenetv2: Inverted residuals and linear bottlenecks. In Proceedings of the IEEE conference on computer vision and pattern recognition (pp. 4510-4520).</p>
+</li>
+</ol>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/" class="category-chain-item">深度学习</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/" class="print-no-link">#深度学习</a>
+      
+        <a href="/tags/ResNet/" class="print-no-link">#ResNet</a>
+      
+        <a href="/tags/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/" class="print-no-link">#神经网络</a>
+      
+        <a href="/tags/%E6%AE%8B%E5%B7%AE%E7%BD%91%E7%BB%9C/" class="print-no-link">#残差网络</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>ResNet思考和理解：深度学习中的智慧捷径</div>
+      <div>http://xcq.ink/2022/10/25/ResNet思考和理解：深度学习中的智慧捷径/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Xander Xu</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2022年10月25日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2023/01/23/%E4%BA%BA%E4%B8%8EAI%E7%9A%84%E5%85%B3%E7%B3%BB/" title="人与AI的关系:我们如何证明自己不是机器？">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">人与AI的关系:我们如何证明自己不是机器？</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+  <div class="disqus" style="width:100%">
+    <div id="disqus_thread"></div>
+    
+      <script type="text/javascript">
+        var disqus_config = function() {
+          this.page.url = 'http://xcq.ink/2022/10/25/ResNet%E6%80%9D%E8%80%83%E5%92%8C%E7%90%86%E8%A7%A3%EF%BC%9A%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E4%B8%AD%E7%9A%84%E6%99%BA%E6%85%A7%E6%8D%B7%E5%BE%84/';
+          this.page.identifier = '/2022/10/25/ResNet%E6%80%9D%E8%80%83%E5%92%8C%E7%90%86%E8%A7%A3%EF%BC%9A%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E4%B8%AD%E7%9A%84%E6%99%BA%E6%85%A7%E6%8D%B7%E5%BE%84/';
+        };
+        Fluid.utils.loadComments('#disqus_thread', function() {
+          var d = document, s = d.createElement('script');
+          s.src = '//' + 'fluid' + '.disqus.com/embed.js';
+          s.setAttribute('data-timestamp', new Date());
+          (d.head || d.body).appendChild(s);
+        });
+      </script>
+    
+    <noscript>Please enable JavaScript to view the comments</noscript>
+  </div>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+
+  
+
+</div>
+
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
