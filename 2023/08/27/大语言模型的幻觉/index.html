@@ -1,0 +1,1047 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/logo.svg">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Xander Xu">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="在人工智能快速发展的今天，大语言模型（LLM）如 GPT、Claude 等已经成为我们生活的一部分。然而，这些模型偶尔会产生&quot;幻觉&quot;——生成看似可信但实际上并不真实的内容。本文将由浅入深地解析这一现象的本质、原因及应对方法。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="大语言模型的幻觉">
+<meta property="og:url" content="http://xcq.ink/2023/08/27/%E5%A4%A7%E8%AF%AD%E8%A8%80%E6%A8%A1%E5%9E%8B%E7%9A%84%E5%B9%BB%E8%A7%89/index.html">
+<meta property="og:site_name" content="人菜瘾大的小强">
+<meta property="og:description" content="在人工智能快速发展的今天，大语言模型（LLM）如 GPT、Claude 等已经成为我们生活的一部分。然而，这些模型偶尔会产生&quot;幻觉&quot;——生成看似可信但实际上并不真实的内容。本文将由浅入深地解析这一现象的本质、原因及应对方法。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-08-27T07:09:42.000Z">
+<meta property="article:modified_time" content="2025-03-07T07:29:20.342Z">
+<meta property="article:author" content="Xander Xu">
+<meta property="article:tag" content="AI">
+<meta property="article:tag" content="大语言模型">
+<meta property="article:tag" content="LLM">
+<meta property="article:tag" content="幻觉">
+<meta property="article:tag" content="技术解析">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>大语言模型的幻觉 - 人菜瘾大的小强</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"xcq.ink","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":"ac2559fe71d82eda0e6372616e40089e","google":"G-L228BYNZ7T","tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>人菜瘾大的小强</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="大语言模型的幻觉"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-08-27 15:09" pubdate>
+          2023年8月27日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          2k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          17 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">大语言模型的幻觉</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="大语言模型的幻觉：本质与解析"><a href="#大语言模型的幻觉：本质与解析" class="headerlink" title="大语言模型的幻觉：本质与解析"></a>大语言模型的幻觉：本质与解析</h1><p>在人工智能快速发展的今天，大语言模型（LLM）如 GPT、Claude 等已经成为我们生活的一部分。然而，这些模型偶尔会产生”幻觉”——生成看似可信但实际上并不真实的内容。本文将由浅入深地解析这一现象的本质、原因及应对方法。</p>
+<h2 id="一、什么是大语言模型？"><a href="#一、什么是大语言模型？" class="headerlink" title="一、什么是大语言模型？"></a>一、什么是大语言模型？</h2><p>大语言模型是一种通过海量文本数据训练出来的人工智能系统，它能够理解和生成类似人类的文本。简单来说，这些模型在做一件事：根据已有的文本预测”接下来最可能出现的词是什么”。</p>
+<svg width="700" height="180" viewBox="0 0 700 180">
+  <!-- 训练数据表示 -->
+  <rect x="100" y="40" width="160" height="100" rx="10" fill="#E6F7FF" stroke="#333" stroke-width="2"/>
+  <text x="180" y="80" text-anchor="middle" font-size="16" font-weight="bold">海量文本数据</text>
+  <text x="180" y="105" text-anchor="middle" font-size="14">(互联网、书籍、论文...)</text>
+  
+  <!-- 箭头 -->
+  <path d="M270 90 L330 90 M330 90 L320 85 M330 90 L320 95" stroke="#333" stroke-width="2" fill="none"/>
+  
+  <!-- 模型表示 -->
+  <rect x="340" y="40" width="160" height="100" rx="10" fill="#F2E6FF" stroke="#333" stroke-width="2"/>
+  <text x="420" y="80" text-anchor="middle" font-size="16" font-weight="bold">大语言模型</text>
+  <text x="420" y="105" text-anchor="middle" font-size="14">(模式识别与预测)</text>
+  
+  <!-- 箭头 -->
+  <path d="M510 90 L560 90 M560 90 L550 85 M560 90 L550 95" stroke="#333" stroke-width="2" fill="none"/>
+  
+  <!-- 输出表示 -->
+  <rect x="570" y="40" width="100" height="100" rx="10" fill="#FFF2E8" stroke="#333" stroke-width="2"/>
+  <text x="620" y="90" text-anchor="middle" font-size="16" font-weight="bold">文本输出</text>
+</svg>
+
+
+<p>大语言模型通过以下步骤工作：</p>
+<ol>
+<li><strong>学习模式</strong>：分析海量文本，学习词语之间的关系和模式</li>
+<li><strong>上下文理解</strong>：根据已有的文字内容理解上下文</li>
+<li><strong>预测生成</strong>：预测最可能的下一个词，并不断重复这个过程</li>
+</ol>
+<p>重要的是，这些模型并不真正”理解”信息的真实性，它们只是识别和复现文本中的模式。</p>
+<h2 id="二、什么是”幻觉”？"><a href="#二、什么是”幻觉”？" class="headerlink" title="二、什么是”幻觉”？"></a>二、什么是”幻觉”？</h2><p>“幻觉”是人工智能领域的术语，指的是模型生成看似合理但实际上不准确或完全虚构的内容。这就像是你的大脑在看到部分拼图后，试图想象整幅图的样子，但填补的部分与实际不符。</p>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 400">
+  <!-- 定义渐变和阴影 -->
+  <defs>
+    <linearGradient id="brainGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#E3F2FD;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#BBDEFB;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="patternGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#E8EAF6;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#C5CAE9;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="factGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#FFF8E1;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#FFECB3;stop-opacity:1" />
+    </linearGradient>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="2" dy="2" stdDeviation="3" flood-opacity="0.3"/>
+    </filter>
+  </defs>
+  <!-- 背景 -->
+  <rect width="800" height="400" fill="#FFFFFF" rx="0" ry="0"/>
+  <!-- 概念标题 -->
+  <text x="400" y="50" font-family="Arial, sans-serif" font-size="24" font-weight="bold" text-anchor="middle" fill="#333333">大语言模型的"幻觉"本质</text>
+  <!-- 左侧：大脑和神经网络 -->
+  <g transform="translate(200, 200)">
+    <!-- 大脑外轮廓 -->
+    <path d="M-70 -80 
+             C-90 -40, -90 40, -70 80 
+             C-50 100, 50 100, 70 80 
+             C90 40, 90 -40, 70 -80 
+             C50 -100, -50 -100, -70 -80 Z" 
+          fill="url(#brainGradient)" stroke="#546E7A" stroke-width="2" filter="url(#shadow)"/>
+    <!-- 大脑内部纹路 -->
+    <path d="M-40 -80 C-30 -60, 30 -60, 40 -80" stroke="#546E7A" stroke-width="1.5" fill="none"/>
+    <path d="M-50 -50 C-30 -30, 30 -30, 50 -50" stroke="#546E7A" stroke-width="1.5" fill="none"/>
+    <path d="M-60 -20 C-40 0, 40 0, 60 -20" stroke="#546E7A" stroke-width="1.5" fill="none"/>
+    <path d="M-60 20 C-40 40, 40 40, 60 20" stroke="#546E7A" stroke-width="1.5" fill="none"/>
+    <path d="M-50 50 C-30 70, 30 70, 50 50" stroke="#546E7A" stroke-width="1.5" fill="none"/>
+    <!-- 神经网络节点和连接 -->
+    <circle cx="-40" cy="-40" r="6" fill="#1E88E5" stroke="#0D47A1" stroke-width="1"/>
+    <circle cx="0" cy="-50" r="6" fill="#1E88E5" stroke="#0D47A1" stroke-width="1"/>
+    <circle cx="40" cy="-40" r="6" fill="#1E88E5" stroke="#0D47A1" stroke-width="1"/>
+    <circle cx="-50" cy="0" r="6" fill="#1E88E5" stroke="#0D47A1" stroke-width="1"/>
+    <circle cx="0" cy="0" r="8" fill="#1E88E5" stroke="#0D47A1" stroke-width="1"/>
+    <circle cx="50" cy="0" r="6" fill="#1E88E5" stroke="#0D47A1" stroke-width="1"/>
+    <circle cx="-40" cy="40" r="6" fill="#1E88E5" stroke="#0D47A1" stroke-width="1"/>
+    <circle cx="0" cy="50" r="6" fill="#1E88E5" stroke="#0D47A1" stroke-width="1"/>
+    <circle cx="40" cy="40" r="6" fill="#1E88E5" stroke="#0D47A1" stroke-width="1"/>
+    <!-- 神经连接线 -->
+    <path d="M-40 -40 L0 0 M0 -50 L0 0 M40 -40 L0 0" stroke="#0D47A1" stroke-width="1.5" stroke-opacity="0.6"/>
+    <path d="M-50 0 L0 0 M50 0 L0 0" stroke="#0D47A1" stroke-width="1.5" stroke-opacity="0.6"/>
+    <path d="M-40 40 L0 0 M0 50 L0 0 M40 40 L0 0" stroke="#0D47A1" stroke-width="1.5" stroke-opacity="0.6"/>
+    <!-- 标签 -->
+    <text x="0" y="120" font-family="Arial, sans-serif" font-size="16" font-weight="bold" text-anchor="middle" fill="#333333">模型的神经网络</text>
+    <text x="0" y="140" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" fill="#546E7A">(模式识别与预测)</text>
+  </g>
+  <!-- 连接箭头 -->
+  <path d="M300 200 L400 200" stroke="#546E7A" stroke-width="2" fill="none"/>
+  <polygon points="400,200 390,195 390,205" fill="#546E7A"/>
+  <!-- 右侧：幻觉概念可视化 -->
+  <g transform="translate(550, 200)">
+    <!-- 拼图比喻 -->
+    <g transform="translate(0, -60)">
+      <!-- 已知部分拼图 -->
+      <rect x="-100" y="-30" width="60" height="60" fill="url(#patternGradient)" stroke="#3949AB" stroke-width="1.5"/>
+      <text x="-70" y="5" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#333333">已知模式</text>
+      <rect x="-40" y="-30" width="60" height="60" fill="url(#patternGradient)" stroke="#3949AB" stroke-width="1.5"/>
+      <text x="-10" y="5" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#333333">已知模式</text>
+      <!-- 缺失部分（幻觉填充） -->
+      <rect x="20" y="-30" width="60" height="60" fill="url(#factGradient)" stroke="#3949AB" stroke-width="1.5" stroke-dasharray="4 2"/>
+      <text x="50" y="-5" font-family="Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#FFA000">?</text>
+      <text x="50" y="15" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#333333">模型填补</text>
+      <!-- 拼图标签 -->
+      <text x="-20" y="-40" font-family="Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#333333">拼图隐喻：模型填补信息缺口</text>
+    </g>
+    <!-- 两个概念圆 -->
+    <g transform="translate(0, 60)">
+      <circle cx="-50" cy="0" r="40" fill="url(#patternGradient)" stroke="#3949AB" stroke-width="1.5"/>
+      <text x="-50" y="-5" font-family="Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#333333">模式完成</text>
+      <text x="-50" y="15" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#546E7A">(模型预测)</text>
+      <circle cx="50" cy="0" r="40" fill="url(#factGradient)" stroke="#FFA000" stroke-width="1.5"/>
+      <text x="50" y="-5" font-family="Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#333333">事实真相</text>
+      <text x="50" y="15" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#546E7A">(客观现实)</text>
+      <!-- 中间的差距标注 -->
+      <path d="M-10 0 L10 0" stroke="#E53935" stroke-width="2" stroke-dasharray="5 3"/>
+      <text x="0" y="-10" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#E53935">差距</text>
+      <!-- 指向"幻觉"的箭头 -->
+      <path d="M0 20 L0 50" stroke="#E53935" stroke-width="2" fill="none"/>
+      <polygon points="0,50 -5,40 5,40" fill="#E53935"/>
+      <text x="0" y="70" font-family="Arial, sans-serif" font-size="16" font-weight="bold" text-anchor="middle" fill="#E53935">幻觉</text>
+    </g>
+  </g>
+  <!-- 底部注释 -->
+  <text x="400" y="370" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" fill="#546E7A">
+    幻觉是模型基于已知模式预测内容与客观事实之间的差异
+  </text>
+</svg>
+
+
+<h3 id="幻觉的本质"><a href="#幻觉的本质" class="headerlink" title="幻觉的本质"></a>幻觉的本质</h3><p>幻觉的本质是模型在进行<strong>模式完成</strong>时与<strong>事实</strong>之间产生的差距。重要的是，大语言模型：</p>
+<ul>
+<li>不是在陈述它”知道”的事实</li>
+<li>而是在预测”文本应该如何继续”</li>
+<li>这种预测基于它从训练数据中学到的模式</li>
+</ul>
+<blockquote>
+<p><strong>示例</strong>：如果你问模型”第一个登上月球的中国宇航员是谁？”，它可能会自信地生成一个名字和故事，尽管截至23年，中国宇航员尚未登陆月球。</p>
+</blockquote>
+<h2 id="三、为什么会产生幻觉？"><a href="#三、为什么会产生幻觉？" class="headerlink" title="三、为什么会产生幻觉？"></a>三、为什么会产生幻觉？</h2><p>大语言模型产生幻觉有几个根本原因：</p>
+<svg width="700" height="320" viewBox="0 0 700 320">
+  <!-- 标题 -->
+  <text x="350" y="30" text-anchor="middle" font-size="18" font-weight="bold">幻觉产生的根本原因</text>
+  
+  <!-- 原因1：模式匹配 -->
+  <rect x="100" y="60" width="500" height="70" rx="10" fill="#E6F7FF" stroke="#333" stroke-width="2"/>
+  <text x="130" y="90" font-size="16" font-weight="bold">1. 模式匹配优先于事实检验</text>
+  <text x="130" y="115" font-size="14">模型追求的是文本的连贯性和流畅性，而非事实准确性</text>
+  
+  <!-- 原因2：训练数据限制 -->
+  <rect x="100" y="150" width="500" height="70" rx="10" fill="#FFF2E8" stroke="#333" stroke-width="2"/>
+  <text x="130" y="180" font-size="16" font-weight="bold">2. 训练数据的局限性</text>
+  <text x="130" y="205" font-size="14">数据可能过时、错误、不完整或包含偏见</text>
+  
+  <!-- 原因3：知识不确定性 -->
+  <rect x="100" y="240" width="500" height="70" rx="10" fill="#F9F5FF" stroke="#333" stroke-width="2"/>
+  <text x="130" y="270" font-size="16" font-weight="bold">3. 知识的不确定性处理</text>
+  <text x="130" y="295" font-size="14">模型倾向于给出完整答案，缺乏"不确定"或"我不知道"的有效表达</text>
+</svg>
+
+
+<p>让我们深入了解这些原因：</p>
+<h3 id="1-模式匹配优先于事实检验"><a href="#1-模式匹配优先于事实检验" class="headerlink" title="1. 模式匹配优先于事实检验"></a>1. 模式匹配优先于事实检验</h3><p>大语言模型是通过预测下一个最可能的词来工作的，它们寻找的是<strong>文本的连贯性</strong>，而不是事实的准确性。当面临不确定性时，模型会选择”听起来对”的答案，而不是说”我不确定”。</p>
+<h3 id="2-训练数据的局限性"><a href="#2-训练数据的局限性" class="headerlink" title="2. 训练数据的局限性"></a>2. 训练数据的局限性</h3><p>模型只能基于它所学习的数据进行预测。这意味着：</p>
+<ul>
+<li>如果数据中包含错误信息，模型可能会复制这些错误</li>
+<li>如果数据过时，模型无法了解最新事实</li>
+<li>如果某些领域的数据稀少，模型在这些领域的预测会更不可靠</li>
+</ul>
+<h3 id="3-知识的不确定性处理"><a href="#3-知识的不确定性处理" class="headerlink" title="3. 知识的不确定性处理"></a>3. 知识的不确定性处理</h3><p>与人类不同，模型缺乏明确的”不知道”表达机制。当面对未知或不确定的问题时，它们依然会生成看似合理的回答，而不是承认知识边界。</p>
+<h2 id="四、幻觉的常见表现形式"><a href="#四、幻觉的常见表现形式" class="headerlink" title="四、幻觉的常见表现形式"></a>四、幻觉的常见表现形式</h2><svg width="700" height="300" viewBox="0 0 700 300">
+  <!-- 标题 -->
+  <text x="350" y="30" text-anchor="middle" font-size="18" font-weight="bold">幻觉的常见表现形式</text>
+  
+  <!-- 表现1 -->
+  <circle cx="120" cy="70" r="15" fill="#FFD0D0" stroke="#333" stroke-width="2"/>
+  <text x="150" y="75" font-size="16" font-weight="bold">编造不存在的事实、引用或人物</text>
+  
+  <!-- 表现2 -->
+  <circle cx="120" cy="120" r="15" fill="#D0FFD0" stroke="#333" stroke-width="2"/>
+  <text x="150" y="125" font-size="16" font-weight="bold">知识缺口填充</text>
+  <text x="170" y="145" font-size="14">在信息不足时过度自信地进行推测</text>
+  
+  <!-- 表现3 -->
+  <circle cx="120" cy="180" r="15" fill="#D0D0FF" stroke="#333" stroke-width="2"/>
+  <text x="150" y="185" font-size="16" font-weight="bold">错误地混合不同信息源</text>
+  <text x="170" y="205" font-size="14">将不相关的信息错误地组合在一起</text>
+  
+  <!-- 表现4 -->
+  <circle cx="120" cy="240" r="15" fill="#FFFFD0" stroke="#333" stroke-width="2"/>
+  <text x="150" y="245" font-size="16" font-weight="bold">把概率性判断当作确定性事实</text>
+  <text x="170" y="265" font-size="14">用绝对的语气陈述实际上具有不确定性的信息</text>
+</svg>
+
+<h3 id="1-编造不存在的信息"><a href="#1-编造不存在的信息" class="headerlink" title="1. 编造不存在的信息"></a>1. 编造不存在的信息</h3><p>这是最常见的幻觉形式，模型可能会：</p>
+<ul>
+<li>引用不存在的研究论文或书籍</li>
+<li>捏造不存在的人物、事件或地点</li>
+<li>创造虚假的统计数据或事实</li>
+</ul>
+<h3 id="2-知识缺口填充"><a href="#2-知识缺口填充" class="headerlink" title="2. 知识缺口填充"></a>2. 知识缺口填充</h3><p>当模型缺乏某个领域的知识时，它不会简单地说”我不知道”，而是会尝试根据上下文和相关知识”合理猜测”。这种猜测往往看起来很有说服力，但实际上可能是错误的。</p>
+<h3 id="3-信息混合错误"><a href="#3-信息混合错误" class="headerlink" title="3. 信息混合错误"></a>3. 信息混合错误</h3><p>模型可能会将不同来源的信息错误地混合在一起，例如：</p>
+<ul>
+<li>混淆不同人物的生平事迹</li>
+<li>将一个领域的概念错误地应用到另一个领域</li>
+<li>混合不同时期或地区的信息</li>
+</ul>
+<h3 id="4-过度自信的不确定性表达"><a href="#4-过度自信的不确定性表达" class="headerlink" title="4. 过度自信的不确定性表达"></a>4. 过度自信的不确定性表达</h3><p>模型通常会用确定的语气表达实际上具有高度不确定性的信息，缺乏适当的限定词或概率表述。</p>
+<h2 id="五、如何减少和应对幻觉？"><a href="#五、如何减少和应对幻觉？" class="headerlink" title="五、如何减少和应对幻觉？"></a>五、如何减少和应对幻觉？</h2><svg width="700" height="400" viewBox="0 0 700 400">
+  <!-- 标题 -->
+  <text x="350" y="30" text-anchor="middle" font-size="18" font-weight="bold">减少和应对幻觉的策略</text>
+  <!-- 用户层面 -->
+  <text x="130" y="60" font-size="16" font-weight="bold">用户层面:</text>
+  <!-- 方法1 -->
+  <rect x="100" y="80" width="500" height="50" rx="10" fill="#E6FFFA" stroke="#38B2AC" stroke-width="2"/>
+  <text x="350" y="110" text-anchor="middle" font-size="16">提供明确的上下文和指令，限定回答范围</text>
+  <!-- 方法2 -->
+  <rect x="100" y="150" width="500" height="50" rx="10" fill="#EBF8FF" stroke="#4299E1" stroke-width="2"/>
+  <text x="350" y="180" text-anchor="middle" font-size="16">要求模型说明信息来源或置信度</text>
+  <!-- 方法3 -->
+  <rect x="100" y="220" width="500" height="50" rx="10" fill="#F0FFF4" stroke="#48BB78" stroke-width="2"/>
+  <text x="350" y="250" text-anchor="middle" font-size="16">使用多种来源验证重要信息</text>
+  <!-- 技术层面 -->
+  <text x="130" y="290" font-size="16" font-weight="bold">技术层面:</text>
+  <!-- 方法4 -->
+  <rect x="100" y="310" width="500" height="50" rx="10" fill="#FFFAF0" stroke="#DD6B20" stroke-width="2"/>
+  <text x="350" y="340" text-anchor="middle" font-size="16">知识检索增强、事实核查和不确定性表达</text>
+</svg>
+
+
+<h3 id="用户层面的策略"><a href="#用户层面的策略" class="headerlink" title="用户层面的策略"></a>用户层面的策略</h3><ol>
+<li><p><strong>提供明确的上下文和限制</strong></p>
+<ul>
+<li>具体指定你需要的信息范围和类型</li>
+<li>明确告诉模型在不确定时应当如何回应</li>
+<li>例如：”仅基于以下文档回答问题，如果文档中没有相关信息，请直接说’我不知道’”</li>
+</ul>
+</li>
+<li><p><strong>要求说明信息来源</strong></p>
+<ul>
+<li>询问模型的回答基于什么信息</li>
+<li>要求模型标明确定性程度</li>
+<li>例如：”请在回答中标注你对每个陈述的确定程度”</li>
+</ul>
+</li>
+<li><p><strong>交叉验证关键信息</strong></p>
+<ul>
+<li>将重要信息通过其他来源验证</li>
+<li>对于关键决策，将AI作为辅助工具而非唯一依据</li>
+<li>保持批判性思考，尤其是对于意外或非常规的回答</li>
+</ul>
+</li>
+</ol>
+<h3 id="技术层面的改进"><a href="#技术层面的改进" class="headerlink" title="技术层面的改进"></a>技术层面的改进</h3><p>目前研究者正在开发多种技术来减少幻觉：</p>
+<ul>
+<li><strong>知识检索增强</strong>：模型可以实时查询外部知识库</li>
+<li><strong>事实核查机制</strong>：开发自动验证生成内容的工具</li>
+<li><strong>不确定性表达</strong>：训练模型更好地表达知识的不确定性</li>
+</ul>
+<h2 id="六、结论与思考"><a href="#六、结论与思考" class="headerlink" title="六、结论与思考"></a>六、结论与思考</h2><svg width="700" height="200" viewBox="0 0 700 200">
+  <!-- 总结框 -->
+  <rect x="100" y="30" width="500" height="140" rx="15" fill="#FFFAF0" stroke="#DD6B20" stroke-width="3" stroke-dasharray="5,5"/>
+  <!-- 文本 -->
+  <text x="350" y="70" text-anchor="middle" font-size="18" font-weight="bold">大语言模型的幻觉是什么？</text>
+  <text x="350" y="110" text-anchor="middle" font-size="16">模式匹配与事实之间的差距</text>
+  <text x="350" y="140" text-anchor="middle" font-size="16">不是模型的缺陷，而是其工作原理的必然结果</text>
+</svg>
+
+
+<p>理解大语言模型的幻觉本质，对于我们正确使用这些强大工具至关重要。幻觉不是模型的缺陷，而是其工作原理的必然结果——它们是模式匹配器，不是知识数据库。</p>
+<p>当我们使用大语言模型时，应当：</p>
+<ul>
+<li>将它们视为创意助手和思考工具，而非事实的权威来源</li>
+<li>理解它们的局限性，同时发挥它们的优势</li>
+<li>保持批判性思考，不盲目信任AI生成的内容</li>
+<li>对于重要决策，交叉验证关键信息</li>
+</ul>
+<p>随着技术的发展，幻觉问题可能会得到缓解，但完全消除可能是不现实的。作为用户，了解这些系统的工作原理，才能更好地发挥它们的价值，同时避免潜在风险。</p>
+<hr>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/" class="category-chain-item">人工智能</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/AI/" class="print-no-link">#AI</a>
+      
+        <a href="/tags/%E5%A4%A7%E8%AF%AD%E8%A8%80%E6%A8%A1%E5%9E%8B/" class="print-no-link">#大语言模型</a>
+      
+        <a href="/tags/LLM/" class="print-no-link">#LLM</a>
+      
+        <a href="/tags/%E5%B9%BB%E8%A7%89/" class="print-no-link">#幻觉</a>
+      
+        <a href="/tags/%E6%8A%80%E6%9C%AF%E8%A7%A3%E6%9E%90/" class="print-no-link">#技术解析</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>大语言模型的幻觉</div>
+      <div>http://xcq.ink/2023/08/27/大语言模型的幻觉/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Xander Xu</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年8月27日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2024/04/26/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%9A%84%E6%80%9D%E8%80%83/" title="强化学习的思考">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">强化学习的思考</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/06/20/%E5%8F%8D%E5%90%91%E4%BC%A0%E6%92%ADBackpropagation/" title="反向传播">
+                        <span class="hidden-mobile">反向传播</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+  <div class="disqus" style="width:100%">
+    <div id="disqus_thread"></div>
+    
+      <script type="text/javascript">
+        var disqus_config = function() {
+          this.page.url = 'http://xcq.ink/2023/08/27/%E5%A4%A7%E8%AF%AD%E8%A8%80%E6%A8%A1%E5%9E%8B%E7%9A%84%E5%B9%BB%E8%A7%89/';
+          this.page.identifier = '/2023/08/27/%E5%A4%A7%E8%AF%AD%E8%A8%80%E6%A8%A1%E5%9E%8B%E7%9A%84%E5%B9%BB%E8%A7%89/';
+        };
+        Fluid.utils.loadComments('#disqus_thread', function() {
+          var d = document, s = d.createElement('script');
+          s.src = '//' + 'fluid' + '.disqus.com/embed.js';
+          s.setAttribute('data-timestamp', new Date());
+          (d.head || d.body).appendChild(s);
+        });
+      </script>
+    
+    <noscript>Please enable JavaScript to view the comments</noscript>
+  </div>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+
+  
+
+</div>
+
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
