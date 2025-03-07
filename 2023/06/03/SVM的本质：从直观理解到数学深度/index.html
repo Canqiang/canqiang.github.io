@@ -19,15 +19,15 @@
   <meta name="author" content="Xander Xu">
   <meta name="keywords" content="">
   
-    <meta name="description" content="SVM的本质从直观理解到数学深度  1. 基础：分类问题与决策边界                          x₁     x₂                                                                                非线性决策边界               线性决策边界  图1：分类问题中的线性与非线性决策边界">
+    <meta name="description" content="SVM的本质从直观理解到数学深度  1. 基础：分类问题与决策边界                         x₁     x₂">
 <meta property="og:type" content="article">
 <meta property="og:title" content="SVM的本质：从直观理解到数学深度">
 <meta property="og:url" content="http://xcq.ink/2023/06/03/SVM%E7%9A%84%E6%9C%AC%E8%B4%A8%EF%BC%9A%E4%BB%8E%E7%9B%B4%E8%A7%82%E7%90%86%E8%A7%A3%E5%88%B0%E6%95%B0%E5%AD%A6%E6%B7%B1%E5%BA%A6/index.html">
 <meta property="og:site_name" content="人菜瘾大的小强">
-<meta property="og:description" content="SVM的本质从直观理解到数学深度  1. 基础：分类问题与决策边界                          x₁     x₂                                                                                非线性决策边界               线性决策边界  图1：分类问题中的线性与非线性决策边界">
+<meta property="og:description" content="SVM的本质从直观理解到数学深度  1. 基础：分类问题与决策边界                         x₁     x₂">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-06-03T10:00:00.000Z">
-<meta property="article:modified_time" content="2025-03-07T01:51:59.625Z">
+<meta property="article:modified_time" content="2025-03-07T02:03:17.569Z">
 <meta property="article:author" content="Xander Xu">
 <meta property="article:tag" content="SVM">
 <meta property="article:tag" content="支持向量机">
@@ -307,36 +307,53 @@
                 
                 <h1 id="SVM的本质"><a href="#SVM的本质" class="headerlink" title="SVM的本质"></a>SVM的本质</h1><p style="text-align:center; font-size:1.2em; color:#666; margin-top:0; margin-bottom:2em;">从直观理解到数学深度</p>
 
-<h2 id="1-基础：分类问题与决策边界"><a href="#1-基础：分类问题与决策边界" class="headerlink" title="1. 基础：分类问题与决策边界"></a>1. 基础：分类问题与决策边界</h2><div style="text-align:center; margin:2em 0;">
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 300" width="500" height="300">
+<h2 id="1-基础：分类问题与决策边界"><a href="#1-基础：分类问题与决策边界" class="headerlink" title="1. 基础：分类问题与决策边界"></a>1. 基础：分类问题与决策边界</h2><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 300" width="500" height="300">
     <!-- 坐标轴 -->
     <line x1="50" y1="250" x2="450" y2="250" stroke="#999" stroke-width="2"/>
     <line x1="50" y1="50" x2="50" y2="250" stroke="#999" stroke-width="2"/>
     <!-- 坐标轴标注 -->
     <text x="470" y="250" font-family="Arial, sans-serif" font-size="14" fill="#999">x₁</text>
     <text x="50" y="30" font-family="Arial, sans-serif" font-size="14" fill="#999">x₂</text>
-    <!-- 数据点：两类 -->
-    <!-- 蓝色圆点（一类） -->
-    <circle cx="120" cy="150" r="8" fill="#4285f4" stroke="#2c5cbd" stroke-width="1.5"/>
-    <circle cx="150" cy="180" r="8" fill="#4285f4" stroke="#2c5cbd" stroke-width="1.5"/>
-    <circle cx="130" cy="120" r="8" fill="#4285f4" stroke="#2c5cbd" stroke-width="1.5"/>
-    <circle cx="160" cy="140" r="8" fill="#4285f4" stroke="#2c5cbd" stroke-width="1.5"/>
-    <circle cx="100" cy="160" r="8" fill="#4285f4" stroke="#2c5cbd" stroke-width="1.5"/>
-    <!-- 橙色方块（另一类） -->
-    <rect x="330" y="150" width="16" height="16" fill="#f4b400" stroke="#cc9a00" stroke-width="1.5"/>
-    <rect x="360" y="120" width="16" height="16" fill="#f4b400" stroke="#cc9a00" stroke-width="1.5"/>
-    <rect x="380" y="150" width="16" height="16" fill="#f4b400" stroke="#cc9a00" stroke-width="1.5"/>
-    <rect x="350" y="180" width="16" height="16" fill="#f4b400" stroke="#cc9a00" stroke-width="1.5"/>
-    <rect x="400" y="130" width="16" height="16" fill="#f4b400" stroke="#cc9a00" stroke-width="1.5"/>
-    <!-- 决策边界 -->
-    <path d="M100,80 C180,120 280,150 400,200" stroke="#333" stroke-width="2" fill="none"/>
-    <text x="250" y="70" font-family="Arial, sans-serif" font-size="14" fill="#333">非线性决策边界</text>
-    <!-- 线性分类器 -->
-    <line x1="80" y1="200" x2="420" y2="120" stroke="#e53935" stroke-width="2" stroke-dasharray="5,5"/>
-    <text x="250" y="230" font-family="Arial, sans-serif" font-size="14" fill="#e53935">线性决策边界</text>
+    <!-- 内圈蓝色圆点 -->
+    <circle cx="250" cy="150" r="8" fill="#4285f4" stroke="#2c5cbd" stroke-width="1.5"/>
+    <circle cx="270" cy="170" r="8" fill="#4285f4" stroke="#2c5cbd" stroke-width="1.5"/>
+    <circle cx="230" cy="170" r="8" fill="#4285f4" stroke="#2c5cbd" stroke-width="1.5"/>
+    <circle cx="230" cy="130" r="8" fill="#4285f4" stroke="#2c5cbd" stroke-width="1.5"/>
+    <circle cx="270" cy="130" r="8" fill="#4285f4" stroke="#2c5cbd" stroke-width="1.5"/>
+    <circle cx="250" cy="120" r="8" fill="#4285f4" stroke="#2c5cbd" stroke-width="1.5"/>
+    <circle cx="250" cy="180" r="8" fill="#4285f4" stroke="#2c5cbd" stroke-width="1.5"/>
+    <circle cx="290" cy="150" r="8" fill="#4285f4" stroke="#2c5cbd" stroke-width="1.5"/>
+    <circle cx="210" cy="150" r="8" fill="#4285f4" stroke="#2c5cbd" stroke-width="1.5"/>
+    <!-- 外圈橙色方块 -->
+    <rect x="150" y="70" width="16" height="16" fill="#f4b400" stroke="#cc9a00" stroke-width="1.5"/>
+    <rect x="180" y="60" width="16" height="16" fill="#f4b400" stroke="#cc9a00" stroke-width="1.5"/>
+    <rect x="220" y="60" width="16" height="16" fill="#f4b400" stroke="#cc9a00" stroke-width="1.5"/>
+    <rect x="260" y="60" width="16" height="16" fill="#f4b400" stroke="#cc9a00" stroke-width="1.5"/>
+    <rect x="300" y="60" width="16" height="16" fill="#f4b400" stroke="#cc9a00" stroke-width="1.5"/>
+    <rect x="340" y="70" width="16" height="16" fill="#f4b400" stroke="#cc9a00" stroke-width="1.5"/>
+    <rect x="370" y="90" width="16" height="16" fill="#f4b400" stroke="#cc9a00" stroke-width="1.5"/>
+    <rect x="390" y="120" width="16" height="16" fill="#f4b400" stroke="#cc9a00" stroke-width="1.5"/>
+    <rect x="390" y="160" width="16" height="16" fill="#f4b400" stroke="#cc9a00" stroke-width="1.5"/>
+    <rect x="370" y="190" width="16" height="16" fill="#f4b400" stroke="#cc9a00" stroke-width="1.5"/>
+    <rect x="340" y="210" width="16" height="16" fill="#f4b400" stroke="#cc9a00" stroke-width="1.5"/>
+    <rect x="300" y="220" width="16" height="16" fill="#f4b400" stroke="#cc9a00" stroke-width="1.5"/>
+    <rect x="260" y="220" width="16" height="16" fill="#f4b400" stroke="#cc9a00" stroke-width="1.5"/>
+    <rect x="220" y="220" width="16" height="16" fill="#f4b400" stroke="#cc9a00" stroke-width="1.5"/>
+    <rect x="180" y="220" width="16" height="16" fill="#f4b400" stroke="#cc9a00" stroke-width="1.5"/>
+    <rect x="150" y="210" width="16" height="16" fill="#f4b400" stroke="#cc9a00" stroke-width="1.5"/>
+    <rect x="120" y="190" width="16" height="16" fill="#f4b400" stroke="#cc9a00" stroke-width="1.5"/>
+    <rect x="100" y="160" width="16" height="16" fill="#f4b400" stroke="#cc9a00" stroke-width="1.5"/>
+    <rect x="100" y="120" width="16" height="16" fill="#f4b400" stroke="#cc9a00" stroke-width="1.5"/>
+    <rect x="120" y="90" width="16" height="16" fill="#f4b400" stroke="#cc9a00" stroke-width="1.5"/>
+    <!-- 非线性决策边界 - 环形 -->
+    <circle cx="250" cy="150" r="75" fill="none" stroke="#333" stroke-width="2.5"/>
+    <text x="250" y="40" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" fill="#333">非线性决策边界</text>
+    <!-- 尝试的线性决策边界 (多条，表明无法线性分隔) -->
+    <line x1="100" y1="140" x2="400" y2="140" stroke="#e53935" stroke-width="2" stroke-dasharray="5,5"/>
+    <line x1="150" y1="80" x2="350" y2="220" stroke="#e53935" stroke-width="2" stroke-dasharray="5,5"/>
+    <line x1="350" y1="80" x2="150" y2="220" stroke="#e53935" stroke-width="2" stroke-dasharray="5,5"/>
+    <text x="250" y="270" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" fill="#e53935">任何线性决策边界都无法有效分离</text>
 </svg>
-<p style="font-size:0.9em; color:#666; text-align:center; margin-top:0.5em;">图1：分类问题中的线性与非线性决策边界</p>
-</div>
 
 <p>当我们面对分类问题时，本质上是在寻找一个决策边界，将不同类别的数据分隔开。对于复杂的数据集，往往需要非线性的决策边界（图中黑色曲线）。然而，这些复杂边界往往难以数学表达，且容易导致过拟合。</p>
 <p>SVM（支持向量机）提出了一个优雅的解决方案：</p>
@@ -380,7 +397,7 @@
 <p>这导致了线性SVM的原始优化问题：</p>
 <p>$$\min \frac{1}{2}||w||^2$$<br>$$\text{约束条件：} y_i(w \cdot x_i + b) \geq 1, \text{ 对所有样本 } i$$</p>
 <h3 id="支持向量的精确定义"><a href="#支持向量的精确定义" class="headerlink" title="支持向量的精确定义"></a>支持向量的精确定义</h3><p>支持向量是那些恰好满足 $y_i(w \cdot x_i + b) &#x3D; 1$ 的点，它们位于边际超平面上。这些点是唯一决定最优超平面的样本点，移除其他点不会改变解。</p>
-<h2 id="3-拉格朗日对偶与KKT条件"><a href="#3-拉格朗日对偶与KKT条件" class="headerlink" title="3. 拉格朗日对偶与KKT条件"></a>3. 拉格朗日对偶与KKT条件</h2><p>**为什么要使用对偶形式？**有三个主要原因：</p>
+<h2 id="3-拉格朗日对偶与KKT条件"><a href="#3-拉格朗日对偶与KKT条件" class="headerlink" title="3. 拉格朗日对偶与KKT条件"></a>3. 拉格朗日对偶与KKT条件</h2><p><strong>为什么要使用对偶形式？</strong> 有三个主要原因：</p>
 <blockquote>
 <ol>
 <li>对偶问题往往更容易求解</li>
@@ -429,54 +446,87 @@
 <blockquote>
 <p><strong>SVM的稀疏性</strong>：最终模型仅由支持向量定义，其数量通常远少于总样本数，这使得SVM即使在大数据集上也能高效运行。</p>
 </blockquote>
-<h2 id="4-核技巧：处理非线性分类问题的数学原理"><a href="#4-核技巧：处理非线性分类问题的数学原理" class="headerlink" title="4. 核技巧：处理非线性分类问题的数学原理"></a>4. 核技巧：处理非线性分类问题的数学原理</h2><div style="text-align:center; margin:2em 0;">
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 400" width="500" height="400">
-    <!-- 原始特征空间（2D） -->
-    <circle cx="150" cy="150" r="120" fill="none" stroke="#999" stroke-width="1.5"/>
-    <text x="150" y="30" font-family="Arial, sans-serif" font-size="14" fill="#333">原始特征空间 R²</text>
-    <!-- 点在圆周上的分布（非线性可分） -->
-    <circle cx="90" cy="90" r="8" fill="#4285f4" stroke="#2c5cbd" stroke-width="1.5"/>
-    <circle cx="210" cy="90" r="8" fill="#4285f4" stroke="#2c5cbd" stroke-width="1.5"/>
-    <circle cx="90" cy="210" r="8" fill="#4285f4" stroke="#2c5cbd" stroke-width="1.5"/>
-    <circle cx="210" cy="210" r="8" fill="#4285f4" stroke="#2c5cbd" stroke-width="1.5"/>
-    <rect x="150" cy="90" width="16" height="16" fill="#f4b400" stroke="#cc9a00" stroke-width="1.5"/>
-    <rect x="90" cy="150" width="16" height="16" fill="#f4b400" stroke="#cc9a00" stroke-width="1.5"/>
-    <rect x="210" cy="150" width="16" height="16" fill="#f4b400" stroke="#cc9a00" stroke-width="1.5"/>
-    <rect x="150" cy="210" width="16" height="16" fill="#f4b400" stroke="#cc9a00" stroke-width="1.5"/>
-    <!-- 非线性边界 -->
-    <circle cx="150" cy="150" r="80" fill="none" stroke="#333" stroke-width="2" stroke-dasharray="5,5"/>
-    <!-- 映射箭头 -->
-    <path d="M270,150 L330,150" stroke="#333" stroke-width="2" fill="none" marker-end="url(#arrow1)"/>
-    <text x="300" y="135" font-family="Arial, sans-serif" font-size="14" fill="#333">Φ: R² → R³</text>
-    <text x="300" y="165" font-family="Arial, sans-serif" font-size="12" fill="#666">(x₁, x₂) → (x₁², x₂², √2x₁x₂)</text>
-    <!-- 目标特征空间（3D - 在2D上模拟） -->
-    <ellipse cx="400" cy="150" rx="100" ry="80" fill="none" stroke="#999" stroke-width="1.5"/>
-    <text x="400" y="50" font-family="Arial, sans-serif" font-size="14" fill="#333">高维特征空间 R³</text>
-    <!-- 映射后的点（线性可分）- 简化的2D表示 -->
-    <circle cx="350" cy="100" r="6" fill="#4285f4" stroke="#2c5cbd" stroke-width="1.5"/>
-    <circle cx="450" cy="100" r="6" fill="#4285f4" stroke="#2c5cbd" stroke-width="1.5"/>
-    <circle cx="350" cy="200" r="6" fill="#4285f4" stroke="#2c5cbd" stroke-width="1.5"/>
-    <circle cx="450" cy="200" r="6" fill="#4285f4" stroke="#2c5cbd" stroke-width="1.5"/>
-    <rect x="350" cy="150" width="12" height="12" fill="#f4b400" stroke="#cc9a00" stroke-width="1.5"/>
-    <rect x="400" cy="120" width="12" height="12" fill="#f4b400" stroke="#cc9a00" stroke-width="1.5"/>
-    <rect x="400" cy="180" width="12" height="12" fill="#f4b400" stroke="#cc9a00" stroke-width="1.5"/>
-    <rect x="450" cy="150" width="12" height="12" fill="#f4b400" stroke="#cc9a00" stroke-width="1.5"/>
-    <!-- 线性分隔平面的表示 -->
-    <line x1="320" y1="150" x2="480" y2="150" stroke="#333" stroke-width="3"/>
-    <!-- 核函数解释 -->
-    <rect x="150" y="300" width="300" height="70" rx="5" fill="#f0f7ff" stroke="#4285f4" stroke-width="1"/>
-    <text x="160" y="320" font-family="Arial, sans-serif" font-size="14" fill="#333">核函数的本质:</text>
-    <text x="160" y="345" font-family="Arial, sans-serif" font-size="14" fill="#333">K(x, z) = Φ(x)·Φ(z)</text>
-    <text x="160" y="365" font-family="Times New Roman, serif" font-size="14" fill="#666">无需显式计算高维坐标，直接计算内积</text>
+<h2 id="4-核技巧：处理非线性分类问题的数学原理"><a href="#4-核技巧：处理非线性分类问题的数学原理" class="headerlink" title="4. 核技巧：处理非线性分类问题的数学原理"></a>4. 核技巧：处理非线性分类问题的数学原理</h2><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400" width="600" height="400">
+    <!-- 左侧：原始空间（二维）-->
+    <g transform="translate(0,0)">
+        <!-- 背景和标题 -->
+        <rect x="20" y="20" width="240" height="240" fill="#f8f8f8" stroke="#ddd" stroke-width="1"/>
+        <text x="140" y="40" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" font-weight="bold" fill="#333">原始特征空间 (二维)</text>
+        <!-- 坐标轴 -->
+        <line x1="40" y1="220" x2="220" y2="220" stroke="#999" stroke-width="1.5"/>
+        <line x1="40" y1="220" x2="40" y2="40" stroke="#999" stroke-width="1.5"/>
+        <text x="230" y="220" font-family="Arial, sans-serif" font-size="12" fill="#999">x₁</text>
+        <text x="40" y="30" font-family="Arial, sans-serif" font-size="12" fill="#999">x₂</text>
+        <!-- XOR数据分布 -->
+        <!-- 第一类：左上和右下 -->
+        <circle cx="70" cy="70" r="8" fill="#4285f4" stroke="#2c5cbd" stroke-width="1.5"/>
+        <circle cx="80" cy="90" r="8" fill="#4285f4" stroke="#2c5cbd" stroke-width="1.5"/>
+        <circle cx="90" cy="70" r="8" fill="#4285f4" stroke="#2c5cbd" stroke-width="1.5"/>
+        <circle cx="170" cy="170" r="8" fill="#4285f4" stroke="#2c5cbd" stroke-width="1.5"/>
+        <circle cx="190" cy="190" r="8" fill="#4285f4" stroke="#2c5cbd" stroke-width="1.5"/>
+        <circle cx="170" cy="190" r="8" fill="#4285f4" stroke="#2c5cbd" stroke-width="1.5"/>
+        <!-- 第二类：右上和左下 -->
+        <rect x="170" y="60" width="16" height="16" fill="#f4b400" stroke="#cc9a00" stroke-width="1.5"/>
+        <rect x="190" y="80" width="16" height="16" fill="#f4b400" stroke="#cc9a00" stroke-width="1.5"/>
+        <rect x="170" y="80" width="16" height="16" fill="#f4b400" stroke="#cc9a00" stroke-width="1.5"/>
+        <rect x="70" y="170" width="16" height="16" fill="#f4b400" stroke="#cc9a00" stroke-width="1.5"/>
+        <rect x="70" y="190" width="16" height="16" fill="#f4b400" stroke="#cc9a00" stroke-width="1.5"/>
+        <rect x="90" y="190" width="16" height="16" fill="#f4b400" stroke="#cc9a00" stroke-width="1.5"/>
+        <!-- 失败的线性分类器尝试 -->
+        <line x1="40" y1="40" x2="220" y2="220" stroke="#e53935" stroke-width="2" stroke-dasharray="5,5"/>
+        <text x="140" y="140" font-family="Arial, sans-serif" font-size="12" fill="#e53935" font-style="italic">无法线性分隔</text>
+    </g>
+    <!-- 中间：映射函数 -->
+    <g transform="translate(240,0)">
+        <rect x="30" y="100" width="80" height="80" fill="#e8f5e9" stroke="#81c784" stroke-width="1"/>
+        <text x="70" y="140" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" font-weight="bold" fill="#2e7d32">映射函数 Φ</text>
+        <path d="M120,140 L150,140" stroke="#333" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+        <!-- 映射函数的数学表达式 -->
+        <text x="70" y="165" font-family="Times New Roman, serif" font-size="12" text-anchor="middle" fill="#333">Φ: ℝ² → ℝ³</text>
+        <text x="70" y="185" font-family="Times New Roman, serif" font-size="12" text-anchor="middle" fill="#333">(x₁,x₂) → (x₁²,√2x₁x₂,x₂²)</text>
+    </g>
+    <!-- 右侧：特征空间（三维）-->
+    <g transform="translate(330,0)">
+        <!-- 背景和标题 -->
+        <rect x="20" y="20" width="240" height="240" fill="#f8f8f8" stroke="#ddd" stroke-width="1"/>
+        <text x="140" y="40" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" font-weight="bold" fill="#333">高维特征空间 (三维)</text>
+        <!-- 简化的3D坐标系 -->
+        <line x1="70" y1="190" x2="220" y2="190" stroke="#999" stroke-width="1.5"/>
+        <line x1="70" y1="190" x2="40" y2="150" stroke="#999" stroke-width="1.5"/>
+        <line x1="70" y1="190" x2="70" y2="40" stroke="#999" stroke-width="1.5"/>
+        <text x="230" y="190" font-family="Arial, sans-serif" font-size="12" fill="#999">z₁=x₁²</text>
+        <text x="30" y="140" font-family="Arial, sans-serif" font-size="12" fill="#999">z₂=√2x₁x₂</text>
+        <text x="70" y="30" font-family="Arial, sans-serif" font-size="12" fill="#999">z₃=x₂²</text>
+        <!-- 映射后的数据点 - 第一类 (蓝色) 都映射到上方 -->
+        <circle cx="100" cy="80" r="6" fill="#4285f4" stroke="#2c5cbd" stroke-width="1.5"/>
+        <circle cx="120" cy="90" r="6" fill="#4285f4" stroke="#2c5cbd" stroke-width="1.5"/>
+        <circle cx="90" cy="70" r="6" fill="#4285f4" stroke="#2c5cbd" stroke-width="1.5"/>
+        <circle cx="160" cy="80" r="6" fill="#4285f4" stroke="#2c5cbd" stroke-width="1.5"/>
+        <circle cx="140" cy="90" r="6" fill="#4285f4" stroke="#2c5cbd" stroke-width="1.5"/>
+        <circle cx="170" cy="70" r="6" fill="#4285f4" stroke="#2c5cbd" stroke-width="1.5"/>
+        <!-- 映射后的数据点 - 第二类 (橙色) 都映射到下方 -->
+        <rect x="100" y="150" width="12" height="12" fill="#f4b400" stroke="#cc9a00" stroke-width="1.5"/>
+        <rect x="120" y="160" width="12" height="12" fill="#f4b400" stroke="#cc9a00" stroke-width="1.5"/>
+        <rect x="140" y="150" width="12" height="12" fill="#f4b400" stroke="#cc9a00" stroke-width="1.5"/>
+        <rect x="160" y="160" width="12" height="12" fill="#f4b400" stroke="#cc9a00" stroke-width="1.5"/>
+        <rect x="180" y="150" width="12" height="12" fill="#f4b400" stroke="#cc9a00" stroke-width="1.5"/>
+        <rect x="90" y="160" width="12" height="12" fill="#f4b400" stroke="#cc9a00" stroke-width="1.5"/>
+        <!-- 成功的线性分类器 -->
+        <path d="M40,120 L220,120" stroke="#4caf50" stroke-width="2.5"/>
+        <text x="160" y="110" font-family="Arial, sans-serif" font-size="12" fill="#4caf50">线性可分!</text>
+    </g>
     <!-- 箭头定义 -->
     <defs>
-        <marker id="arrow1" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+        <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
             <path d="M0,0 L0,6 L9,3 z" fill="#333" />
         </marker>
     </defs>
+    <!-- 核函数解释 -->
+    <rect x="50" y="300" width="500" height="80" rx="8" fill="#e3f2fd" stroke="#64b5f6" stroke-width="1.5"/>
+    <text x="300" y="325" font-family="Arial, sans-serif" font-size="16" text-anchor="middle" font-weight="bold" fill="#1976d2">核函数的魔力</text>
+    <text x="300" y="350" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" fill="#333">K(x,z) = (x·z)² = Φ(x)·Φ(z)</text>
+    <text x="300" y="370" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" fill="#555">无需显式计算高维坐标，即可获得高维空间中的内积！</text>
 </svg>
-<p style="font-size:0.9em; color:#666; text-align:center; margin-top:0.5em;">图4：核技巧 - 在高维空间中实现线性分类</p>
-</div>
 
 <p>当数据在原始空间中非线性可分时，我们引入映射函数 Φ，将数据映射到更高维的特征空间：Φ: x → Φ(x)。在这个新空间中，数据可能变得线性可分。</p>
 <p>在对偶表示中，SVM的决策函数变为：</p>
