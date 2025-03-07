@@ -78,13 +78,13 @@
     
     <tags>
       
+      <tag>人工智能</tag>
+      
       <tag>Agent</tag>
       
       <tag>智能体</tag>
       
       <tag>AI</tag>
-      
-      <tag>人工智能</tag>
       
     </tags>
     
@@ -109,6 +109,8 @@
     
     <tags>
       
+      <tag>LLM</tag>
+      
       <tag>RAG</tag>
       
       <tag>检索增强生成</tag>
@@ -116,8 +118,6 @@
       <tag>AI技术</tag>
       
       <tag>知识库</tag>
-      
-      <tag>LLM</tag>
       
     </tags>
     
@@ -144,9 +144,9 @@
       
       <tag>AI</tag>
       
-      <tag>LLM</tag>
-      
       <tag>大语言模型</tag>
+      
+      <tag>LLM</tag>
       
       <tag>幻觉</tag>
       
@@ -233,13 +233,13 @@
       
       <tag>机器学习</tag>
       
-      <tag>决策树</tag>
-      
-      <tag>集成学习</tag>
-      
       <tag>算法</tag>
       
       <tag>随机森林</tag>
+      
+      <tag>决策树</tag>
+      
+      <tag>集成学习</tag>
       
     </tags>
     
@@ -359,11 +359,11 @@
     
     <tags>
       
-      <tag>XGBoost</tag>
-      
       <tag>决策树</tag>
       
       <tag>集成学习</tag>
+      
+      <tag>XGBoost</tag>
       
       <tag>梯度提升</tag>
       
