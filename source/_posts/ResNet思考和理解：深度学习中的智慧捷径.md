@@ -773,63 +773,215 @@ ResNet的成功启发了许多新的研究方向：
 
 ResNet的成功超越了技术层面，它提供了解决复杂问题的思考框架：
 
-<svg width="600" height="400" viewBox="0 0 600 400">
+<svg width="800" height="600" viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
+  <!-- 定义滤镜和渐变 -->
+  <defs>
+    <!-- 阴影效果 -->
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="4" stdDeviation="4" flood-opacity="0.15"/>
+    </filter>
+    <!-- 轻微发光效果 -->
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="4" result="blur"/>
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
+    <!-- 渐变色定义 -->
+    <linearGradient id="gradientBlue" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#bbdefb"/>
+      <stop offset="100%" stop-color="#1e88e5"/>
+    </linearGradient>
+    <linearGradient id="gradientGreen" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#c8e6c9"/>
+      <stop offset="100%" stop-color="#43a047"/>
+    </linearGradient>
+    <linearGradient id="gradientOrange" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffecb3"/>
+      <stop offset="100%" stop-color="#fb8c00"/>
+    </linearGradient>
+    <linearGradient id="gradientPurple" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#e1bee7"/>
+      <stop offset="100%" stop-color="#7b1fa2"/>
+    </linearGradient>
+    <linearGradient id="gradientCenter" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#d1c4e9"/>
+      <stop offset="100%" stop-color="#5e35b1"/>
+    </linearGradient>
+    <!-- 连线箭头 -->
+    <marker id="arrow" viewBox="0 0 10 10" refX="5" refY="5" 
+            markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#9e9e9e"/>
+    </marker>
+    <!-- 脉冲动画 -->
+    <radialGradient id="pulseGradient" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
+      <stop offset="0%" stop-color="white" stop-opacity="1">
+        <animate attributeName="stop-opacity" values="0.7;0;0.7" dur="3s" repeatCount="indefinite"/>
+      </stop>
+      <stop offset="100%" stop-color="white" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
   <!-- 背景 -->
-  <rect width="600" height="400" fill="#f9f9f9" rx="10" ry="10"/>
-  <!-- 标题 -->
-  <text x="300" y="50" font-size="24" font-weight="bold" text-anchor="middle" fill="#333">
-    ResNet的哲学启示
-  </text>
-  <!-- 左侧思考 -->
-  <g transform="translate(100, 120)">
-    <circle cx="0" cy="0" r="70" fill="#e3f2fd" stroke="#2196F3" stroke-width="2"/>
-    <text x="0" y="-20" font-size="16" font-weight="bold" text-anchor="middle">渐进式改进</text>
-    <text x="0" y="10" font-size="14" text-anchor="middle" width="120">
-      <tspan x="0" dy="0">改变不必推倒重来，</tspan>
-      <tspan x="0" dy="20">可以基于现有基础</tspan>
-      <tspan x="0" dy="20">增量构建</tspan>
+  <rect width="800" height="600" fill="#fafafa" rx="15" ry="15"/>
+  <!-- 标题区域 -->
+  <g transform="translate(400, 70)">
+    <rect x="-300" y="-45" width="600" height="70" rx="10" ry="10" fill="#f5f5f5" filter="url(#shadow)"/>
+    <text x="0" y="0" font-family="Arial, sans-serif" font-size="32" font-weight="bold" text-anchor="middle" fill="#333333">
+      ResNet的哲学启示
+    </text>
+    <text x="0" y="30" font-family="Arial, sans-serif" font-size="16" text-anchor="middle" fill="#757575">
+      深度学习架构设计中的思想精髓
     </text>
   </g>
-  <!-- 右上思考 -->
-  <g transform="translate(400, 150)">
-    <circle cx="0" cy="0" r="70" fill="#e8f5e9" stroke="#4CAF50" stroke-width="2"/>
-    <text x="0" y="-20" font-size="16" font-weight="bold" text-anchor="middle">知识传承</text>
-    <text x="0" y="10" font-size="14" text-anchor="middle" width="120">
-      <tspan x="0" dy="0">新知识建立在已有</tspan>
-      <tspan x="0" dy="20">知识基础上，而非</tspan>
-      <tspan x="0" dy="20">完全替代它</tspan>
-    </text>
+  <!-- 左上思考圈 - 渐进式改进 -->
+  <g transform="translate(180, 200)">
+    <!-- 背景脉冲 -->
+    <circle cx="0" cy="0" r="100" fill="url(#pulseGradient)" filter="url(#glow)">
+      <animate attributeName="r" values="90;95;90" dur="6s" repeatCount="indefinite"/>
+    </circle>
+    <!-- 主圆 -->
+    <circle cx="0" cy="0" r="90" fill="url(#gradientBlue)" filter="url(#shadow)">
+      <animate attributeName="r" values="90;93;90" dur="4s" repeatCount="indefinite"/>
+    </circle>
+    <!-- 文本 -->
+    <text x="0" y="-20" font-family="Arial, sans-serif" font-size="20" font-weight="bold" text-anchor="middle" fill="#1565c0">渐进式改进</text>
+    <g font-family="Arial, sans-serif" font-size="16" text-anchor="middle" fill="#424242">
+      <text x="0" y="0">改变不必推倒重来，</text>
+      <text x="0" y="25">可以基于现有基础</text>
+      <text x="0" y="50">进行增量构建</text>
+    </g>
+    <!-- 图标 -->
+    <g transform="translate(0, -60) scale(0.6)">
+      <rect x="-25" y="-10" width="50" height="20" fill="#1976d2" rx="2" ry="2"/>
+      <rect x="-15" y="-30" width="30" height="20" fill="#42a5f5" rx="2" ry="2"/>
+      <rect x="-20" y="10" width="40" height="20" fill="#0d47a1" rx="2" ry="2"/>
+    </g>
   </g>
-  <!-- 左下思考 -->
-  <g transform="translate(150, 280)">
-    <circle cx="0" cy="0" r="70" fill="#fff3e0" stroke="#FF9800" stroke-width="2"/>
-    <text x="0" y="-20" font-size="16" font-weight="bold" text-anchor="middle">简化复杂性</text>
-    <text x="0" y="10" font-size="14" text-anchor="middle" width="120">
-      <tspan x="0" dy="0">将复杂问题分解为</tspan>
-      <tspan x="0" dy="20">已解决部分与需要</tspan>
-      <tspan x="0" dy="20">关注的残差部分</tspan>
-    </text>
+  <!-- 右上思考圈 - 知识传承 -->
+  <g transform="translate(620, 230)">
+    <!-- 背景脉冲 -->
+    <circle cx="0" cy="0" r="100" fill="url(#pulseGradient)" filter="url(#glow)">
+      <animate attributeName="r" values="90;95;90" dur="6s" repeatCount="indefinite" begin="1s"/>
+    </circle>
+    <!-- 主圆 -->
+    <circle cx="0" cy="0" r="90" fill="url(#gradientGreen)" filter="url(#shadow)">
+      <animate attributeName="r" values="90;93;90" dur="4s" repeatCount="indefinite" begin="1s"/>
+    </circle>
+    <!-- 文本 -->
+    <text x="0" y="-20" font-family="Arial, sans-serif" font-size="20" font-weight="bold" text-anchor="middle" fill="#2e7d32">知识传承</text>
+    <g font-family="Arial, sans-serif" font-size="16" text-anchor="middle" fill="#424242">
+      <text x="0" y="0">新知识建立在已有</text>
+      <text x="0" y="25">知识基础上，而非</text>
+      <text x="0" y="50">完全替代它</text>
+    </g>
+    <!-- 图标 -->
+    <g transform="translate(0, -60) scale(0.6)">
+      <path d="M -20,-10 L 0,-30 L 20,-10 L 20,20 L -20,20 Z" fill="#388e3c"/>
+      <path d="M -10,-5 L 0,-15 L 10,-5 L 10,10 L -10,10 Z" fill="#66bb6a"/>
+    </g>
   </g>
-  <!-- 右下思考 -->
-  <g transform="translate(450, 280)">
-    <circle cx="0" cy="0" r="70" fill="#f3e5f5" stroke="#9C27B0" stroke-width="2"/>
-    <text x="0" y="-20" font-size="16" font-weight="bold" text-anchor="middle">反馈与连接</text>
-    <text x="0" y="10" font-size="14" text-anchor="middle" width="120">
-      <tspan x="0" dy="0">建立直接反馈通道，</tspan>
-      <tspan x="0" dy="20">确保信息在复杂系统</tspan>
-      <tspan x="0" dy="20">中高效流动</tspan>
-    </text>
+  <!-- 左下思考圈 - 简化复杂性 -->
+  <g transform="translate(220, 430)">
+    <!-- 背景脉冲 -->
+    <circle cx="0" cy="0" r="100" fill="url(#pulseGradient)" filter="url(#glow)">
+      <animate attributeName="r" values="90;95;90" dur="6s" repeatCount="indefinite" begin="2s"/>
+    </circle>
+    <!-- 主圆 -->
+    <circle cx="0" cy="0" r="90" fill="url(#gradientOrange)" filter="url(#shadow)">
+      <animate attributeName="r" values="90;93;90" dur="4s" repeatCount="indefinite" begin="2s"/>
+    </circle>
+    <!-- 文本 -->
+    <text x="0" y="-20" font-family="Arial, sans-serif" font-size="20" font-weight="bold" text-anchor="middle" fill="#e65100">简化复杂性</text>
+    <g font-family="Arial, sans-serif" font-size="16" text-anchor="middle" fill="#424242">
+      <text x="0" y="0">将复杂问题分解为</text>
+      <text x="0" y="25">已解决部分与需要</text>
+      <text x="0" y="50">关注的残差部分</text>
+    </g>
+    <!-- 图标 -->
+    <g transform="translate(0, -60) scale(0.6)">
+      <rect x="-30" y="-10" width="60" height="20" fill="#f57c00" rx="2" ry="2"/>
+      <rect x="-20" y="15" width="10" height="10" fill="#ff9800" rx="1" ry="1"/>
+      <rect x="-5" y="15" width="10" height="10" fill="#ff9800" rx="1" ry="1"/>
+      <rect x="10" y="15" width="10" height="10" fill="#ff9800" rx="1" ry="1"/>
+    </g>
   </g>
-  <!-- 连接线 -->
-  <line x1="150" y1="200" x2="350" y2="150" stroke="#666" stroke-width="1" stroke-dasharray="5,3"/>
-  <line x1="150" y1="200" x2="200" y2="280" stroke="#666" stroke-width="1" stroke-dasharray="5,3"/>
-  <line x1="350" y1="150" x2="400" y2="280" stroke="#666" stroke-width="1" stroke-dasharray="5,3"/>
-  <line x1="200" y1="280" x2="400" y2="280" stroke="#666" stroke-width="1" stroke-dasharray="5,3"/>
+  <!-- 右下思考圈 - 反馈与连接 -->
+  <g transform="translate(580, 430)">
+    <!-- 背景脉冲 -->
+    <circle cx="0" cy="0" r="100" fill="url(#pulseGradient)" filter="url(#glow)">
+      <animate attributeName="r" values="90;95;90" dur="6s" repeatCount="indefinite" begin="3s"/>
+    </circle>
+    <!-- 主圆 -->
+    <circle cx="0" cy="0" r="90" fill="url(#gradientPurple)" filter="url(#shadow)">
+      <animate attributeName="r" values="90;93;90" dur="4s" repeatCount="indefinite" begin="3s"/>
+    </circle>
+    <!-- 文本 -->
+    <text x="0" y="-20" font-family="Arial, sans-serif" font-size="20" font-weight="bold" text-anchor="middle" fill="#6a1b9a">反馈与连接</text>
+    <g font-family="Arial, sans-serif" font-size="16" text-anchor="middle" fill="#424242">
+      <text x="0" y="0">建立直接反馈通道，</text>
+      <text x="0" y="25">确保信息在复杂系统</text>
+      <text x="0" y="50">中高效流动</text>
+    </g>
+    <!-- 图标 -->
+    <g transform="translate(0, -60) scale(0.6)">
+      <path d="M -20,0 C -20,-20 20,-20 20,0 S -20,20 -20,0" fill="none" stroke="#7b1fa2" stroke-width="4"/>
+      <path d="M -10,0 L -25,0" stroke="#7b1fa2" stroke-width="4"/>
+      <path d="M 10,0 L 25,0" stroke="#7b1fa2" stroke-width="4"/>
+    </g>
+  </g>
   <!-- 中心思想 -->
-  <g transform="translate(300, 200)">
-    <circle cx="0" cy="0" r="40" fill="#e1bee7" stroke="#673AB7" stroke-width="3"/>
-    <text x="0" y="0" font-size="14" font-weight="bold" text-anchor="middle" fill="#333">思考</text>
-    <text x="0" y="20" font-size="14" font-weight="bold" text-anchor="middle" fill="#333">方式</text>
+  <g transform="translate(400, 320)">
+    <!-- 背景脉冲 -->
+    <circle cx="0" cy="0" r="70" fill="url(#pulseGradient)" filter="url(#glow)">
+      <animate attributeName="r" values="60;65;60" dur="3s" repeatCount="indefinite"/>
+    </circle>
+    <!-- 主圆 -->
+    <circle cx="0" cy="0" r="60" fill="url(#gradientCenter)" filter="url(#shadow)">
+      <animate attributeName="r" values="60;62;60" dur="2s" repeatCount="indefinite"/>
+    </circle>
+    <!-- 文本 -->
+    <text x="0" y="-10" font-family="Arial, sans-serif" font-size="18" font-weight="bold" text-anchor="middle" fill="#ffffff">思考</text>
+    <text x="0" y="15" font-family="Arial, sans-serif" font-size="18" font-weight="bold" text-anchor="middle" fill="#ffffff">方式</text>
+    <!-- 旋转效果 -->
+    <circle cx="0" cy="0" r="55" fill="none" stroke="#7e57c2" stroke-width="2" stroke-dasharray="10,5">
+      <animateTransform attributeName="transform" type="rotate" from="0" to="360" dur="60s" repeatCount="indefinite"/>
+    </circle>
+  </g>
+  <!-- 连接线 - 使用动画和箭头 -->
+  <g stroke="#9e9e9e" stroke-width="1.5" fill="none">
+    <!-- 左上到中心 -->
+    <path d="M 230,250 Q 315,285 370,320" stroke-dasharray="7,3" marker-end="url(#arrow)">
+      <animate attributeName="stroke-dashoffset" from="100" to="0" dur="15s" repeatCount="indefinite"/>
+    </path>
+    <!-- 右上到中心 -->
+    <path d="M 570,280 Q 485,300 430,320" stroke-dasharray="7,3" marker-end="url(#arrow)">
+      <animate attributeName="stroke-dashoffset" from="100" to="0" dur="15s" repeatCount="indefinite"/>
+    </path>
+    <!-- 左下到中心 -->
+    <path d="M 270,380 Q 335,350 370,340" stroke-dasharray="7,3" marker-end="url(#arrow)">
+      <animate attributeName="stroke-dashoffset" from="100" to="0" dur="15s" repeatCount="indefinite"/>
+    </path>
+    <!-- 右下到中心 -->
+    <path d="M 530,380 Q 465,350 430,340" stroke-dasharray="7,3" marker-end="url(#arrow)">
+      <animate attributeName="stroke-dashoffset" from="100" to="0" dur="15s" repeatCount="indefinite"/>
+    </path>
+    <!-- 圆圈间连接 -->
+    <path d="M 230,250 Q 400,200 570,230" stroke-dasharray="7,3">
+      <animate attributeName="stroke-dashoffset" from="200" to="0" dur="20s" repeatCount="indefinite"/>
+    </path>
+    <path d="M 270,380 C 350,500 450,500 530,380" stroke-dasharray="7,3">
+      <animate attributeName="stroke-dashoffset" from="200" to="0" dur="20s" repeatCount="indefinite"/>
+    </path>
+    <path d="M 230,250 C 150,350 180,420 270,380" stroke-dasharray="7,3">
+      <animate attributeName="stroke-dashoffset" from="200" to="0" dur="20s" repeatCount="indefinite"/>
+    </path>
+    <path d="M 570,230 C 650,350 620,420 530,380" stroke-dasharray="7,3">
+      <animate attributeName="stroke-dashoffset" from="200" to="0" dur="20s" repeatCount="indefinite"/>
+    </path>
+  </g>
+  <!-- 底部文字 -->
+  <g transform="translate(400, 560)">
+    <text x="0" y="0" font-family="Arial, sans-serif" font-size="16" text-anchor="middle" fill="#616161">
+      "一切应该尽可能简单，但不能过于简单。" —— 阿尔伯特·爱因斯坦
+    </text>
   </g>
 </svg>
 
