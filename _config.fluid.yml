@@ -138,7 +138,7 @@ web_analytics:  # 网页访问统计
 post:
   math:
     enable: true
-    specific: false
+    specific: true
     engine: mathjax
   comments:
     enable: true
