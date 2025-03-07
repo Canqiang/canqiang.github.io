@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <!-- 背景 -->
+  <rect width="200" height="200" fill="none" />
+  
+  <!-- 主要形状 - 抽象B字形 -->
+  <path d="M60,40 C60,40 60,160 60,160 C60,160 140,160 140,160 C150,160 160,150 160,140 C160,115 130,105 130,105 C130,105 155,95 155,75 C155,55 140,40 120,40 C120,40 60,40 60,40 Z" 
+        fill="none" stroke="#333" stroke-width="8" stroke-linejoin="round" />
+  
+  <!-- 内部横线 - 简化的书页效果 -->
+  <path d="M80,85 L135,85" stroke="#333" stroke-width="8" stroke-linecap="round" />
+  <path d="M80,115 L135,115" stroke="#333" stroke-width="8" stroke-linecap="round" />
+  
+  <!-- 动态元素 - 表示思想和内容流动 -->
+  <circle cx="35" cy="75" r="10" fill="#3498db" />
+  <circle cx="35" cy="125" r="10" fill="#3498db" />
+  <circle cx="170" cy="100" r="15" fill="#3498db" />
+  
+  <!-- 连接线 - 表示思想连接 -->
+  <path d="M45,75 Q60,90 45,100 Q30,110 45,125" fill="none" stroke="#3498db" stroke-width="3" />
+  <path d="M155,75 Q170,85 170,100 Q170,115 155,125" fill="none" stroke="#3498db" stroke-width="3" />
+</svg>
