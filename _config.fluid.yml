@@ -142,7 +142,7 @@ post:
     specific: false
     engine: mathjax
   comments:
-    enable: true
+    enable: false
     type: disqus
 
 disqus:
