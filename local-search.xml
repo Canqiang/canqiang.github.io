@@ -47,13 +47,13 @@
     
     <tags>
       
-      <tag>人工智能</tag>
-      
       <tag>深度学习</tag>
       
-      <tag>强化学习</tag>
+      <tag>人工智能</tag>
       
       <tag>机器学习</tag>
+      
+      <tag>强化学习</tag>
       
     </tags>
     
@@ -78,13 +78,13 @@
     
     <tags>
       
-      <tag>机器学习</tag>
-      
       <tag>神经网络</tag>
       
       <tag>反向传播</tag>
       
       <tag>BP算法</tag>
+      
+      <tag>机器学习</tag>
       
     </tags>
     
