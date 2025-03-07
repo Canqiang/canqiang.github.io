@@ -12,6 +12,7 @@ language: zh-CN
 timezone: ''
 navbar:
   blog_title: 人菜瘾大的小强
+favicon: /img/logo.svg
 
 # URL
 ## Set your site url here. For example, if you use GitHub Page, set url as 'https://username.github.io/project'
@@ -48,7 +49,7 @@ future: true
 syntax_highlighter: highlight.js
 highlight:
   line_number: true
-  auto_detect: false
+  auto_detect: true
   tab_replace: ''
   wrap: true
   hljs: false
@@ -113,8 +114,8 @@ about:
   name: "Xander Xu"
   intro: "在代码的星河与思维的洪流间，寻觅人工智能与人类意识共舞的奇点"
   icons:
-    - { class: 'iconfont icon-github-fill', link: 'https://github.com/Canqiang', tip: 'GitHub' }
-    # - { class: 'iconfont icon-douban-fill', link: 'https://douban.com', tip: '豆瓣' }
+    - { class: 'iconfont icon-zhihu-fill', link: 'https://www.zhihu.com/people/77-23-10-5-56', tip: '知乎' }
+    - { class: 'iconfont icon-mail', link: 'mailto:canqiangxu@yeah.net', tip: 'Mail' }
     - { class: 'iconfont icon-wechat-fill', qrcode: '/img/wechat-qrcode.jpg' }
 
 
@@ -132,8 +133,9 @@ footer:
     uv_format: "总访客数 {} 人"
 
 web_analytics:  # 网页访问统计
-  enable: true # 默认为false，启用网页统计改为true即可
-  baidu: ac2559fe71d82eda0e6372616e40089e # 百度统计的Key，参见 https://tongji.baidu.com/sc-web/10000033910/home/site/getjs?siteId=13751376 代码获取中 hm.js? 后边的字符串
+  baidu:  ac2559fe71d82eda0e6372616e40089e # 百度统计的Key，参见 https://tongji.baidu.com/sc-web/10000033910/home/site/getjs?siteId=13751376 代码获取中 hm.js? 后边的字符串
+  google:  G-ZN6QDY636V
+
 
 post:
   math:
