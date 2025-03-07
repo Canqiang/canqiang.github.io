@@ -133,8 +133,8 @@ footer:
     uv_format: "总访客数 {} 人"
 
 web_analytics:  # 网页访问统计
-  baidu:  ac2559fe71d82eda0e6372616e40089e # 百度统计的Key，参见 https://tongji.baidu.com/sc-web/10000033910/home/site/getjs?siteId=13751376 代码获取中 hm.js? 后边的字符串
-  google:  G-ZN6QDY636V
+  baidu: ac2559fe71d82eda0e6372616e40089e # 百度统计的Key，参见 https://tongji.baidu.com/sc-web/10000033910/home/site/getjs?siteId=13751376 代码获取中 hm.js? 后边的字符串
+  google: G-L228BYNZ7T
 
 
 post:
@@ -148,3 +148,8 @@ post:
 
 disqus:
   shortname: fluid
+
+custom_js:
+custom_css:
+custom_head:
+custom_footer: 
