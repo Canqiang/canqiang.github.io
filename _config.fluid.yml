@@ -115,7 +115,7 @@ about:
   icons:
     - { class: 'iconfont icon-zhihu-fill', link: 'https://www.zhihu.com/people/77-23-10-5-56', tip: '知乎' }
     - { class: 'iconfont icon-mail', link: 'mailto:canqiangxu@yeah.net', tip: 'Mail' }
-    - { class: 'iconfont icon-wechat-fill', qrcode: '/img/wechat-qrcode.jpg' }
+    - { class: 'iconfont icon-wechat-fill', qrcode: '/img/qrcode_for_gh_a9393a204e88_430.jpg' }
 
 
 index:
