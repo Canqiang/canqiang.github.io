@@ -27,10 +27,10 @@
 <meta property="og:description" content="在深度学习的发展历程中，有一些关键的架构突破推动了整个领域的飞跃。残差网络（ResNet）无疑是其中最具影响力的创新之一。本文将从本质出发，深入浅出地探索ResNet的核心思想、技术细节和哲学意义。">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-10-25T09:53:04.000Z">
-<meta property="article:modified_time" content="2025-03-07T10:20:52.181Z">
+<meta property="article:modified_time" content="2025-03-10T00:47:28.781Z">
 <meta property="article:author" content="Xander Xu">
-<meta property="article:tag" content="深度学习">
 <meta property="article:tag" content="ResNet">
+<meta property="article:tag" content="深度学习">
 <meta property="article:tag" content="神经网络">
 <meta property="article:tag" content="残差网络">
 <meta name="twitter:card" content="summary_large_image">
@@ -281,7 +281,8 @@
             
               <div class="markdown-body">
                 
-                <h2 id="1-深度网络的悖论"><a href="#1-深度网络的悖论" class="headerlink" title="1. 深度网络的悖论"></a>1. 深度网络的悖论</h2><p>神经网络的强大之处在于其层级结构能够逐层提取特征，理论上讲，网络越深，提取的特征应该越抽象，表达能力应该越强。然而，实践中研究人员发现了一个令人困惑的现象：</p>
+                <h2 id="1-深度网络的悖论"><a class="markdownIt-Anchor" href="#1-深度网络的悖论"></a> 1. 深度网络的悖论</h2>
+<p>神经网络的强大之处在于其层级结构能够逐层提取特征，理论上讲，网络越深，提取的特征应该越抽象，表达能力应该越强。然而，实践中研究人员发现了一个令人困惑的现象：</p>
 <blockquote>
 <p>当网络深度增加到一定程度后，性能不升反降。</p>
 </blockquote>
@@ -422,9 +423,8 @@
     <text x="500" y="111" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#2196F3">优势点</text>
   </g>
 </svg>
-
-
-<p>退化问题的根源在于两个主要挑战：<br><strong>梯度消失&#x2F;爆炸问题</strong></p>
+<p>退化问题的根源在于两个主要挑战：<br />
+<strong>梯度消失/爆炸问题</strong></p>
 <p>在反向传播过程中，梯度需要从输出层传回到输入层。在深层网络中，由于连续的矩阵乘法，梯度会呈指数级衰减或增长：</p>
 <ul>
 <li><strong>梯度消失</strong>：当网络深度增加，浅层网络的梯度变得极小，几乎为零，导致这些层停止学习。</li>
@@ -432,13 +432,17 @@
 </ul>
 <p>虽然批量归一化(Batch Normalization)等技术可以在一定程度上缓解这些问题，但并不能从根本上解决深层网络的退化问题。</p>
 <p><strong>恒等映射难以学习</strong></p>
-<p>何恺明等人提出了一个关键洞察：如果深层网络难以超越浅层网络，那么理想情况下，多余的层应该至少学会”什么都不做”——即恒等映射(Identity Mapping)。</p>
+<p>何恺明等人提出了一个关键洞察：如果深层网络难以超越浅层网络，那么理想情况下，多余的层应该至少学会&quot;什么都不做&quot;——即恒等映射(Identity Mapping)。</p>
 <p>然而，对于传统网络架构来说，学习恒等映射并不容易。多层非线性网络需要精确调整权重以模拟恒等函数，这在实践中非常困难。</p>
-<h2 id="2-ResNet的核心思想：残差学习"><a href="#2-ResNet的核心思想：残差学习" class="headerlink" title="2. ResNet的核心思想：残差学习"></a>2. ResNet的核心思想：残差学习</h2><p>2015年，何恺明、张翔、任少卿和孙剑在论文《Deep Residual Learning for Image Recognition》中提出了一个优雅的解决方案——残差网络(ResNet)。</p>
-<h3 id="2-1-残差映射的本质"><a href="#2-1-残差映射的本质" class="headerlink" title="2.1 残差映射的本质"></a>2.1 残差映射的本质</h3><p>ResNet的核心创新在于，不再让每一层直接学习期望的输出映射H(x)，而是学习输入与输出之间的<strong>差异</strong>(残差)F(x)：</p>
-<p>$$F(x) &#x3D; H(x) - x$$</p>
+<h2 id="2-resnet的核心思想残差学习"><a class="markdownIt-Anchor" href="#2-resnet的核心思想残差学习"></a> 2. ResNet的核心思想：残差学习</h2>
+<p>2015年，何恺明、张翔、任少卿和孙剑在论文《Deep Residual Learning for Image Recognition》中提出了一个优雅的解决方案——残差网络(ResNet)。</p>
+<h3 id="21-残差映射的本质"><a class="markdownIt-Anchor" href="#21-残差映射的本质"></a> 2.1 残差映射的本质</h3>
+<p>ResNet的核心创新在于，不再让每一层直接学习期望的输出映射H(x)，而是学习输入与输出之间的<strong>差异</strong>(残差)F(x)：</p>
+<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>F</mi><mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo><mo>=</mo><mi>H</mi><mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo><mo>−</mo><mi>x</mi></mrow><annotation encoding="application/x-tex">F(x) = H(x) - x
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">F</span><span class="mopen">(</span><span class="mord mathnormal">x</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.08125em;">H</span><span class="mopen">(</span><span class="mord mathnormal">x</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathnormal">x</span></span></span></span></span></p>
 <p>这样，期望的输出可以表示为：</p>
-<p>$$H(x) &#x3D; F(x) + x$$</p>
+<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>H</mi><mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo><mo>=</mo><mi>F</mi><mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo><mo>+</mo><mi>x</mi></mrow><annotation encoding="application/x-tex">H(x) = F(x) + x
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.08125em;">H</span><span class="mopen">(</span><span class="mord mathnormal">x</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">F</span><span class="mopen">(</span><span class="mord mathnormal">x</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathnormal">x</span></span></span></span></span></p>
 <svg width="700" height="360" viewBox="0 0 700 360" xmlns="http://www.w3.org/2000/svg">
   <!-- 背景 -->
   <rect width="700" height="360" fill="#f8f9fa" rx="12" ry="12"/>
@@ -534,9 +538,9 @@
     </marker>
   </defs>
 </svg>
-
 <p>这种设计的巧妙之处在于：如果最优函数接近于恒等映射，神经网络只需将F(x)拟合为接近于零的函数，这比直接拟合一个恒等映射要容易得多。</p>
-<h3 id="2-2-残差块的结构"><a href="#2-2-残差块的结构" class="headerlink" title="2.2 残差块的结构"></a>2.2 残差块的结构</h3><p>ResNet通过引入”残差块”来实现这一思想。残差块的基本结构如下：</p>
+<h3 id="22-残差块的结构"><a class="markdownIt-Anchor" href="#22-残差块的结构"></a> 2.2 残差块的结构</h3>
+<p>ResNet通过引入&quot;残差块&quot;来实现这一思想。残差块的基本结构如下：</p>
 <svg width="700" height="400" viewBox="0 0 700 400" xmlns="http://www.w3.org/2000/svg">
   <!-- 背景 -->
   <rect width="700" height="400" fill="#ffffff"/>
@@ -604,7 +608,6 @@
     <text x="0" y="75">· 解决梯度消失问题</text>
   </g>
 </svg>
-
 <p>一个标准的残差块包含：</p>
 <ol>
 <li><strong>主路径</strong>：通常包含两个3×3的卷积层，每层后面跟着批量归一化(BN)和ReLU激活函数</li>
@@ -612,9 +615,12 @@
 <li><strong>元素级加法</strong>：将主路径输出和捷径连接的输出相加</li>
 </ol>
 <p>值得注意的是，对于维度不匹配的情况，可以通过在捷径连接上添加1×1卷积来调整维度。</p>
-<h2 id="3-为什么残差连接如此有效？"><a href="#3-为什么残差连接如此有效？" class="headerlink" title="3. 为什么残差连接如此有效？"></a>3. 为什么残差连接如此有效？</h2><p>ResNet的成功不仅仅是一个工程技巧，它解决了深度神经网络的根本性问题：</p>
-<h3 id="3-1-梯度畅通无阻的反向传播"><a href="#3-1-梯度畅通无阻的反向传播" class="headerlink" title="3.1 梯度畅通无阻的反向传播"></a>3.1 梯度畅通无阻的反向传播</h3><p>残差连接最重要的贡献是为梯度提供了一条畅通无阻的路径：</p>
-<p>$$\frac{\partial \mathcal{L}}{\partial x_l} &#x3D; \frac{\partial \mathcal{L}}{\partial x_{l+1}} \cdot (1 + \frac{\partial F(x_l, W_l)}{\partial x_l})$$</p>
+<h2 id="3-为什么残差连接如此有效"><a class="markdownIt-Anchor" href="#3-为什么残差连接如此有效"></a> 3. 为什么残差连接如此有效？</h2>
+<p>ResNet的成功不仅仅是一个工程技巧，它解决了深度神经网络的根本性问题：</p>
+<h3 id="31-梯度畅通无阻的反向传播"><a class="markdownIt-Anchor" href="#31-梯度畅通无阻的反向传播"></a> 3.1 梯度畅通无阻的反向传播</h3>
+<p>残差连接最重要的贡献是为梯度提供了一条畅通无阻的路径：</p>
+<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mfrac><mrow><mi mathvariant="normal">∂</mi><mi mathvariant="script">L</mi></mrow><mrow><mi mathvariant="normal">∂</mi><msub><mi>x</mi><mi>l</mi></msub></mrow></mfrac><mo>=</mo><mfrac><mrow><mi mathvariant="normal">∂</mi><mi mathvariant="script">L</mi></mrow><mrow><mi mathvariant="normal">∂</mi><msub><mi>x</mi><mrow><mi>l</mi><mo>+</mo><mn>1</mn></mrow></msub></mrow></mfrac><mo>⋅</mo><mo stretchy="false">(</mo><mn>1</mn><mo>+</mo><mfrac><mrow><mi mathvariant="normal">∂</mi><mi>F</mi><mo stretchy="false">(</mo><msub><mi>x</mi><mi>l</mi></msub><mo separator="true">,</mo><msub><mi>W</mi><mi>l</mi></msub><mo stretchy="false">)</mo></mrow><mrow><mi mathvariant="normal">∂</mi><msub><mi>x</mi><mi>l</mi></msub></mrow></mfrac><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">\frac{\partial \mathcal{L}}{\partial x_l} = \frac{\partial \mathcal{L}}{\partial x_{l+1}} \cdot (1 + \frac{\partial F(x_l, W_l)}{\partial x_l})
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:2.20744em;vertical-align:-0.8360000000000001em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.37144em;"><span style="top:-2.3139999999999996em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord" style="margin-right:0.05556em;">∂</span><span class="mord"><span class="mord mathnormal">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.33610799999999996em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.01968em;">l</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord" style="margin-right:0.05556em;">∂</span><span class="mord"><span class="mord mathcal">L</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.8360000000000001em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:2.265771em;vertical-align:-0.894331em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.37144em;"><span style="top:-2.3139999999999996em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord" style="margin-right:0.05556em;">∂</span><span class="mord"><span class="mord mathnormal">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361079999999999em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.01968em;">l</span><span class="mbin mtight">+</span><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.208331em;"><span></span></span></span></span></span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord" style="margin-right:0.05556em;">∂</span><span class="mord"><span class="mord mathcal">L</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.894331em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">⋅</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord">1</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:2.263em;vertical-align:-0.8360000000000001em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.427em;"><span style="top:-2.3139999999999996em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord" style="margin-right:0.05556em;">∂</span><span class="mord"><span class="mord mathnormal">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.33610799999999996em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.01968em;">l</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord" style="margin-right:0.05556em;">∂</span><span class="mord mathnormal" style="margin-right:0.13889em;">F</span><span class="mopen">(</span><span class="mord"><span class="mord mathnormal">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.33610799999999996em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.01968em;">l</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em;">W</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.33610799999999996em;"><span style="top:-2.5500000000000003em;margin-left:-0.13889em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.01968em;">l</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.8360000000000001em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mclose">)</span></span></span></span></span></p>
 <p>从这个公式可以看出，即使F(x)的梯度接近于零，梯度仍然可以通过恒等映射（乘以1）传递回去。这就像在一座高层建筑中安装了直达电梯，保证了信息可以快速、无损地从顶层传回底层。</p>
 <svg width="900" height="500" viewBox="0 0 900 500" xmlns="http://www.w3.org/2000/svg">
   <!-- 定义滤镜和渐变 -->
@@ -858,177 +864,364 @@
     </text>
   </g>
 </svg>
-
-<h3 id="3-2-加法操作的优势"><a href="#3-2-加法操作的优势" class="headerlink" title="3.2 加法操作的优势"></a>3.2 加法操作的优势</h3><p>残差块采用元素级加法而非拼接(concatenation)，这种选择非常重要：</p>
+<h3 id="32-加法操作的优势"><a class="markdownIt-Anchor" href="#32-加法操作的优势"></a> 3.2 加法操作的优势</h3>
+<p>残差块采用元素级加法而非拼接(concatenation)，这种选择非常重要：</p>
 <ol>
 <li><strong>参数效率</strong>：与拼接相比，加法不增加特征图的通道数，保持了参数数量的高效性</li>
 <li><strong>计算轻量</strong>：加法操作计算开销很小</li>
 <li><strong>数学优雅</strong>：加法操作使得残差学习的数学表达更为简洁和优雅</li>
 </ol>
-<h3 id="3-3-优化的几何解释"><a href="#3-3-优化的几何解释" class="headerlink" title="3.3 优化的几何解释"></a>3.3 优化的几何解释</h3><p>从优化角度看，残差连接重新塑造了损失函数的景观：</p>
+<h3 id="33-优化的几何解释"><a class="markdownIt-Anchor" href="#33-优化的几何解释"></a> 3.3 优化的几何解释</h3>
+<p>从优化角度看，残差连接重新塑造了损失函数的景观：</p>
 <p>在传统神经网络中，损失函数可能包含许多局部极小值，使得优化算法难以找到全局最优解。而在ResNet中，残差连接创建了更平滑的优化路径，使得网络更容易找到全局或更优的局部极小值。</p>
-<h2 id="4-ResNet的技术细节与变体"><a href="#4-ResNet的技术细节与变体" class="headerlink" title="4. ResNet的技术细节与变体"></a>4. ResNet的技术细节与变体</h2><h3 id="4-1-基本架构设计"><a href="#4-1-基本架构设计" class="headerlink" title="4.1 基本架构设计"></a>4.1 基本架构设计</h3><p>原始ResNet有多个变体，包括ResNet-18&#x2F;34&#x2F;50&#x2F;101&#x2F;152，数字表示层数。其中：</p>
+<h2 id="4-resnet的技术细节与变体"><a class="markdownIt-Anchor" href="#4-resnet的技术细节与变体"></a> 4. ResNet的技术细节与变体</h2>
+<h3 id="41-基本架构设计"><a class="markdownIt-Anchor" href="#41-基本架构设计"></a> 4.1 基本架构设计</h3>
+<p>原始ResNet有多个变体，包括ResNet-18/34/50/101/152，数字表示层数。其中：</p>
 <ul>
-<li><strong>ResNet-18&#x2F;34</strong>：使用基本残差块(Basic Block)</li>
-<li><strong>ResNet-50&#x2F;101&#x2F;152</strong>：使用瓶颈残差块(Bottleneck Block)</li>
+<li><strong>ResNet-18/34</strong>：使用基本残差块(Basic Block)</li>
+<li><strong>ResNet-50/101/152</strong>：使用瓶颈残差块(Bottleneck Block)</li>
 </ul>
 <p>瓶颈残差块通过1×1卷积层压缩和恢复维度，在降低计算复杂度的同时保持性能：</p>
 <figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs scss">输入 → <span class="hljs-number">1</span>×<span class="hljs-number">1</span>卷积(降维) → <span class="hljs-number">3</span>×<span class="hljs-number">3</span>卷积 → <span class="hljs-number">1</span>×<span class="hljs-number">1</span>卷积(升维) → 输出<br></code></pre></td></tr></table></figure>
-
-<h3 id="4-2-重要的技术细节"><a href="#4-2-重要的技术细节" class="headerlink" title="4.2 重要的技术细节"></a>4.2 重要的技术细节</h3><p>ResNet的成功不仅仅在于其残差学习的思想，还在于许多关键的实现细节：</p>
+<h3 id="42-重要的技术细节"><a class="markdownIt-Anchor" href="#42-重要的技术细节"></a> 4.2 重要的技术细节</h3>
+<p>ResNet的成功不仅仅在于其残差学习的思想，还在于许多关键的实现细节：</p>
 <ol>
 <li><strong>批量归一化(Batch Normalization)</strong>：每个卷积层后都有BN层，有助于稳定训练</li>
-<li><strong>权重初始化</strong>：采用”He初始化”，有助于深层网络的训练</li>
+<li><strong>权重初始化</strong>：采用&quot;He初始化&quot;，有助于深层网络的训练</li>
 <li><strong>降采样策略</strong>：通过带步长的卷积而非池化来降低特征图尺寸</li>
 <li><strong>全局平均池化</strong>：在全连接分类层前使用全局平均池化，减少参数数量</li>
 </ol>
-<h3 id="4-3-主要变体"><a href="#4-3-主要变体" class="headerlink" title="4.3 主要变体"></a>4.3 主要变体</h3><p>自ResNet提出后，研究人员开发了许多变体，每一个都有其独特的贡献：</p>
-<h4 id="4-3-1-Pre-activation-ResNet"><a href="#4-3-1-Pre-activation-ResNet" class="headerlink" title="4.3.1 Pre-activation ResNet"></a>4.3.1 Pre-activation ResNet</h4><p>何恺明等人在2016年提出了一种改进，将激活函数放在卷积层前面：</p>
+<h3 id="43-主要变体"><a class="markdownIt-Anchor" href="#43-主要变体"></a> 4.3 主要变体</h3>
+<p>自ResNet提出后，研究人员开发了许多变体，每一个都有其独特的贡献：</p>
+<h4 id="431-pre-activation-resnet"><a class="markdownIt-Anchor" href="#431-pre-activation-resnet"></a> 4.3.1 Pre-activation ResNet</h4>
+<p>何恺明等人在2016年提出了一种改进，将激活函数放在卷积层前面：</p>
 <figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs mipsasm"><span class="hljs-keyword">BN </span>→ ReLU → 卷积 → <span class="hljs-keyword">BN </span>→ ReLU → 卷积<br></code></pre></td></tr></table></figure>
-
 <p>这种设计提供了更好的表达能力和训练稳定性。</p>
-<h4 id="4-3-2-Wide-ResNet"><a href="#4-3-2-Wide-ResNet" class="headerlink" title="4.3.2 Wide ResNet"></a>4.3.2 Wide ResNet</h4><p>通过增加每一层的宽度（通道数）而不是深度，Wide ResNet在某些任务上取得了更好的性能和更快的训练速度。</p>
-<h4 id="4-3-3-ResNeXt"><a href="#4-3-3-ResNeXt" class="headerlink" title="4.3.3 ResNeXt"></a>4.3.3 ResNeXt</h4><p>引入了”cardinality”（基数）的概念，将残差函数分解为多个并行路径，是一种聚合转换(aggregated transformation)思想。</p>
-<h4 id="4-3-4-DenseNet"><a href="#4-3-4-DenseNet" class="headerlink" title="4.3.4 DenseNet"></a>4.3.4 DenseNet</h4><p>虽然不严格是ResNet的变体，但DenseNet受到了ResNet的启发，通过密集连接(dense connections)进一步加强了特征重用和梯度流。</p>
-<h2 id="5-ResNet的理论基础与启示"><a href="#5-ResNet的理论基础与启示" class="headerlink" title="5. ResNet的理论基础与启示"></a>5. ResNet的理论基础与启示</h2><h3 id="5-1-集成学习的视角"><a href="#5-1-集成学习的视角" class="headerlink" title="5.1 集成学习的视角"></a>5.1 集成学习的视角</h3><p>从集成学习的角度，ResNet可以被看作是许多浅层网络的隐式集成。每个残差块学习一个增量变换，这些变换被组合成一个强大的整体。</p>
+<h4 id="432-wide-resnet"><a class="markdownIt-Anchor" href="#432-wide-resnet"></a> 4.3.2 Wide ResNet</h4>
+<p>通过增加每一层的宽度（通道数）而不是深度，Wide ResNet在某些任务上取得了更好的性能和更快的训练速度。</p>
+<h4 id="433-resnext"><a class="markdownIt-Anchor" href="#433-resnext"></a> 4.3.3 ResNeXt</h4>
+<p>引入了&quot;cardinality&quot;（基数）的概念，将残差函数分解为多个并行路径，是一种聚合转换(aggregated transformation)思想。</p>
+<h4 id="434-densenet"><a class="markdownIt-Anchor" href="#434-densenet"></a> 4.3.4 DenseNet</h4>
+<p>虽然不严格是ResNet的变体，但DenseNet受到了ResNet的启发，通过密集连接(dense connections)进一步加强了特征重用和梯度流。</p>
+<h2 id="5-resnet的理论基础与启示"><a class="markdownIt-Anchor" href="#5-resnet的理论基础与启示"></a> 5. ResNet的理论基础与启示</h2>
+<h3 id="51-集成学习的视角"><a class="markdownIt-Anchor" href="#51-集成学习的视角"></a> 5.1 集成学习的视角</h3>
+<p>从集成学习的角度，ResNet可以被看作是许多浅层网络的隐式集成。每个残差块学习一个增量变换，这些变换被组合成一个强大的整体。</p>
 <p>论文《Residual Networks Behave Like Ensembles of Relatively Shallow Networks》证明了这一观点，他们发现：</p>
 <ol>
-<li>ResNet中的信息通常沿着少数几条”高速公路”传播</li>
+<li>ResNet中的信息通常沿着少数几条&quot;高速公路&quot;传播</li>
 <li>删除单个残差块对性能影响很小</li>
 <li>整个网络的表现类似于多个浅层网络的集成</li>
 </ol>
-<h3 id="5-2-信息论解释"><a href="#5-2-信息论解释" class="headerlink" title="5.2 信息论解释"></a>5.2 信息论解释</h3><p>从信息论角度，残差连接有助于信息的高效传递。传统深度网络中，信息在层间传递中可能会丢失，而残差连接允许原始信息与处理后的信息并行传输，减少了信息丢失。</p>
-<h3 id="5-3-优化理论视角"><a href="#5-3-优化理论视角" class="headerlink" title="5.3 优化理论视角"></a>5.3 优化理论视角</h3><p>在优化理论中，残差学习可以被看作是一种”路径最小化”策略。通过学习与恒等映射的偏差，网络实际上寻找的是一条从输入到输出的”最小变化路径”。</p>
-<h2 id="6-ResNet的影响与应用"><a href="#6-ResNet的影响与应用" class="headerlink" title="6. ResNet的影响与应用"></a>6. ResNet的影响与应用</h2><p>ResNet的影响远超计算机视觉领域：</p>
-<h3 id="6-1-在计算机视觉中的应用"><a href="#6-1-在计算机视觉中的应用" class="headerlink" title="6.1 在计算机视觉中的应用"></a>6.1 在计算机视觉中的应用</h3><ul>
+<h3 id="52-信息论解释"><a class="markdownIt-Anchor" href="#52-信息论解释"></a> 5.2 信息论解释</h3>
+<p>从信息论角度，残差连接有助于信息的高效传递。传统深度网络中，信息在层间传递中可能会丢失，而残差连接允许原始信息与处理后的信息并行传输，减少了信息丢失。</p>
+<h3 id="53-优化理论视角"><a class="markdownIt-Anchor" href="#53-优化理论视角"></a> 5.3 优化理论视角</h3>
+<p>在优化理论中，残差学习可以被看作是一种&quot;路径最小化&quot;策略。通过学习与恒等映射的偏差，网络实际上寻找的是一条从输入到输出的&quot;最小变化路径&quot;。</p>
+<h2 id="6-resnet的影响与应用"><a class="markdownIt-Anchor" href="#6-resnet的影响与应用"></a> 6. ResNet的影响与应用</h2>
+<p>ResNet的影响远超计算机视觉领域：</p>
+<h3 id="61-在计算机视觉中的应用"><a class="markdownIt-Anchor" href="#61-在计算机视觉中的应用"></a> 6.1 在计算机视觉中的应用</h3>
+<ul>
 <li><strong>图像分类</strong>：ResNet在ImageNet等数据集上实现了突破性的精度</li>
 <li><strong>目标检测</strong>：Faster R-CNN结合ResNet骨干网络大幅提高了检测性能</li>
 <li><strong>图像分割</strong>：DeepLab等模型采用ResNet提取特征，提高了分割精度</li>
 <li><strong>视频理解</strong>：许多视频分析模型建立在ResNet架构之上</li>
 </ul>
-<h3 id="6-2-跨领域影响"><a href="#6-2-跨领域影响" class="headerlink" title="6.2 跨领域影响"></a>6.2 跨领域影响</h3><p>残差学习的思想已扩展到多个领域：</p>
+<h3 id="62-跨领域影响"><a class="markdownIt-Anchor" href="#62-跨领域影响"></a> 6.2 跨领域影响</h3>
+<p>残差学习的思想已扩展到多个领域：</p>
 <ul>
 <li><strong>自然语言处理</strong>：Transformer架构中的残差连接借鉴了ResNet的思想</li>
 <li><strong>图神经网络</strong>：许多GNN架构采用残差连接以支持更深的网络</li>
 <li><strong>语音识别</strong>：现代语音识别系统广泛采用残差结构</li>
 <li><strong>强化学习</strong>：深度强化学习算法中的价值网络和策略网络常使用ResNet架构</li>
 </ul>
-<h2 id="7-未来展望与思考"><a href="#7-未来展望与思考" class="headerlink" title="7. 未来展望与思考"></a>7. 未来展望与思考</h2><h3 id="7-1-ResNet的局限性"><a href="#7-1-ResNet的局限性" class="headerlink" title="7.1 ResNet的局限性"></a>7.1 ResNet的局限性</h3><p>尽管ResNet解决了深度网络的许多问题，但它仍然面临一些挑战：</p>
+<h2 id="7-未来展望与思考"><a class="markdownIt-Anchor" href="#7-未来展望与思考"></a> 7. 未来展望与思考</h2>
+<h3 id="71-resnet的局限性"><a class="markdownIt-Anchor" href="#71-resnet的局限性"></a> 7.1 ResNet的局限性</h3>
+<p>尽管ResNet解决了深度网络的许多问题，但它仍然面临一些挑战：</p>
 <ul>
 <li><strong>计算效率</strong>：虽然比同等深度的传统网络更易训练，但深层ResNet仍然需要大量计算资源</li>
 <li><strong>过参数化</strong>：某些研究表明，ResNet中的许多参数可能是冗余的</li>
 <li><strong>泛化性</strong>：尽管ResNet在特定数据集上表现出色，但在领域迁移和对抗样本上的鲁棒性仍有待提高</li>
 <li><strong>模型体积</strong>：深层ResNet模型参数量大，不适合资源受限的设备</li>
 </ul>
-<h3 id="7-2-未来研究方向"><a href="#7-2-未来研究方向" class="headerlink" title="7.2 未来研究方向"></a>7.2 未来研究方向</h3><p>ResNet的成功启发了许多新的研究方向：</p>
-<h4 id="7-2-1-动态残差网络"><a href="#7-2-1-动态残差网络" class="headerlink" title="7.2.1 动态残差网络"></a>7.2.1 动态残差网络</h4><p>传统ResNet对所有输入应用相同的残差块。动态残差网络根据输入内容调整网络流程，实现了更高的计算效率和更好的性能。代表工作包括：</p>
+<h3 id="72-未来研究方向"><a class="markdownIt-Anchor" href="#72-未来研究方向"></a> 7.2 未来研究方向</h3>
+<p>ResNet的成功启发了许多新的研究方向：</p>
+<h4 id="721-动态残差网络"><a class="markdownIt-Anchor" href="#721-动态残差网络"></a> 7.2.1 动态残差网络</h4>
+<p>传统ResNet对所有输入应用相同的残差块。动态残差网络根据输入内容调整网络流程，实现了更高的计算效率和更好的性能。代表工作包括：</p>
 <ul>
 <li><strong>SkipNet</strong>：学习动态跳过某些层，为不同输入提供不同深度的处理</li>
 <li><strong>Dynamic Routing</strong>：根据样本难度自适应选择执行路径</li>
 </ul>
-<h4 id="7-2-2-轻量级设计"><a href="#7-2-2-轻量级设计" class="headerlink" title="7.2.2 轻量级设计"></a>7.2.2 轻量级设计</h4><p>针对计算资源受限的场景，研究人员开发了多种轻量级ResNet变体：</p>
+<h4 id="722-轻量级设计"><a class="markdownIt-Anchor" href="#722-轻量级设计"></a> 7.2.2 轻量级设计</h4>
+<p>针对计算资源受限的场景，研究人员开发了多种轻量级ResNet变体：</p>
 <ul>
 <li><strong>ShuffleNet</strong>：结合点分组卷积和通道重排，大幅降低计算复杂度</li>
 <li><strong>MobileNetV2</strong>：引入倒置残差结构，适合移动设备部署</li>
 <li><strong>EfficientNet</strong>：通过复合缩放法优化深度、宽度和分辨率的平衡</li>
 </ul>
-<h4 id="7-2-3-自动架构搜索"><a href="#7-2-3-自动架构搜索" class="headerlink" title="7.2.3 自动架构搜索"></a>7.2.3 自动架构搜索</h4><p>神经架构搜索(NAS)技术被用来自动发现比人工设计更优的残差网络变体：</p>
+<h4 id="723-自动架构搜索"><a class="markdownIt-Anchor" href="#723-自动架构搜索"></a> 7.2.3 自动架构搜索</h4>
+<p>神经架构搜索(NAS)技术被用来自动发现比人工设计更优的残差网络变体：</p>
 <ul>
 <li><strong>EfficientNet</strong>：使用NAS搜索基础模型，然后应用复合缩放</li>
 <li><strong>RegNet</strong>：通过系统分析残差网络设计空间，发现高效结构规律</li>
 </ul>
-<h4 id="7-2-4-可解释性研究"><a href="#7-2-4-可解释性研究" class="headerlink" title="7.2.4 可解释性研究"></a>7.2.4 可解释性研究</h4><p>理解ResNet的内部工作机制仍是一个活跃的研究领域：</p>
+<h4 id="724-可解释性研究"><a class="markdownIt-Anchor" href="#724-可解释性研究"></a> 7.2.4 可解释性研究</h4>
+<p>理解ResNet的内部工作机制仍是一个活跃的研究领域：</p>
 <ul>
 <li><strong>特征可视化</strong>：探索不同深度层提取的特征含义</li>
 <li><strong>剪枝研究</strong>：分析哪些连接和层对性能至关重要</li>
 <li><strong>知识蒸馏</strong>：从深层ResNet中提取关键知识到更简单的模型中</li>
 </ul>
-<h3 id="7-3-哲学思考：ResNet的启示"><a href="#7-3-哲学思考：ResNet的启示" class="headerlink" title="7.3 哲学思考：ResNet的启示"></a>7.3 哲学思考：ResNet的启示</h3><p>ResNet的成功超越了技术层面，它提供了解决复杂问题的思考框架：</p>
-<svg width="600" height="400" viewBox="0 0 600 400">
+<h3 id="73-哲学思考resnet的启示"><a class="markdownIt-Anchor" href="#73-哲学思考resnet的启示"></a> 7.3 哲学思考：ResNet的启示</h3>
+<p>ResNet的成功超越了技术层面，它提供了解决复杂问题的思考框架：</p>
+<svg width="800" height="600" viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
+  <!-- 定义滤镜和渐变 -->
+  <defs>
+    <!-- 阴影效果 -->
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="4" stdDeviation="4" flood-opacity="0.15"/>
+    </filter>
+    <!-- 轻微发光效果 -->
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="4" result="blur"/>
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
+    <!-- 渐变色定义 -->
+    <linearGradient id="gradientBlue" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#bbdefb"/>
+      <stop offset="100%" stop-color="#1e88e5"/>
+    </linearGradient>
+    <linearGradient id="gradientGreen" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#c8e6c9"/>
+      <stop offset="100%" stop-color="#43a047"/>
+    </linearGradient>
+    <linearGradient id="gradientOrange" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffecb3"/>
+      <stop offset="100%" stop-color="#fb8c00"/>
+    </linearGradient>
+    <linearGradient id="gradientPurple" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#e1bee7"/>
+      <stop offset="100%" stop-color="#7b1fa2"/>
+    </linearGradient>
+    <linearGradient id="gradientCenter" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#d1c4e9"/>
+      <stop offset="100%" stop-color="#5e35b1"/>
+    </linearGradient>
+    <!-- 连线箭头 -->
+    <marker id="arrow" viewBox="0 0 10 10" refX="5" refY="5" 
+            markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#9e9e9e"/>
+    </marker>
+    <!-- 脉冲动画 -->
+    <radialGradient id="pulseGradient" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
+      <stop offset="0%" stop-color="white" stop-opacity="1">
+        <animate attributeName="stop-opacity" values="0.7;0;0.7" dur="3s" repeatCount="indefinite"/>
+      </stop>
+      <stop offset="100%" stop-color="white" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
   <!-- 背景 -->
-  <rect width="600" height="400" fill="#f9f9f9" rx="10" ry="10"/>
-  <!-- 标题 -->
-  <text x="300" y="50" font-size="24" font-weight="bold" text-anchor="middle" fill="#333">
-    ResNet的哲学启示
-  </text>
-  <!-- 左侧思考 -->
-  <g transform="translate(100, 120)">
-    <circle cx="0" cy="0" r="70" fill="#e3f2fd" stroke="#2196F3" stroke-width="2"/>
-    <text x="0" y="-20" font-size="16" font-weight="bold" text-anchor="middle">渐进式改进</text>
-    <text x="0" y="10" font-size="14" text-anchor="middle" width="120">
-      <tspan x="0" dy="0">改变不必推倒重来，</tspan>
-      <tspan x="0" dy="20">可以基于现有基础</tspan>
-      <tspan x="0" dy="20">增量构建</tspan>
+  <rect width="800" height="600" fill="#fafafa" rx="15" ry="15"/>
+  <!-- 标题区域 -->
+  <g transform="translate(400, 70)">
+    <rect x="-300" y="-45" width="600" height="70" rx="10" ry="10" fill="#f5f5f5" filter="url(#shadow)"/>
+    <text x="0" y="0" font-family="Arial, sans-serif" font-size="32" font-weight="bold" text-anchor="middle" fill="#333333">
+      ResNet的哲学启示
+    </text>
+    <text x="0" y="30" font-family="Arial, sans-serif" font-size="16" text-anchor="middle" fill="#757575">
+      深度学习架构设计中的思想精髓
     </text>
   </g>
-  <!-- 右上思考 -->
-  <g transform="translate(400, 150)">
-    <circle cx="0" cy="0" r="70" fill="#e8f5e9" stroke="#4CAF50" stroke-width="2"/>
-    <text x="0" y="-20" font-size="16" font-weight="bold" text-anchor="middle">知识传承</text>
-    <text x="0" y="10" font-size="14" text-anchor="middle" width="120">
-      <tspan x="0" dy="0">新知识建立在已有</tspan>
-      <tspan x="0" dy="20">知识基础上，而非</tspan>
-      <tspan x="0" dy="20">完全替代它</tspan>
-    </text>
+  <!-- 左上思考圈 - 渐进式改进 -->
+  <g transform="translate(180, 200)">
+    <!-- 背景脉冲 -->
+    <circle cx="0" cy="0" r="100" fill="url(#pulseGradient)" filter="url(#glow)">
+      <animate attributeName="r" values="90;95;90" dur="6s" repeatCount="indefinite"/>
+    </circle>
+    <!-- 主圆 -->
+    <circle cx="0" cy="0" r="90" fill="url(#gradientBlue)" filter="url(#shadow)">
+      <animate attributeName="r" values="90;93;90" dur="4s" repeatCount="indefinite"/>
+    </circle>
+    <!-- 文本 -->
+    <text x="0" y="-20" font-family="Arial, sans-serif" font-size="20" font-weight="bold" text-anchor="middle" fill="#1565c0">渐进式改进</text>
+    <g font-family="Arial, sans-serif" font-size="16" text-anchor="middle" fill="#424242">
+      <text x="0" y="0">改变不必推倒重来，</text>
+      <text x="0" y="25">可以基于现有基础</text>
+      <text x="0" y="50">进行增量构建</text>
+    </g>
+    <!-- 图标 -->
+    <g transform="translate(0, -60) scale(0.6)">
+      <rect x="-25" y="-10" width="50" height="20" fill="#1976d2" rx="2" ry="2"/>
+      <rect x="-15" y="-30" width="30" height="20" fill="#42a5f5" rx="2" ry="2"/>
+      <rect x="-20" y="10" width="40" height="20" fill="#0d47a1" rx="2" ry="2"/>
+    </g>
   </g>
-  <!-- 左下思考 -->
-  <g transform="translate(150, 280)">
-    <circle cx="0" cy="0" r="70" fill="#fff3e0" stroke="#FF9800" stroke-width="2"/>
-    <text x="0" y="-20" font-size="16" font-weight="bold" text-anchor="middle">简化复杂性</text>
-    <text x="0" y="10" font-size="14" text-anchor="middle" width="120">
-      <tspan x="0" dy="0">将复杂问题分解为</tspan>
-      <tspan x="0" dy="20">已解决部分与需要</tspan>
-      <tspan x="0" dy="20">关注的残差部分</tspan>
-    </text>
+  <!-- 右上思考圈 - 知识传承 -->
+  <g transform="translate(620, 230)">
+    <!-- 背景脉冲 -->
+    <circle cx="0" cy="0" r="100" fill="url(#pulseGradient)" filter="url(#glow)">
+      <animate attributeName="r" values="90;95;90" dur="6s" repeatCount="indefinite" begin="1s"/>
+    </circle>
+    <!-- 主圆 -->
+    <circle cx="0" cy="0" r="90" fill="url(#gradientGreen)" filter="url(#shadow)">
+      <animate attributeName="r" values="90;93;90" dur="4s" repeatCount="indefinite" begin="1s"/>
+    </circle>
+    <!-- 文本 -->
+    <text x="0" y="-20" font-family="Arial, sans-serif" font-size="20" font-weight="bold" text-anchor="middle" fill="#2e7d32">知识传承</text>
+    <g font-family="Arial, sans-serif" font-size="16" text-anchor="middle" fill="#424242">
+      <text x="0" y="0">新知识建立在已有</text>
+      <text x="0" y="25">知识基础上，而非</text>
+      <text x="0" y="50">完全替代它</text>
+    </g>
+    <!-- 图标 -->
+    <g transform="translate(0, -60) scale(0.6)">
+      <path d="M -20,-10 L 0,-30 L 20,-10 L 20,20 L -20,20 Z" fill="#388e3c"/>
+      <path d="M -10,-5 L 0,-15 L 10,-5 L 10,10 L -10,10 Z" fill="#66bb6a"/>
+    </g>
   </g>
-  <!-- 右下思考 -->
-  <g transform="translate(450, 280)">
-    <circle cx="0" cy="0" r="70" fill="#f3e5f5" stroke="#9C27B0" stroke-width="2"/>
-    <text x="0" y="-20" font-size="16" font-weight="bold" text-anchor="middle">反馈与连接</text>
-    <text x="0" y="10" font-size="14" text-anchor="middle" width="120">
-      <tspan x="0" dy="0">建立直接反馈通道，</tspan>
-      <tspan x="0" dy="20">确保信息在复杂系统</tspan>
-      <tspan x="0" dy="20">中高效流动</tspan>
-    </text>
+  <!-- 左下思考圈 - 简化复杂性 -->
+  <g transform="translate(220, 430)">
+    <!-- 背景脉冲 -->
+    <circle cx="0" cy="0" r="100" fill="url(#pulseGradient)" filter="url(#glow)">
+      <animate attributeName="r" values="90;95;90" dur="6s" repeatCount="indefinite" begin="2s"/>
+    </circle>
+    <!-- 主圆 -->
+    <circle cx="0" cy="0" r="90" fill="url(#gradientOrange)" filter="url(#shadow)">
+      <animate attributeName="r" values="90;93;90" dur="4s" repeatCount="indefinite" begin="2s"/>
+    </circle>
+    <!-- 文本 -->
+    <text x="0" y="-20" font-family="Arial, sans-serif" font-size="20" font-weight="bold" text-anchor="middle" fill="#e65100">简化复杂性</text>
+    <g font-family="Arial, sans-serif" font-size="16" text-anchor="middle" fill="#424242">
+      <text x="0" y="0">将复杂问题分解为</text>
+      <text x="0" y="25">已解决部分与需要</text>
+      <text x="0" y="50">关注的残差部分</text>
+    </g>
+    <!-- 图标 -->
+    <g transform="translate(0, -60) scale(0.6)">
+      <rect x="-30" y="-10" width="60" height="20" fill="#f57c00" rx="2" ry="2"/>
+      <rect x="-20" y="15" width="10" height="10" fill="#ff9800" rx="1" ry="1"/>
+      <rect x="-5" y="15" width="10" height="10" fill="#ff9800" rx="1" ry="1"/>
+      <rect x="10" y="15" width="10" height="10" fill="#ff9800" rx="1" ry="1"/>
+    </g>
   </g>
-  <!-- 连接线 -->
-  <line x1="150" y1="200" x2="350" y2="150" stroke="#666" stroke-width="1" stroke-dasharray="5,3"/>
-  <line x1="150" y1="200" x2="200" y2="280" stroke="#666" stroke-width="1" stroke-dasharray="5,3"/>
-  <line x1="350" y1="150" x2="400" y2="280" stroke="#666" stroke-width="1" stroke-dasharray="5,3"/>
-  <line x1="200" y1="280" x2="400" y2="280" stroke="#666" stroke-width="1" stroke-dasharray="5,3"/>
+  <!-- 右下思考圈 - 反馈与连接 -->
+  <g transform="translate(580, 430)">
+    <!-- 背景脉冲 -->
+    <circle cx="0" cy="0" r="100" fill="url(#pulseGradient)" filter="url(#glow)">
+      <animate attributeName="r" values="90;95;90" dur="6s" repeatCount="indefinite" begin="3s"/>
+    </circle>
+    <!-- 主圆 -->
+    <circle cx="0" cy="0" r="90" fill="url(#gradientPurple)" filter="url(#shadow)">
+      <animate attributeName="r" values="90;93;90" dur="4s" repeatCount="indefinite" begin="3s"/>
+    </circle>
+    <!-- 文本 -->
+    <text x="0" y="-20" font-family="Arial, sans-serif" font-size="20" font-weight="bold" text-anchor="middle" fill="#6a1b9a">反馈与连接</text>
+    <g font-family="Arial, sans-serif" font-size="16" text-anchor="middle" fill="#424242">
+      <text x="0" y="0">建立直接反馈通道，</text>
+      <text x="0" y="25">确保信息在复杂系统</text>
+      <text x="0" y="50">中高效流动</text>
+    </g>
+    <!-- 图标 -->
+    <g transform="translate(0, -60) scale(0.6)">
+      <path d="M -20,0 C -20,-20 20,-20 20,0 S -20,20 -20,0" fill="none" stroke="#7b1fa2" stroke-width="4"/>
+      <path d="M -10,0 L -25,0" stroke="#7b1fa2" stroke-width="4"/>
+      <path d="M 10,0 L 25,0" stroke="#7b1fa2" stroke-width="4"/>
+    </g>
+  </g>
   <!-- 中心思想 -->
-  <g transform="translate(300, 200)">
-    <circle cx="0" cy="0" r="40" fill="#e1bee7" stroke="#673AB7" stroke-width="3"/>
-    <text x="0" y="0" font-size="14" font-weight="bold" text-anchor="middle" fill="#333">思考</text>
-    <text x="0" y="20" font-size="14" font-weight="bold" text-anchor="middle" fill="#333">方式</text>
+  <g transform="translate(400, 320)">
+    <!-- 背景脉冲 -->
+    <circle cx="0" cy="0" r="70" fill="url(#pulseGradient)" filter="url(#glow)">
+      <animate attributeName="r" values="60;65;60" dur="3s" repeatCount="indefinite"/>
+    </circle>
+    <!-- 主圆 -->
+    <circle cx="0" cy="0" r="60" fill="url(#gradientCenter)" filter="url(#shadow)">
+      <animate attributeName="r" values="60;62;60" dur="2s" repeatCount="indefinite"/>
+    </circle>
+    <!-- 文本 -->
+    <text x="0" y="-10" font-family="Arial, sans-serif" font-size="18" font-weight="bold" text-anchor="middle" fill="#ffffff">思考</text>
+    <text x="0" y="15" font-family="Arial, sans-serif" font-size="18" font-weight="bold" text-anchor="middle" fill="#ffffff">方式</text>
+    <!-- 旋转效果 -->
+    <circle cx="0" cy="0" r="55" fill="none" stroke="#7e57c2" stroke-width="2" stroke-dasharray="10,5">
+      <animateTransform attributeName="transform" type="rotate" from="0" to="360" dur="60s" repeatCount="indefinite"/>
+    </circle>
+  </g>
+  <!-- 连接线 - 使用动画和箭头 -->
+  <g stroke="#9e9e9e" stroke-width="1.5" fill="none">
+    <!-- 左上到中心 -->
+    <path d="M 230,250 Q 315,285 370,320" stroke-dasharray="7,3" marker-end="url(#arrow)">
+      <animate attributeName="stroke-dashoffset" from="100" to="0" dur="15s" repeatCount="indefinite"/>
+    </path>
+    <!-- 右上到中心 -->
+    <path d="M 570,280 Q 485,300 430,320" stroke-dasharray="7,3" marker-end="url(#arrow)">
+      <animate attributeName="stroke-dashoffset" from="100" to="0" dur="15s" repeatCount="indefinite"/>
+    </path>
+    <!-- 左下到中心 -->
+    <path d="M 270,380 Q 335,350 370,340" stroke-dasharray="7,3" marker-end="url(#arrow)">
+      <animate attributeName="stroke-dashoffset" from="100" to="0" dur="15s" repeatCount="indefinite"/>
+    </path>
+    <!-- 右下到中心 -->
+    <path d="M 530,380 Q 465,350 430,340" stroke-dasharray="7,3" marker-end="url(#arrow)">
+      <animate attributeName="stroke-dashoffset" from="100" to="0" dur="15s" repeatCount="indefinite"/>
+    </path>
+    <!-- 圆圈间连接 -->
+    <path d="M 230,250 Q 400,200 570,230" stroke-dasharray="7,3">
+      <animate attributeName="stroke-dashoffset" from="200" to="0" dur="20s" repeatCount="indefinite"/>
+    </path>
+    <path d="M 270,380 C 350,500 450,500 530,380" stroke-dasharray="7,3">
+      <animate attributeName="stroke-dashoffset" from="200" to="0" dur="20s" repeatCount="indefinite"/>
+    </path>
+    <path d="M 230,250 C 150,350 180,420 270,380" stroke-dasharray="7,3">
+      <animate attributeName="stroke-dashoffset" from="200" to="0" dur="20s" repeatCount="indefinite"/>
+    </path>
+    <path d="M 570,230 C 650,350 620,420 530,380" stroke-dasharray="7,3">
+      <animate attributeName="stroke-dashoffset" from="200" to="0" dur="20s" repeatCount="indefinite"/>
+    </path>
+  </g>
+  <!-- 底部文字 -->
+  <g transform="translate(400, 560)">
+    <text x="0" y="0" font-family="Arial, sans-serif" font-size="16" text-anchor="middle" fill="#616161">
+      "一切应该尽可能简单，但不能过于简单。" —— 阿尔伯特·爱因斯坦
+    </text>
   </g>
 </svg>
-
-<h4 id="7-3-1-渐进式改进而非推倒重来"><a href="#7-3-1-渐进式改进而非推倒重来" class="headerlink" title="7.3.1 渐进式改进而非推倒重来"></a>7.3.1 渐进式改进而非推倒重来</h4><p>在科技和社会发展中，我们常常面临是”推倒重来”还是”在现有基础上改进”的选择。ResNet表明，有时通过建立巧妙的连接和增量修改，我们可以在保留已有结构价值的同时，突破发展瓶颈。</p>
-<h4 id="7-3-2-简化而非复杂化"><a href="#7-3-2-简化而非复杂化" class="headerlink" title="7.3.2 简化而非复杂化"></a>7.3.2 简化而非复杂化</h4><p>面对复杂问题，我们的本能可能是增加复杂度。然而，ResNet的设计告诉我们，有时最优雅的解决方案是简化问题 - 不是学习整个复杂映射，而是学习与简单参考点的偏差。</p>
-<h4 id="7-3-3-反思现有假设"><a href="#7-3-3-反思现有假设" class="headerlink" title="7.3.3 反思现有假设"></a>7.3.3 反思现有假设</h4><p>ResNet挑战了”更深的网络应该能学到更多”的假设，发现深度网络面临的根本问题在于优化难度而非表达能力。这提醒我们在面对瓶颈时，要审视基本假设，找出真正的限制因素<br>。</p>
-<h2 id="8-结语：从简单出发的深刻变革"><a href="#8-结语：从简单出发的深刻变革" class="headerlink" title="8. 结语：从简单出发的深刻变革"></a>8. 结语：从简单出发的深刻变革</h2><p>ResNet作为深度学习领域的里程碑，其价值不仅在于解决了特定的技术问题，更在于它以优雅的方式展示了复杂问题可以通过巧妙的设计得到简化。</p>
+<h4 id="731-渐进式改进而非推倒重来"><a class="markdownIt-Anchor" href="#731-渐进式改进而非推倒重来"></a> 7.3.1 渐进式改进而非推倒重来</h4>
+<p>在科技和社会发展中，我们常常面临是&quot;推倒重来&quot;还是&quot;在现有基础上改进&quot;的选择。ResNet表明，有时通过建立巧妙的连接和增量修改，我们可以在保留已有结构价值的同时，突破发展瓶颈。</p>
+<h4 id="732-简化而非复杂化"><a class="markdownIt-Anchor" href="#732-简化而非复杂化"></a> 7.3.2 简化而非复杂化</h4>
+<p>面对复杂问题，我们的本能可能是增加复杂度。然而，ResNet的设计告诉我们，有时最优雅的解决方案是简化问题 - 不是学习整个复杂映射，而是学习与简单参考点的偏差。</p>
+<h4 id="733-反思现有假设"><a class="markdownIt-Anchor" href="#733-反思现有假设"></a> 7.3.3 反思现有假设</h4>
+<p>ResNet挑战了&quot;更深的网络应该能学到更多&quot;的假设，发现深度网络面临的根本问题在于优化难度而非表达能力。这提醒我们在面对瓶颈时，要审视基本假设，找出真正的限制因素<br />
+。</p>
+<h2 id="8-结语从简单出发的深刻变革"><a class="markdownIt-Anchor" href="#8-结语从简单出发的深刻变革"></a> 8. 结语：从简单出发的深刻变革</h2>
+<p>ResNet作为深度学习领域的里程碑，其价值不仅在于解决了特定的技术问题，更在于它以优雅的方式展示了复杂问题可以通过巧妙的设计得到简化。</p>
 <p>残差学习的核心思想简洁明了：将复杂目标分解为已知部分与未知增量的组合。这个思想在自然界中随处可见：从物种进化到科学发展，都体现了在已有基础上渐进增量的特点。</p>
 <blockquote>
 <p>“一切应该尽可能简单，但不能过于简单。” —— 阿尔伯特·爱因斯坦</p>
 </blockquote>
 <p>ResNet的成功提醒我们，有时候，最深刻的创新不是来自于增加复杂性，而是通过重新思考问题的本质，找到一种更简单、更优雅的解决方案。无论是在算法设计、科学研究还是生活问题解决中，这种思考方式都具有普遍的适用价值。</p>
-<h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><ol>
-<li><p>He, K., Zhang, X., Ren, S., &amp; Sun, J. (2016). Deep residual learning for image recognition. In Proceedings of the IEEE conference on computer vision and pattern recognition (pp. 770-778).</p>
+<h2 id="参考文献"><a class="markdownIt-Anchor" href="#参考文献"></a> 参考文献</h2>
+<ol>
+<li>
+<p>He, K., Zhang, X., Ren, S., &amp; Sun, J. (2016). Deep residual learning for image recognition. In Proceedings of the IEEE conference on computer vision and pattern recognition (pp. 770-778).</p>
 </li>
-<li><p>He, K., Zhang, X., Ren, S., &amp; Sun, J. (2016). Identity mappings in deep residual networks. In European conference on computer vision (pp. 630-645).</p>
+<li>
+<p>He, K., Zhang, X., Ren, S., &amp; Sun, J. (2016). Identity mappings in deep residual networks. In European conference on computer vision (pp. 630-645).</p>
 </li>
-<li><p>Veit, A., Wilber, M. J., &amp; Belongie, S. (2016). Residual networks behave like ensembles of relatively shallow networks. Advances in neural information processing systems, 29.</p>
+<li>
+<p>Veit, A., Wilber, M. J., &amp; Belongie, S. (2016). Residual networks behave like ensembles of relatively shallow networks. Advances in neural information processing systems, 29.</p>
 </li>
-<li><p>Zagoruyko, S., &amp; Komodakis, N. (2016). Wide residual networks. arXiv preprint arXiv:1605.07146.</p>
+<li>
+<p>Zagoruyko, S., &amp; Komodakis, N. (2016). Wide residual networks. arXiv preprint arXiv:1605.07146.</p>
 </li>
-<li><p>Xie, S., Girshick, R., Dollár, P., Tu, Z., &amp; He, K. (2017). Aggregated residual transformations for deep neural networks. In Proceedings of the IEEE conference on computer vision and pattern recognition (pp. 1492-1500).</p>
+<li>
+<p>Xie, S., Girshick, R., Dollár, P., Tu, Z., &amp; He, K. (2017). Aggregated residual transformations for deep neural networks. In Proceedings of the IEEE conference on computer vision and pattern recognition (pp. 1492-1500).</p>
 </li>
-<li><p>Huang, G., Liu, Z., Van Der Maaten, L., &amp; Weinberger, K. Q. (2017). Densely connected convolutional networks. In Proceedings of the IEEE conference on computer vision and pattern recognition (pp. 4700-4708).</p>
+<li>
+<p>Huang, G., Liu, Z., Van Der Maaten, L., &amp; Weinberger, K. Q. (2017). Densely connected convolutional networks. In Proceedings of the IEEE conference on computer vision and pattern recognition (pp. 4700-4708).</p>
 </li>
-<li><p>Tan, M., &amp; Le, Q. (2019). Efficientnet: Rethinking model scaling for convolutional neural networks. In International conference on machine learning (pp. 6105-6114).</p>
+<li>
+<p>Tan, M., &amp; Le, Q. (2019). Efficientnet: Rethinking model scaling for convolutional neural networks. In International conference on machine learning (pp. 6105-6114).</p>
 </li>
-<li><p>Sandler, M., Howard, A., Zhu, M., Zhmoginov, A., &amp; Chen, L. C. (2018). Mobilenetv2: Inverted residuals and linear bottlenecks. In Proceedings of the IEEE conference on computer vision and pattern recognition (pp. 4510-4520).</p>
+<li>
+<p>Sandler, M., Howard, A., Zhu, M., Zhmoginov, A., &amp; Chen, L. C. (2018). Mobilenetv2: Inverted residuals and linear bottlenecks. In Proceedings of the IEEE conference on computer vision and pattern recognition (pp. 4510-4520).</p>
 </li>
 </ol>
 
@@ -1064,9 +1257,9 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/" class="print-no-link">#深度学习</a>
-      
         <a href="/tags/ResNet/" class="print-no-link">#ResNet</a>
+      
+        <a href="/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/" class="print-no-link">#深度学习</a>
       
         <a href="/tags/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/" class="print-no-link">#神经网络</a>
       
@@ -1127,9 +1320,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2023/01/23/%E4%BA%BA%E4%B8%8EAI%E7%9A%84%E5%85%B3%E7%B3%BB/" title="人与AI的关系:我们如何证明自己不是机器？">
+                      <a href="/2022/12/19/XGBoost/" title="XGBoost">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">人与AI的关系:我们如何证明自己不是机器？</span>
+                        <span class="hidden-mobile">XGBoost</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -1137,40 +1330,18 @@
                   <article class="post-next col-6">
                     
                     
+                      <a href="/2022/08/01/%E4%BA%8C%E4%BB%A3%E6%B5%8B%E5%BA%8FNGS/" title="二代测序技术原理">
+                        <span class="hidden-mobile">二代测序技术原理</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
                   </article>
                 </div>
               
             </div>
 
             
-  
-  
-    <article id="comments" lazyload>
-      
-  <div class="disqus" style="width:100%">
-    <div id="disqus_thread"></div>
-    
-      <script type="text/javascript">
-        var disqus_config = function() {
-          this.page.url = 'http://xcq.ink/2022/10/25/ResNet%E6%80%9D%E8%80%83%E5%92%8C%E7%90%86%E8%A7%A3%EF%BC%9A%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E4%B8%AD%E7%9A%84%E6%99%BA%E6%85%A7%E6%8D%B7%E5%BE%84/';
-          this.page.identifier = '/2022/10/25/ResNet%E6%80%9D%E8%80%83%E5%92%8C%E7%90%86%E8%A7%A3%EF%BC%9A%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E4%B8%AD%E7%9A%84%E6%99%BA%E6%85%A7%E6%8D%B7%E5%BE%84/';
-        };
-        Fluid.utils.loadComments('#disqus_thread', function() {
-          var d = document, s = d.createElement('script');
-          s.src = '//' + 'fluid' + '.disqus.com/embed.js';
-          s.setAttribute('data-timestamp', new Date());
-          (d.head || d.body).appendChild(s);
-        });
-      </script>
-    
-    <noscript>Please enable JavaScript to view the comments</noscript>
-  </div>
-
-
-    </article>
-  
-
-
           </article>
         </div>
       </div>

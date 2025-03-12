@@ -29,11 +29,11 @@
 <meta property="article:published_time" content="2023-09-11T08:42:18.000Z">
 <meta property="article:modified_time" content="2025-03-07T09:36:33.352Z">
 <meta property="article:author" content="Xander Xu">
+<meta property="article:tag" content="LLM">
 <meta property="article:tag" content="RAG">
 <meta property="article:tag" content="检索增强生成">
 <meta property="article:tag" content="AI技术">
 <meta property="article:tag" content="知识库">
-<meta property="article:tag" content="LLM">
 <meta name="twitter:card" content="summary_large_image">
   
   
@@ -282,13 +282,14 @@
             
               <div class="markdown-body">
                 
-                <h2 id="一、RAG的本质：为AI配上”外部记忆”"><a href="#一、RAG的本质：为AI配上”外部记忆”" class="headerlink" title="一、RAG的本质：为AI配上”外部记忆”"></a>一、RAG的本质：为AI配上”外部记忆”</h2><p>想象一下，如果你面临两种考试方式：</p>
+                <h2 id="一-rag的本质为ai配上外部记忆"><a class="markdownIt-Anchor" href="#一-rag的本质为ai配上外部记忆"></a> 一、RAG的本质：为AI配上&quot;外部记忆&quot;</h2>
+<p>想象一下，如果你面临两种考试方式：</p>
 <ul>
 <li><strong>闭卷考试</strong>：只能依靠大脑中已有的知识</li>
 <li><strong>开卷考试</strong>：可以查阅资料，再回答问题</li>
 </ul>
-<p>传统的大型语言模型（LLMs）就像是在进行<strong>闭卷考试</strong>—它们只能使用训练时学到的知识。这也是为什么它们经常会”幻觉”（生成看似合理但实际上不正确的信息）。</p>
-<p><strong>RAG（检索增强生成）给予了AI”开卷考试”的能力。</strong></p>
+<p>传统的大型语言模型（LLMs）就像是在进行<strong>闭卷考试</strong>—它们只能使用训练时学到的知识。这也是为什么它们经常会&quot;幻觉&quot;（生成看似合理但实际上不正确的信息）。</p>
+<p><strong>RAG（检索增强生成）给予了AI&quot;开卷考试&quot;的能力。</strong></p>
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 500">
   <!-- 定义渐变和样式 -->
   <defs>
@@ -642,11 +643,13 @@
   <path d="M0,440 Q450,500 900,440" fill="none" stroke="#1890ff" stroke-width="1.5" stroke-opacity="0.2" stroke-dasharray="5,5"/>
   <path d="M0,435 Q450,485 900,435" fill="none" stroke="#1890ff" stroke-width="1" stroke-opacity="0.2" stroke-dasharray="5,5"/>
 </svg>
-
 <p>RAG的核心思想非常简单——<strong>将信息检索与文本生成相结合</strong>。这种看似简单的结合，却彻底改变了AI系统回答问题的方式。</p>
-<h2 id="二、RAG的工作原理：三步流程"><a href="#二、RAG的工作原理：三步流程" class="headerlink" title="二、RAG的工作原理：三步流程"></a>二、RAG的工作原理：三步流程</h2><p>RAG的工作流程可以分为三个关键步骤：</p>
-<h3 id="1-用户提问"><a href="#1-用户提问" class="headerlink" title="1. 用户提问"></a>1. 用户提问</h3><p>用户向系统提出问题，比如”2023年全球碳排放量是多少？”</p>
-<h3 id="2-检索阶段（Retrieval）"><a href="#2-检索阶段（Retrieval）" class="headerlink" title="2. 检索阶段（Retrieval）"></a>2. 检索阶段（Retrieval）</h3><p>系统从<strong>外部知识库</strong>中检索与问题相关的信息。这是RAG的核心区别所在。</p>
+<h2 id="二-rag的工作原理三步流程"><a class="markdownIt-Anchor" href="#二-rag的工作原理三步流程"></a> 二、RAG的工作原理：三步流程</h2>
+<p>RAG的工作流程可以分为三个关键步骤：</p>
+<h3 id="1-用户提问"><a class="markdownIt-Anchor" href="#1-用户提问"></a> 1. 用户提问</h3>
+<p>用户向系统提出问题，比如&quot;2023年全球碳排放量是多少？&quot;</p>
+<h3 id="2-检索阶段retrieval"><a class="markdownIt-Anchor" href="#2-检索阶段retrieval"></a> 2. 检索阶段（Retrieval）</h3>
+<p>系统从<strong>外部知识库</strong>中检索与问题相关的信息。这是RAG的核心区别所在。</p>
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 500">
   <!-- 定义渐变和效果 -->
   <defs>
@@ -858,12 +861,15 @@
   <path d="M0,470 Q450,490 900,470" fill="none" stroke="#1890ff" stroke-width="1" stroke-opacity="0.2" stroke-dasharray="5,5"/>
   <path d="M0,460 Q450,480 900,460" fill="none" stroke="#1890ff" stroke-width="0.5" stroke-opacity="0.2" stroke-dasharray="5,5"/>
 </svg>
-
 <p>检索阶段包含几个技术要点：</p>
-<h4 id="a-嵌入（Embedding）"><a href="#a-嵌入（Embedding）" class="headerlink" title="a) 嵌入（Embedding）"></a>a) 嵌入（Embedding）</h4><p>问题被转换为<strong>向量表示</strong>（通常是几百到几千维的浮点数数组）。这种向量能够捕捉问题的语义特征。</p>
-<h4 id="b-向量检索"><a href="#b-向量检索" class="headerlink" title="b) 向量检索"></a>b) 向量检索</h4><p>系统使用<strong>相似度搜索</strong>（如余弦相似度）在向量数据库中寻找与问题向量最相似的文档向量。</p>
-<h4 id="c-重排序（可选）"><a href="#c-重排序（可选）" class="headerlink" title="c) 重排序（可选）"></a>c) 重排序（可选）</h4><p>对初步检索结果进行更精细的排序，使用更复杂的模型（如交叉编码器）计算问题与文档的相关性。</p>
-<h3 id="3-生成阶段（Generation）"><a href="#3-生成阶段（Generation）" class="headerlink" title="3. 生成阶段（Generation）"></a>3. 生成阶段（Generation）</h3><p>大语言模型（如GPT、Claude等）结合<strong>检索到的信息</strong>和<strong>原始问题</strong>生成最终答案。</p>
+<h4 id="a-嵌入embedding"><a class="markdownIt-Anchor" href="#a-嵌入embedding"></a> a) 嵌入（Embedding）</h4>
+<p>问题被转换为<strong>向量表示</strong>（通常是几百到几千维的浮点数数组）。这种向量能够捕捉问题的语义特征。</p>
+<h4 id="b-向量检索"><a class="markdownIt-Anchor" href="#b-向量检索"></a> b) 向量检索</h4>
+<p>系统使用<strong>相似度搜索</strong>（如余弦相似度）在向量数据库中寻找与问题向量最相似的文档向量。</p>
+<h4 id="c-重排序可选"><a class="markdownIt-Anchor" href="#c-重排序可选"></a> c) 重排序（可选）</h4>
+<p>对初步检索结果进行更精细的排序，使用更复杂的模型（如交叉编码器）计算问题与文档的相关性。</p>
+<h3 id="3-生成阶段generation"><a class="markdownIt-Anchor" href="#3-生成阶段generation"></a> 3. 生成阶段（Generation）</h3>
+<p>大语言模型（如GPT、Claude等）结合<strong>检索到的信息</strong>和<strong>原始问题</strong>生成最终答案。</p>
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 500">
   <!-- 定义渐变和效果 -->
   <defs>
@@ -1101,36 +1107,40 @@
     RAG生成阶段将检索到的相关文档与原始问题结合，生成基于事实的精确回答
   </text>
 </svg>
-
 <p>生成阶段的关键是<strong>提示工程（Prompt Engineering）</strong>：</p>
 <figure class="highlight mel"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs mel">系统: 你是一个知识助手，请根据提供的参考信息回答用户问题。<br>只使用参考信息中的内容。如果参考信息中没有相关内容，<br>请回答<span class="hljs-string">&quot;我没有足够信息回答这个问题&quot;</span>。<br><br>参考信息:<br>[<span class="hljs-number">1</span>] 根据国际能源署(IEA)的数据，<span class="hljs-number">2023</span>年全球碳排放量约为<span class="hljs-number">36.8</span>吉吨，<br>比<span class="hljs-number">2022</span>年增长了<span class="hljs-number">1.1</span>%。主要排放来源为电力和热力生产(<span class="hljs-number">41</span>%)，<br>工业(<span class="hljs-number">20</span>%)，交通(<span class="hljs-number">21</span>%)。<br><br>用户问题: <span class="hljs-number">2023</span>年全球碳排放量是多少？<br></code></pre></td></tr></table></figure>
-
 <p>这种结构化提示确保了模型在生成回答时会优先使用检索到的信息，而不是依赖其预训练知识。</p>
-<h2 id="三、RAG的技术实现细节"><a href="#三、RAG的技术实现细节" class="headerlink" title="三、RAG的技术实现细节"></a>三、RAG的技术实现细节</h2><h3 id="1-文档处理与索引构建"><a href="#1-文档处理与索引构建" class="headerlink" title="1. 文档处理与索引构建"></a>1. 文档处理与索引构建</h3><p>RAG的基础是高质量的知识库，这需要几个关键步骤：</p>
-<h4 id="a-文档收集与准备"><a href="#a-文档收集与准备" class="headerlink" title="a) 文档收集与准备"></a>a) 文档收集与准备</h4><ul>
+<h2 id="三-rag的技术实现细节"><a class="markdownIt-Anchor" href="#三-rag的技术实现细节"></a> 三、RAG的技术实现细节</h2>
+<h3 id="1-文档处理与索引构建"><a class="markdownIt-Anchor" href="#1-文档处理与索引构建"></a> 1. 文档处理与索引构建</h3>
+<p>RAG的基础是高质量的知识库，这需要几个关键步骤：</p>
+<h4 id="a-文档收集与准备"><a class="markdownIt-Anchor" href="#a-文档收集与准备"></a> a) 文档收集与准备</h4>
+<ul>
 <li>确定知识来源（网页、PDF、数据库等）</li>
 <li>数据清洗与预处理</li>
 </ul>
-<h4 id="b-文档分块（Chunking）"><a href="#b-文档分块（Chunking）" class="headerlink" title="b) 文档分块（Chunking）"></a>b) 文档分块（Chunking）</h4><ul>
+<h4 id="b-文档分块chunking"><a class="markdownIt-Anchor" href="#b-文档分块chunking"></a> b) 文档分块（Chunking）</h4>
+<ul>
 <li>将长文档拆分为适当大小的片段</li>
 <li>常见策略：固定大小、语义分割、重叠分块</li>
 </ul>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 文档分块示例代码</span><br><span class="hljs-keyword">from</span> langchain.text_splitter <span class="hljs-keyword">import</span> RecursiveCharacterTextSplitter<br><br>text_splitter = RecursiveCharacterTextSplitter(<br>    chunk_size=<span class="hljs-number">1000</span>,<br>    chunk_overlap=<span class="hljs-number">200</span>,<br>    length_function=<span class="hljs-built_in">len</span>,<br>)<br><br>chunks = text_splitter.split_text(long_document)<br></code></pre></td></tr></table></figure>
-
-<h4 id="c-向量化与索引"><a href="#c-向量化与索引" class="headerlink" title="c) 向量化与索引"></a>c) 向量化与索引</h4><ul>
+<h4 id="c-向量化与索引"><a class="markdownIt-Anchor" href="#c-向量化与索引"></a> c) 向量化与索引</h4>
+<ul>
 <li>使用嵌入模型将文本块转换为向量表示</li>
 <li>构建向量索引以支持高效检索</li>
 </ul>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 向量化与索引示例代码</span><br><span class="hljs-keyword">from</span> langchain.embeddings <span class="hljs-keyword">import</span> OpenAIEmbeddings<br><span class="hljs-keyword">from</span> langchain.vectorstores <span class="hljs-keyword">import</span> FAISS<br><br>embeddings = OpenAIEmbeddings()<br>vector_store = FAISS.from_texts(chunks, embeddings)<br><br><span class="hljs-comment"># 保存索引</span><br>vector_store.save_local(<span class="hljs-string">&quot;my_faiss_index&quot;</span>)<br></code></pre></td></tr></table></figure>
-
-<h3 id="2-检索策略进阶"><a href="#2-检索策略进阶" class="headerlink" title="2. 检索策略进阶"></a>2. 检索策略进阶</h3><p>高效检索不仅仅是简单的向量匹配，还包括：</p>
-<h4 id="a-混合检索"><a href="#a-混合检索" class="headerlink" title="a) 混合检索"></a>a) 混合检索</h4><p>结合多种检索策略：</p>
+<h3 id="2-检索策略进阶"><a class="markdownIt-Anchor" href="#2-检索策略进阶"></a> 2. 检索策略进阶</h3>
+<p>高效检索不仅仅是简单的向量匹配，还包括：</p>
+<h4 id="a-混合检索"><a class="markdownIt-Anchor" href="#a-混合检索"></a> a) 混合检索</h4>
+<p>结合多种检索策略：</p>
 <ul>
 <li>语义检索（向量相似度）</li>
 <li>关键词检索（BM25等）</li>
 <li>元数据过滤（时间、来源等）</li>
 </ul>
-<h4 id="b-多步检索"><a href="#b-多步检索" class="headerlink" title="b) 多步检索"></a>b) 多步检索</h4><ul>
+<h4 id="b-多步检索"><a class="markdownIt-Anchor" href="#b-多步检索"></a> b) 多步检索</h4>
+<ul>
 <li>先检索大量候选文档</li>
 <li>通过重排序模型进一步精确相关性</li>
 <li>可能包括多轮检索精炼</li>
@@ -1386,31 +1396,35 @@
   <path d="M0,570 Q450,590 900,570" fill="none" stroke="#1890ff" stroke-width="1" stroke-opacity="0.2" stroke-dasharray="5,5"/>
   <path d="M0,560 Q450,580 900,560" fill="none" stroke="#1890ff" stroke-width="0.5" stroke-opacity="0.2" stroke-dasharray="5,5"/>
 </svg>
-
-<h4 id="c-检索质量评估"><a href="#c-检索质量评估" class="headerlink" title="c) 检索质量评估"></a>c) 检索质量评估</h4><ul>
+<h4 id="c-检索质量评估"><a class="markdownIt-Anchor" href="#c-检索质量评估"></a> c) 检索质量评估</h4>
+<ul>
 <li>相关性评分</li>
 <li>多样性度量</li>
 <li>重复内容检测</li>
 </ul>
-<h3 id="3-增强生成质量"><a href="#3-增强生成质量" class="headerlink" title="3. 增强生成质量"></a>3. 增强生成质量</h3><p>高质量生成需要多个技术手段：</p>
-<h4 id="a-提示模板优化"><a href="#a-提示模板优化" class="headerlink" title="a) 提示模板优化"></a>a) 提示模板优化</h4><ul>
+<h3 id="3-增强生成质量"><a class="markdownIt-Anchor" href="#3-增强生成质量"></a> 3. 增强生成质量</h3>
+<p>高质量生成需要多个技术手段：</p>
+<h4 id="a-提示模板优化"><a class="markdownIt-Anchor" href="#a-提示模板优化"></a> a) 提示模板优化</h4>
+<ul>
 <li>明确指令和格式要求</li>
 <li>包含系统角色和行为约束</li>
 <li>结构化提示有助于LLM更好理解和执行任务</li>
 </ul>
-<h4 id="b-上下文管理"><a href="#b-上下文管理" class="headerlink" title="b) 上下文管理"></a>b) 上下文管理</h4><ul>
+<h4 id="b-上下文管理"><a class="markdownIt-Anchor" href="#b-上下文管理"></a> b) 上下文管理</h4>
+<ul>
 <li>压缩检索文本以适应上下文窗口</li>
 <li>选择性包含最相关信息</li>
 <li>多级上下文组织（先概览，后细节）</li>
 </ul>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 上下文压缩示例</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">compress_context</span>(<span class="hljs-params">retrieved_docs, max_tokens=<span class="hljs-number">3000</span></span>):<br>    compressed_docs = []<br>    current_tokens = <span class="hljs-number">0</span><br>    <br>    <span class="hljs-keyword">for</span> doc <span class="hljs-keyword">in</span> <span class="hljs-built_in">sorted</span>(retrieved_docs, key=<span class="hljs-keyword">lambda</span> d: d.relevance_score, reverse=<span class="hljs-literal">True</span>):<br>        doc_tokens = <span class="hljs-built_in">len</span>(tokenizer.encode(doc.content))<br>        <span class="hljs-keyword">if</span> current_tokens + doc_tokens &lt;= max_tokens:<br>            compressed_docs.append(doc.content)<br>            current_tokens += doc_tokens<br>    <br>    <span class="hljs-keyword">return</span> compressed_docs<br></code></pre></td></tr></table></figure>
-
-<h4 id="c-幻觉检测与减少"><a href="#c-幻觉检测与减少" class="headerlink" title="c) 幻觉检测与减少"></a>c) 幻觉检测与减少</h4><ul>
+<h4 id="c-幻觉检测与减少"><a class="markdownIt-Anchor" href="#c-幻觉检测与减少"></a> c) 幻觉检测与减少</h4>
+<ul>
 <li>生成后验证机制</li>
 <li>引用追踪</li>
 <li>确保回答内容有证据支持</li>
 </ul>
-<h2 id="四、RAG性能对比与优势"><a href="#四、RAG性能对比与优势" class="headerlink" title="四、RAG性能对比与优势"></a>四、RAG性能对比与优势</h2><p>与传统LLM相比，RAG在多个维度上都有显著优势：</p>
+<h2 id="四-rag性能对比与优势"><a class="markdownIt-Anchor" href="#四-rag性能对比与优势"></a> 四、RAG性能对比与优势</h2>
+<p>与传统LLM相比，RAG在多个维度上都有显著优势：</p>
 <table>
 <thead>
 <tr>
@@ -1419,7 +1433,8 @@
 <th>RAG系统</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>知识时效性</td>
 <td>仅限训练数据截止日</td>
 <td>可实时更新</td>
@@ -1442,14 +1457,15 @@
 <tr>
 <td>个性化</td>
 <td>有限</td>
-<td>可集成个人&#x2F;组织知识</td>
+<td>可集成个人/组织知识</td>
 </tr>
 <tr>
 <td>隐私保护</td>
 <td>训练数据潜在泄露</td>
 <td>可控制知识来源</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 500">
   <!-- 定义渐变和效果 -->
   <defs>
@@ -1621,336 +1637,346 @@
   <path d="M0,480 Q450,500 900,480" fill="none" stroke="#1890ff" stroke-width="1" stroke-opacity="0.2" stroke-dasharray="5,5"/>
   <path d="M0,470 Q450,490 900,470" fill="none" stroke="#1890ff" stroke-width="0.5" stroke-opacity="0.2" stroke-dasharray="5,5"/>
 </svg>
-
-
-<h2 id="五、RAG的实际应用场景"><a href="#五、RAG的实际应用场景" class="headerlink" title="五、RAG的实际应用场景"></a>五、RAG的实际应用场景</h2><p>RAG已在多个领域展现了强大价值：</p>
-<h3 id="1-企业知识管理"><a href="#1-企业知识管理" class="headerlink" title="1. 企业知识管理"></a>1. 企业知识管理</h3><ul>
+<h2 id="五-rag的实际应用场景"><a class="markdownIt-Anchor" href="#五-rag的实际应用场景"></a> 五、RAG的实际应用场景</h2>
+<p>RAG已在多个领域展现了强大价值：</p>
+<h3 id="1-企业知识管理"><a class="markdownIt-Anchor" href="#1-企业知识管理"></a> 1. 企业知识管理</h3>
+<ul>
 <li><strong>内部文档问答</strong>：员工可以直接询问公司政策、产品规格等信息</li>
 <li><strong>客户支持</strong>：基于产品手册和支持文档回答客户问题</li>
 <li><strong>知识库自动化</strong>：更高效地整合和检索企业知识</li>
 </ul>
-<h3 id="2-专业领域应用"><a href="#2-专业领域应用" class="headerlink" title="2. 专业领域应用"></a>2. 专业领域应用</h3><ul>
+<h3 id="2-专业领域应用"><a class="markdownIt-Anchor" href="#2-专业领域应用"></a> 2. 专业领域应用</h3>
+<ul>
 <li><strong>医疗</strong>：基于医学文献和临床指南提供信息支持</li>
 <li><strong>法律</strong>：检索相关法规和判例</li>
 <li><strong>研究</strong>：科研文献检索与分析</li>
 </ul>
-<h3 id="3-个性化信息服务"><a href="#3-个性化信息服务" class="headerlink" title="3. 个性化信息服务"></a>3. 个性化信息服务</h3><ul>
+<h3 id="3-个性化信息服务"><a class="markdownIt-Anchor" href="#3-个性化信息服务"></a> 3. 个性化信息服务</h3>
+<ul>
 <li><strong>个人助手</strong>：基于个人笔记、邮件和文档的智能助手</li>
 <li><strong>学习工具</strong>：基于教材和学习资料的个性化学习辅助</li>
 </ul>
-<h2 id="六、RAG的技术挑战与未来发展"><a href="#六、RAG的技术挑战与未来发展" class="headerlink" title="六、RAG的技术挑战与未来发展"></a>六、RAG的技术挑战与未来发展</h2><h3 id="1-当前挑战"><a href="#1-当前挑战" class="headerlink" title="1. 当前挑战"></a>1. 当前挑战</h3><ul>
+<h2 id="六-rag的技术挑战与未来发展"><a class="markdownIt-Anchor" href="#六-rag的技术挑战与未来发展"></a> 六、RAG的技术挑战与未来发展</h2>
+<h3 id="1-当前挑战"><a class="markdownIt-Anchor" href="#1-当前挑战"></a> 1. 当前挑战</h3>
+<ul>
 <li><strong>长文本处理</strong>：如何有效索引和检索长文档</li>
 <li><strong>多模态内容</strong>：图像、音频等非文本内容的检索</li>
 <li><strong>实时性能</strong>：降低检索延迟，提高用户体验</li>
 <li><strong>上下文窗口限制</strong>：如何在有限窗口中包含更多相关信息</li>
 </ul>
-<h3 id="2-未来发展方向"><a href="#2-未来发展方向" class="headerlink" title="2. 未来发展方向"></a>2. 未来发展方向</h3><h4 id="a-自适应RAG"><a href="#a-自适应RAG" class="headerlink" title="a) 自适应RAG"></a>a) 自适应RAG</h4><ul>
+<h3 id="2-未来发展方向"><a class="markdownIt-Anchor" href="#2-未来发展方向"></a> 2. 未来发展方向</h3>
+<h4 id="a-自适应rag"><a class="markdownIt-Anchor" href="#a-自适应rag"></a> a) 自适应RAG</h4>
+<ul>
 <li>系统根据问题复杂度动态调整检索策略</li>
 <li>学习用户偏好和查询模式</li>
 </ul>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">adaptive_retrieval</span>(<span class="hljs-params">query, user_profile</span>):<br>    query_complexity = analyze_complexity(query)<br>    user_expertise = user_profile.get(<span class="hljs-string">&#x27;expertise_level&#x27;</span>, <span class="hljs-string">&#x27;general&#x27;</span>)<br>    <br>    <span class="hljs-keyword">if</span> query_complexity == <span class="hljs-string">&#x27;high&#x27;</span> <span class="hljs-keyword">and</span> user_expertise == <span class="hljs-string">&#x27;expert&#x27;</span>:<br>        <span class="hljs-keyword">return</span> deep_technical_retrieval(query)<br>    <span class="hljs-keyword">elif</span> <span class="hljs-string">&#x27;historical&#x27;</span> <span class="hljs-keyword">in</span> analyze_query_intent(query):<br>        <span class="hljs-keyword">return</span> temporal_aware_retrieval(query)<br>    <span class="hljs-keyword">else</span>:<br>        <span class="hljs-keyword">return</span> standard_retrieval(query)<br></code></pre></td></tr></table></figure>
-
-<h4 id="b-多代理RAG协作"><a href="#b-多代理RAG协作" class="headerlink" title="b) 多代理RAG协作"></a>b) 多代理RAG协作</h4><ul>
+<h4 id="b-多代理rag协作"><a class="markdownIt-Anchor" href="#b-多代理rag协作"></a> b) 多代理RAG协作</h4>
+<ul>
 <li>专门的检索代理提供知识支持</li>
-<li>多代理协作解决复杂问题</li>
+<li>多代理协作解决复杂问题<br />
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 500"><!-- 定义渐变和效果 -->
+<defs>
+  <!-- 背景渐变 -->
+  <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+    <stop offset="0%" stop-color="#f8f9fb" />
+    <stop offset="100%" stop-color="#edf1f7" />
+  </linearGradient>
+  <!-- 当前RAG渐变 -->
+  <linearGradient id="currentGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+    <stop offset="0%" stop-color="#f5f5f5" />
+    <stop offset="100%" stop-color="#e0e0e0" />
+  </linearGradient>
+  <!-- 增强RAG渐变 -->
+  <linearGradient id="enhancedGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+    <stop offset="0%" stop-color="#e6f7ff" />
+    <stop offset="100%" stop-color="#bae7ff" />
+  </linearGradient>
+  <!-- 未来RAG渐变 -->
+  <linearGradient id="futureGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+    <stop offset="0%" stop-color="#f6ffed" />
+    <stop offset="100%" stop-color="#d9f7be" />
+  </linearGradient>
+  <!-- 内部卡片渐变 - 当前 -->
+  <linearGradient id="cardCurrentGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+    <stop offset="0%" stop-color="#ffffff" />
+    <stop offset="100%" stop-color="#f5f5f5" />
+  </linearGradient>
+  <!-- 内部卡片渐变 - 增强 -->
+  <linearGradient id="cardEnhancedGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+    <stop offset="0%" stop-color="#ffffff" />
+    <stop offset="100%" stop-color="#e6f7ff" />
+  </linearGradient>
+  <!-- 内部卡片渐变 - 未来 -->
+  <linearGradient id="cardFutureGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+    <stop offset="0%" stop-color="#ffffff" />
+    <stop offset="100%" stop-color="#f6ffed" />
+  </linearGradient>
+  <!-- 时间线渐变 -->
+  <linearGradient id="timelineGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+    <stop offset="0%" stop-color="#666666" />
+    <stop offset="50%" stop-color="#1890ff" />
+    <stop offset="100%" stop-color="#52c41a" />
+  </linearGradient>
+  <!-- 阴影效果 -->
+  <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+    <feDropShadow dx="2" dy="3" stdDeviation="3" flood-opacity="0.15"/>
+  </filter>
+  <!-- 轻微阴影 -->
+  <filter id="lightShadow" x="-10%" y="-10%" width="120%" height="120%">
+    <feDropShadow dx="1" dy="1" stdDeviation="1" flood-opacity="0.1"/>
+  </filter>
+  <!-- 文字阴影 -->
+  <filter id="textShadow" x="-10%" y="-10%" width="120%" height="120%">
+    <feDropShadow dx="1" dy="1" stdDeviation="1" flood-opacity="0.2"/>
+  </filter>
+  <!-- 箭头标记 -->
+  <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+    <polygon points="0 0, 10 3.5, 0 7" fill="#333"/>
+  </marker>
+  <!-- 发光箭头标记 -->
+  <marker id="glowArrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+    <polygon points="0 0, 10 3.5, 0 7" fill="#1890ff"/>
+  </marker>
+  <!-- 发光箭头标记2 -->
+  <marker id="glowArrowhead2" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+    <polygon points="0 0, 10 3.5, 0 7" fill="#52c41a"/>
+  </marker>
+  <!-- 纹理图案 -->
+  <pattern id="diagonalHatch" width="10" height="10" patternTransform="rotate(45 0 0)" patternUnits="userSpaceOnUse">
+    <line x1="0" y1="0" x2="0" y2="10" style="stroke:#1890ff; stroke-width:1; stroke-opacity:0.05" />
+  </pattern>
+  <!-- 动画路径 -->
+  <linearGradient id="animatedGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+    <stop offset="0%" stop-color="#1890ff" stop-opacity="0.8">
+      <animate attributeName="offset" values="0;1" dur="3s" repeatCount="indefinite"/>
+    </stop>
+    <stop offset="25%" stop-color="#1890ff" stop-opacity="0">
+      <animate attributeName="offset" values="0.25;1.25" dur="3s" repeatCount="indefinite"/>
+    </stop>
+  </linearGradient>
+  <linearGradient id="animatedGradient2" x1="0%" y1="0%" x2="100%" y2="0%">
+    <stop offset="0%" stop-color="#52c41a" stop-opacity="0.8">
+      <animate attributeName="offset" values="0;1" dur="3s" repeatCount="indefinite"/>
+    </stop>
+    <stop offset="25%" stop-color="#52c41a" stop-opacity="0">
+      <animate attributeName="offset" values="0.25;1.25" dur="3s" repeatCount="indefinite"/>
+    </stop>
+  </linearGradient>
+</defs>
+<!-- 背景 -->
+<rect width="900" height="500" fill="url(#bgGradient)" rx="8"/>
+<rect width="900" height="500" fill="url(#diagonalHatch)" rx="8" opacity="0.4"/>
+<!-- 标题和时间线 -->
+<text x="450" y="50" font-family="Arial, sans-serif" font-size="28" font-weight="bold" text-anchor="middle" fill="#333" filter="url(#textShadow)">
+  RAG 技术发展趋势
+</text>
+<!-- 时间线 -->
+<rect x="100" y="320" width="700" height="6" rx="3" fill="url(#timelineGradient)"/>
+<!-- 时间标记 -->
+<circle cx="150" cy="323" r="10" fill="#666"/>
+<text x="150" y="350" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" fill="#666">
+  2020-2022
+</text>
+<circle cx="450" cy="323" r="10" fill="#1890ff"/>
+<text x="450" y="350" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" fill="#1890ff">
+  2023-2024
+</text>
+<circle cx="750" cy="323" r="10" fill="#52c41a"/>
+<text x="750" y="350" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" fill="#52c41a">
+  2025+
+</text>
+<!-- 当前RAG -->
+<g transform="translate(0,10)">
+  <rect x="50" y="90" width="220" height="180" rx="12" fill="url(#currentGradient)" stroke="#666" stroke-width="2" filter="url(#shadow)"/>
+  <text x="160" y="85" font-family="Arial, sans-serif" font-size="20" font-weight="bold" text-anchor="middle" fill="#333">
+    当前 RAG (2020-2022)
+  </text>
+  <!-- 简单图标 -->
+  <circle cx="90" cy="120" r="15" fill="#f5f5f5" stroke="#666" stroke-width="1.5"/>
+  <text x="90" y="125" font-family="Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#666">1.0</text>
+  <!-- 内容卡片 -->
+  <rect x="70" y="145" width="180" height="105" rx="8" fill="url(#cardCurrentGradient)" stroke="#666" stroke-width="1" filter="url(#lightShadow)"/>
+  <!-- 内容项目 -->
+  <line x1="85" y1="170" x2="95" y2="170" stroke="#666" stroke-width="2"/>
+  <text x="115" y="174" font-family="Arial, sans-serif" font-size="14" text-anchor="start" fill="#333">
+    单一检索-生成流程
+  </text>
+  <line x1="85" y1="195" x2="95" y2="195" stroke="#666" stroke-width="2"/>
+  <text x="115" y="199" font-family="Arial, sans-serif" font-size="14" text-anchor="start" fill="#333">
+    基本向量检索
+  </text>
+  <line x1="85" y1="220" x2="95" y2="220" stroke="#666" stroke-width="2"/>
+  <text x="115" y="224" font-family="Arial, sans-serif" font-size="14" text-anchor="start" fill="#333">
+    简单提示工程
+  </text>
+</g>
+<!-- 增强RAG -->
+<g transform="translate(0,10)">
+  <rect x="340" y="90" width="220" height="180" rx="12" fill="url(#enhancedGradient)" stroke="#1890ff" stroke-width="2" filter="url(#shadow)"/>
+  <text x="450" y="85" font-family="Arial, sans-serif" font-size="20" font-weight="bold" text-anchor="middle" fill="#333">
+    增强 RAG (2023-2024)
+  </text>
+  <!-- 进阶图标 -->
+  <circle cx="380" cy="120" r="15" fill="#e6f7ff" stroke="#1890ff" stroke-width="1.5"/>
+  <text x="380" y="125" font-family="Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#1890ff">2.0</text>
+  <!-- 内容卡片 -->
+  <rect x="360" y="145" width="180" height="105" rx="8" fill="url(#cardEnhancedGradient)" stroke="#1890ff" stroke-width="1" filter="url(#lightShadow)"/>
+  <!-- 多策略图标 -->
+  <circle cx="375" cy="170" r="5" fill="#1890ff"/>
+  <text x="405" y="174" font-family="Arial, sans-serif" font-size="14" text-anchor="start" fill="#333">
+    多策略检索
+  </text>
+  <!-- 推理图标 -->
+  <circle cx="375" cy="195" r="5" fill="#1890ff"/>
+  <text x="405" y="199" font-family="Arial, sans-serif" font-size="14" text-anchor="start" fill="#333">
+    推理增强
+  </text>
+  <!-- 自我评估图标 -->
+  <circle cx="375" cy="220" r="5" fill="#1890ff"/>
+  <text x="405" y="224" font-family="Arial, sans-serif" font-size="14" text-anchor="start" fill="#333">
+    自我评估
+  </text>
+  <!-- 当前位置标记 -->
+  <rect x="400" y="100" width="100" height="25" rx="12.5" fill="#e6f7ff" stroke="#1890ff" stroke-width="1.5"/>
+  <text x="450" y="117" font-family="Arial, sans-serif" font-size="12" font-weight="bold" text-anchor="middle" fill="#1890ff">
+    当前技术位置
+  </text>
+  <path d="M450 80 L450 90" stroke="#1890ff" stroke-width="1.5" stroke-dasharray="3,2"/>
+</g>
+<!-- 未来RAG -->
+<g transform="translate(0,10)">
+  <rect x="630" y="90" width="220" height="180" rx="12" fill="url(#futureGradient)" stroke="#52c41a" stroke-width="2" filter="url(#shadow)"/>
+  <text x="740" y="85" font-family="Arial, sans-serif" font-size="20" font-weight="bold" text-anchor="middle" fill="#333">
+    未来 RAG (2025+)
+  </text>
+  <!-- 未来图标 -->
+  <circle cx="670" cy="120" r="15" fill="#f6ffed" stroke="#52c41a" stroke-width="1.5"/>
+  <text x="670" y="125" font-family="Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#52c41a">3.0</text>
+  <!-- 内容卡片 -->
+  <rect x="650" y="145" width="180" height="150" rx="8" fill="url(#cardFutureGradient)" stroke="#52c41a" stroke-width="1" filter="url(#lightShadow)"/>
+  <!-- 内容项目 -->
+  <rect x="663" y="163" width="7" height="7" rx="1" fill="#52c41a"/>
+  <text x="680" y="170" font-family="Arial, sans-serif" font-size="14" text-anchor="start" fill="#333">
+    多代理协作
+  </text>
+  <rect x="663" y="183" width="7" height="7" rx="1" fill="#52c41a"/>
+  <text x="680" y="190" font-family="Arial, sans-serif" font-size="14" text-anchor="start" fill="#333">
+    持续学习能力
+  </text>
+  <rect x="663" y="203" width="7" height="7" rx="1" fill="#52c41a"/>
+  <text x="680" y="210" font-family="Arial, sans-serif" font-size="14" text-anchor="start" fill="#333">
+    多模态RAG
+  </text>
+  <rect x="663" y="223" width="7" height="7" rx="1" fill="#52c41a"/>
+  <text x="680" y="230" font-family="Arial, sans-serif" font-size="14" text-anchor="start" fill="#333">
+    知识蒸馏
+  </text>
+  <rect x="663" y="243" width="7" height="7" rx="1" fill="#52c41a"/>
+  <text x="680" y="250" font-family="Arial, sans-serif" font-size="14" text-anchor="start" fill="#333">
+    自适应架构
+  </text>
+  <rect x="663" y="263" width="7" height="7" rx="1" fill="#52c41a"/>
+  <text x="680" y="270" font-family="Arial, sans-serif" font-size="14" text-anchor="start" fill="#333">
+    细粒度知识融合
+  </text>
+</g>
+<!-- 连接线 - 动画版 -->
+<path d="M270 170 L340 170" stroke="url(#animatedGradient)" stroke-width="3" stroke-linecap="round"/>
+<path d="M560 170 L630 170" stroke="url(#animatedGradient2)" stroke-width="3" stroke-linecap="round"/>
+<!-- 发展阶段标签 -->
+<rect x="50" y="280" width="220" height="25" rx="5" fill="#f0f0f0" fill-opacity="0.7" stroke="#666" stroke-width="1"/>
+<text x="160" y="297" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" fill="#666">
+  基础阶段: 知识获取
+</text>
+<rect x="340" y="280" width="220" height="25" rx="5" fill="#e6f7ff" fill-opacity="0.7" stroke="#1890ff" stroke-width="1"/>
+<text x="450" y="297" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" fill="#1890ff">
+  发展阶段: 知识理解
+</text>
+<rect x="630" y="280" width="220" height="25" rx="5" fill="#f6ffed" fill-opacity="0.7" stroke="#52c41a" stroke-width="1"/>
+<text x="740" y="297" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" fill="#52c41a">
+  未来阶段: 知识推理
+</text>
+<!-- 关键技术突破 -->
+<g transform="translate(-10,0)">
+  <line x1="160" y1="323" x2="160" y2="375" stroke="#666" stroke-width="1.5" stroke-dasharray="4,2"/>
+  <rect x="110" y="375" width="100" height="30" rx="15" fill="#f5f5f5" stroke="#666" stroke-width="1"/>
+  <text x="160" y="395" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#666">
+    基础检索方法
+  </text>
+</g>
+<g transform="translate(-10,0)">
+  <line x1="310" y1="323" x2="310" y2="405" stroke="#666" stroke-width="1.5" stroke-dasharray="4,2"/>
+  <rect x="250" y="405" width="120" height="30" rx="15" fill="#f5f5f5" stroke="#666" stroke-width="1"/>
+  <text x="310" y="425" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#666">
+    检索-生成分离架构
+  </text>
+</g>
+<g transform="translate(-10,0)">
+  <line x1="450" y1="323" x2="450" y2="375" stroke="#1890ff" stroke-width="1.5" stroke-dasharray="4,2"/>
+  <rect x="385" y="375" width="130" height="30" rx="15" fill="#e6f7ff" stroke="#1890ff" stroke-width="1"/>
+  <text x="450" y="395" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#1890ff">
+    自评估与重排序
+  </text>
+</g>
+<g transform="translate(-10,0)">
+  <line x1="600" y1="323" x2="600" y2="405" stroke="#1890ff" stroke-width="1.5" stroke-dasharray="4,2"/>
+  <rect x="540" y="405" width="120" height="30" rx="15" fill="#e6f7ff" stroke="#1890ff" stroke-width="1"/>
+  <text x="600" y="425" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#1890ff">
+    混合检索策略
+  </text>
+</g>
+<g transform="translate(-10,0)">
+  <line x1="750" y1="323" x2="750" y2="375" stroke="#52c41a" stroke-width="1.5" stroke-dasharray="4,2"/>
+  <rect x="685" y="375" width="130" height="30" rx="15" fill="#f6ffed" stroke="#52c41a" stroke-width="1"/>
+  <text x="750" y="395" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#52c41a">
+    多代理系统
+  </text>
+</g>
+<!-- 底部注释 -->
+<rect x="150" y="445" width="600" height="50" rx="8" fill="#fff" fill-opacity="0.8" stroke="#ddd" stroke-width="1" filter="url(#shadow)"/>
+<text x="450" y="465" font-family="Arial, sans-serif" font-size="16" font-weight="bold" text-anchor="middle" fill="#333">
+  核心发展方向: 从简单检索到知识理解与推理
+</text>
+<text x="450" y="485" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" fill="#666">
+  更高效、更准确、更智能的知识获取与应用
+</text>
+<!-- 底部装饰 -->
+<path d="M0,460 Q450,490 900,460" fill="none" stroke="#1890ff" stroke-width="1" stroke-opacity="0.2" stroke-dasharray="5,5"/>
+<path d="M0,470 Q450,500 900,470" fill="none" stroke="#1890ff" stroke-width="0.5" stroke-opacity="0.2" stroke-dasharray="5,5"/>
+</li>
 </ul>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 500">
-  <!-- 定义渐变和效果 -->
-  <defs>
-    <!-- 背景渐变 -->
-    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#f8f9fb" />
-      <stop offset="100%" stop-color="#edf1f7" />
-    </linearGradient>
-    <!-- 当前RAG渐变 -->
-    <linearGradient id="currentGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" stop-color="#f5f5f5" />
-      <stop offset="100%" stop-color="#e0e0e0" />
-    </linearGradient>
-    <!-- 增强RAG渐变 -->
-    <linearGradient id="enhancedGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" stop-color="#e6f7ff" />
-      <stop offset="100%" stop-color="#bae7ff" />
-    </linearGradient>
-    <!-- 未来RAG渐变 -->
-    <linearGradient id="futureGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" stop-color="#f6ffed" />
-      <stop offset="100%" stop-color="#d9f7be" />
-    </linearGradient>
-    <!-- 内部卡片渐变 - 当前 -->
-    <linearGradient id="cardCurrentGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" stop-color="#ffffff" />
-      <stop offset="100%" stop-color="#f5f5f5" />
-    </linearGradient>
-    <!-- 内部卡片渐变 - 增强 -->
-    <linearGradient id="cardEnhancedGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" stop-color="#ffffff" />
-      <stop offset="100%" stop-color="#e6f7ff" />
-    </linearGradient>
-    <!-- 内部卡片渐变 - 未来 -->
-    <linearGradient id="cardFutureGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" stop-color="#ffffff" />
-      <stop offset="100%" stop-color="#f6ffed" />
-    </linearGradient>
-    <!-- 时间线渐变 -->
-    <linearGradient id="timelineGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" stop-color="#666666" />
-      <stop offset="50%" stop-color="#1890ff" />
-      <stop offset="100%" stop-color="#52c41a" />
-    </linearGradient>
-    <!-- 阴影效果 -->
-    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
-      <feDropShadow dx="2" dy="3" stdDeviation="3" flood-opacity="0.15"/>
-    </filter>
-    <!-- 轻微阴影 -->
-    <filter id="lightShadow" x="-10%" y="-10%" width="120%" height="120%">
-      <feDropShadow dx="1" dy="1" stdDeviation="1" flood-opacity="0.1"/>
-    </filter>
-    <!-- 文字阴影 -->
-    <filter id="textShadow" x="-10%" y="-10%" width="120%" height="120%">
-      <feDropShadow dx="1" dy="1" stdDeviation="1" flood-opacity="0.2"/>
-    </filter>
-    <!-- 箭头标记 -->
-    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
-      <polygon points="0 0, 10 3.5, 0 7" fill="#333"/>
-    </marker>
-    <!-- 发光箭头标记 -->
-    <marker id="glowArrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
-      <polygon points="0 0, 10 3.5, 0 7" fill="#1890ff"/>
-    </marker>
-    <!-- 发光箭头标记2 -->
-    <marker id="glowArrowhead2" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
-      <polygon points="0 0, 10 3.5, 0 7" fill="#52c41a"/>
-    </marker>
-    <!-- 纹理图案 -->
-    <pattern id="diagonalHatch" width="10" height="10" patternTransform="rotate(45 0 0)" patternUnits="userSpaceOnUse">
-      <line x1="0" y1="0" x2="0" y2="10" style="stroke:#1890ff; stroke-width:1; stroke-opacity:0.05" />
-    </pattern>
-    <!-- 动画路径 -->
-    <linearGradient id="animatedGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" stop-color="#1890ff" stop-opacity="0.8">
-        <animate attributeName="offset" values="0;1" dur="3s" repeatCount="indefinite"/>
-      </stop>
-      <stop offset="25%" stop-color="#1890ff" stop-opacity="0">
-        <animate attributeName="offset" values="0.25;1.25" dur="3s" repeatCount="indefinite"/>
-      </stop>
-    </linearGradient>
-    <linearGradient id="animatedGradient2" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" stop-color="#52c41a" stop-opacity="0.8">
-        <animate attributeName="offset" values="0;1" dur="3s" repeatCount="indefinite"/>
-      </stop>
-      <stop offset="25%" stop-color="#52c41a" stop-opacity="0">
-        <animate attributeName="offset" values="0.25;1.25" dur="3s" repeatCount="indefinite"/>
-      </stop>
-    </linearGradient>
-  </defs>
-  <!-- 背景 -->
-  <rect width="900" height="500" fill="url(#bgGradient)" rx="8"/>
-  <rect width="900" height="500" fill="url(#diagonalHatch)" rx="8" opacity="0.4"/>
-  <!-- 标题和时间线 -->
-  <text x="450" y="50" font-family="Arial, sans-serif" font-size="28" font-weight="bold" text-anchor="middle" fill="#333" filter="url(#textShadow)">
-    RAG 技术发展趋势
-  </text>
-  <!-- 时间线 -->
-  <rect x="100" y="320" width="700" height="6" rx="3" fill="url(#timelineGradient)"/>
-  <!-- 时间标记 -->
-  <circle cx="150" cy="323" r="10" fill="#666"/>
-  <text x="150" y="350" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" fill="#666">
-    2020-2022
-  </text>
-  <circle cx="450" cy="323" r="10" fill="#1890ff"/>
-  <text x="450" y="350" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" fill="#1890ff">
-    2023-2024
-  </text>
-  <circle cx="750" cy="323" r="10" fill="#52c41a"/>
-  <text x="750" y="350" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" fill="#52c41a">
-    2025+
-  </text>
-  <!-- 当前RAG -->
-  <g transform="translate(0,10)">
-    <rect x="50" y="90" width="220" height="180" rx="12" fill="url(#currentGradient)" stroke="#666" stroke-width="2" filter="url(#shadow)"/>
-    <text x="160" y="85" font-family="Arial, sans-serif" font-size="20" font-weight="bold" text-anchor="middle" fill="#333">
-      当前 RAG (2020-2022)
-    </text>
-    <!-- 简单图标 -->
-    <circle cx="90" cy="120" r="15" fill="#f5f5f5" stroke="#666" stroke-width="1.5"/>
-    <text x="90" y="125" font-family="Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#666">1.0</text>
-    <!-- 内容卡片 -->
-    <rect x="70" y="145" width="180" height="105" rx="8" fill="url(#cardCurrentGradient)" stroke="#666" stroke-width="1" filter="url(#lightShadow)"/>
-    <!-- 内容项目 -->
-    <line x1="85" y1="170" x2="95" y2="170" stroke="#666" stroke-width="2"/>
-    <text x="115" y="174" font-family="Arial, sans-serif" font-size="14" text-anchor="start" fill="#333">
-      单一检索-生成流程
-    </text>
-    <line x1="85" y1="195" x2="95" y2="195" stroke="#666" stroke-width="2"/>
-    <text x="115" y="199" font-family="Arial, sans-serif" font-size="14" text-anchor="start" fill="#333">
-      基本向量检索
-    </text>
-    <line x1="85" y1="220" x2="95" y2="220" stroke="#666" stroke-width="2"/>
-    <text x="115" y="224" font-family="Arial, sans-serif" font-size="14" text-anchor="start" fill="#333">
-      简单提示工程
-    </text>
-  </g>
-  <!-- 增强RAG -->
-  <g transform="translate(0,10)">
-    <rect x="340" y="90" width="220" height="180" rx="12" fill="url(#enhancedGradient)" stroke="#1890ff" stroke-width="2" filter="url(#shadow)"/>
-    <text x="450" y="85" font-family="Arial, sans-serif" font-size="20" font-weight="bold" text-anchor="middle" fill="#333">
-      增强 RAG (2023-2024)
-    </text>
-    <!-- 进阶图标 -->
-    <circle cx="380" cy="120" r="15" fill="#e6f7ff" stroke="#1890ff" stroke-width="1.5"/>
-    <text x="380" y="125" font-family="Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#1890ff">2.0</text>
-    <!-- 内容卡片 -->
-    <rect x="360" y="145" width="180" height="105" rx="8" fill="url(#cardEnhancedGradient)" stroke="#1890ff" stroke-width="1" filter="url(#lightShadow)"/>
-    <!-- 多策略图标 -->
-    <circle cx="375" cy="170" r="5" fill="#1890ff"/>
-    <text x="405" y="174" font-family="Arial, sans-serif" font-size="14" text-anchor="start" fill="#333">
-      多策略检索
-    </text>
-    <!-- 推理图标 -->
-    <circle cx="375" cy="195" r="5" fill="#1890ff"/>
-    <text x="405" y="199" font-family="Arial, sans-serif" font-size="14" text-anchor="start" fill="#333">
-      推理增强
-    </text>
-    <!-- 自我评估图标 -->
-    <circle cx="375" cy="220" r="5" fill="#1890ff"/>
-    <text x="405" y="224" font-family="Arial, sans-serif" font-size="14" text-anchor="start" fill="#333">
-      自我评估
-    </text>
-    <!-- 当前位置标记 -->
-    <rect x="400" y="100" width="100" height="25" rx="12.5" fill="#e6f7ff" stroke="#1890ff" stroke-width="1.5"/>
-    <text x="450" y="117" font-family="Arial, sans-serif" font-size="12" font-weight="bold" text-anchor="middle" fill="#1890ff">
-      当前技术位置
-    </text>
-    <path d="M450 80 L450 90" stroke="#1890ff" stroke-width="1.5" stroke-dasharray="3,2"/>
-  </g>
-  <!-- 未来RAG -->
-  <g transform="translate(0,10)">
-    <rect x="630" y="90" width="220" height="180" rx="12" fill="url(#futureGradient)" stroke="#52c41a" stroke-width="2" filter="url(#shadow)"/>
-    <text x="740" y="85" font-family="Arial, sans-serif" font-size="20" font-weight="bold" text-anchor="middle" fill="#333">
-      未来 RAG (2025+)
-    </text>
-    <!-- 未来图标 -->
-    <circle cx="670" cy="120" r="15" fill="#f6ffed" stroke="#52c41a" stroke-width="1.5"/>
-    <text x="670" y="125" font-family="Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#52c41a">3.0</text>
-    <!-- 内容卡片 -->
-    <rect x="650" y="145" width="180" height="150" rx="8" fill="url(#cardFutureGradient)" stroke="#52c41a" stroke-width="1" filter="url(#lightShadow)"/>
-    <!-- 内容项目 -->
-    <rect x="663" y="163" width="7" height="7" rx="1" fill="#52c41a"/>
-    <text x="680" y="170" font-family="Arial, sans-serif" font-size="14" text-anchor="start" fill="#333">
-      多代理协作
-    </text>
-    <rect x="663" y="183" width="7" height="7" rx="1" fill="#52c41a"/>
-    <text x="680" y="190" font-family="Arial, sans-serif" font-size="14" text-anchor="start" fill="#333">
-      持续学习能力
-    </text>
-    <rect x="663" y="203" width="7" height="7" rx="1" fill="#52c41a"/>
-    <text x="680" y="210" font-family="Arial, sans-serif" font-size="14" text-anchor="start" fill="#333">
-      多模态RAG
-    </text>
-    <rect x="663" y="223" width="7" height="7" rx="1" fill="#52c41a"/>
-    <text x="680" y="230" font-family="Arial, sans-serif" font-size="14" text-anchor="start" fill="#333">
-      知识蒸馏
-    </text>
-    <rect x="663" y="243" width="7" height="7" rx="1" fill="#52c41a"/>
-    <text x="680" y="250" font-family="Arial, sans-serif" font-size="14" text-anchor="start" fill="#333">
-      自适应架构
-    </text>
-    <rect x="663" y="263" width="7" height="7" rx="1" fill="#52c41a"/>
-    <text x="680" y="270" font-family="Arial, sans-serif" font-size="14" text-anchor="start" fill="#333">
-      细粒度知识融合
-    </text>
-  </g>
-  <!-- 连接线 - 动画版 -->
-  <path d="M270 170 L340 170" stroke="url(#animatedGradient)" stroke-width="3" stroke-linecap="round"/>
-  <path d="M560 170 L630 170" stroke="url(#animatedGradient2)" stroke-width="3" stroke-linecap="round"/>
-  <!-- 发展阶段标签 -->
-  <rect x="50" y="280" width="220" height="25" rx="5" fill="#f0f0f0" fill-opacity="0.7" stroke="#666" stroke-width="1"/>
-  <text x="160" y="297" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" fill="#666">
-    基础阶段: 知识获取
-  </text>
-  <rect x="340" y="280" width="220" height="25" rx="5" fill="#e6f7ff" fill-opacity="0.7" stroke="#1890ff" stroke-width="1"/>
-  <text x="450" y="297" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" fill="#1890ff">
-    发展阶段: 知识理解
-  </text>
-  <rect x="630" y="280" width="220" height="25" rx="5" fill="#f6ffed" fill-opacity="0.7" stroke="#52c41a" stroke-width="1"/>
-  <text x="740" y="297" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" fill="#52c41a">
-    未来阶段: 知识推理
-  </text>
-  <!-- 关键技术突破 -->
-  <g transform="translate(-10,0)">
-    <line x1="160" y1="323" x2="160" y2="375" stroke="#666" stroke-width="1.5" stroke-dasharray="4,2"/>
-    <rect x="110" y="375" width="100" height="30" rx="15" fill="#f5f5f5" stroke="#666" stroke-width="1"/>
-    <text x="160" y="395" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#666">
-      基础检索方法
-    </text>
-  </g>
-  <g transform="translate(-10,0)">
-    <line x1="310" y1="323" x2="310" y2="405" stroke="#666" stroke-width="1.5" stroke-dasharray="4,2"/>
-    <rect x="250" y="405" width="120" height="30" rx="15" fill="#f5f5f5" stroke="#666" stroke-width="1"/>
-    <text x="310" y="425" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#666">
-      检索-生成分离架构
-    </text>
-  </g>
-  <g transform="translate(-10,0)">
-    <line x1="450" y1="323" x2="450" y2="375" stroke="#1890ff" stroke-width="1.5" stroke-dasharray="4,2"/>
-    <rect x="385" y="375" width="130" height="30" rx="15" fill="#e6f7ff" stroke="#1890ff" stroke-width="1"/>
-    <text x="450" y="395" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#1890ff">
-      自评估与重排序
-    </text>
-  </g>
-  <g transform="translate(-10,0)">
-    <line x1="600" y1="323" x2="600" y2="405" stroke="#1890ff" stroke-width="1.5" stroke-dasharray="4,2"/>
-    <rect x="540" y="405" width="120" height="30" rx="15" fill="#e6f7ff" stroke="#1890ff" stroke-width="1"/>
-    <text x="600" y="425" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#1890ff">
-      混合检索策略
-    </text>
-  </g>
-  <g transform="translate(-10,0)">
-    <line x1="750" y1="323" x2="750" y2="375" stroke="#52c41a" stroke-width="1.5" stroke-dasharray="4,2"/>
-    <rect x="685" y="375" width="130" height="30" rx="15" fill="#f6ffed" stroke="#52c41a" stroke-width="1"/>
-    <text x="750" y="395" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#52c41a">
-      多代理系统
-    </text>
-  </g>
-  <!-- 底部注释 -->
-  <rect x="150" y="445" width="600" height="50" rx="8" fill="#fff" fill-opacity="0.8" stroke="#ddd" stroke-width="1" filter="url(#shadow)"/>
-  <text x="450" y="465" font-family="Arial, sans-serif" font-size="16" font-weight="bold" text-anchor="middle" fill="#333">
-    核心发展方向: 从简单检索到知识理解与推理
-  </text>
-  <text x="450" y="485" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" fill="#666">
-    更高效、更准确、更智能的知识获取与应用
-  </text>
-  <!-- 底部装饰 -->
-  <path d="M0,460 Q450,490 900,460" fill="none" stroke="#1890ff" stroke-width="1" stroke-opacity="0.2" stroke-dasharray="5,5"/>
-  <path d="M0,470 Q450,500 900,470" fill="none" stroke="#1890ff" stroke-width="0.5" stroke-opacity="0.2" stroke-dasharray="5,5"/>
 </svg>
-
-
-<h4 id="c-多模态RAG"><a href="#c-多模态RAG" class="headerlink" title="c) 多模态RAG"></a>c) 多模态RAG</h4><ul>
+<h4 id="c-多模态rag"><a class="markdownIt-Anchor" href="#c-多模态rag"></a> c) 多模态RAG</h4>
+<ul>
 <li>支持图像、音频、视频等多模态内容检索</li>
 <li>跨模态理解与知识整合</li>
 </ul>
-<h4 id="d-细粒度知识集成"><a href="#d-细粒度知识集成" class="headerlink" title="d) 细粒度知识集成"></a>d) 细粒度知识集成</h4><ul>
+<h4 id="d-细粒度知识集成"><a class="markdownIt-Anchor" href="#d-细粒度知识集成"></a> d) 细粒度知识集成</h4>
+<ul>
 <li>知识图谱与RAG的深度融合</li>
 <li>实体关系推理能力</li>
 </ul>
-<h2 id="七、构建自己的RAG系统"><a href="#七、构建自己的RAG系统" class="headerlink" title="七、构建自己的RAG系统"></a>七、构建自己的RAG系统</h2><h3 id="1-开源工具生态"><a href="#1-开源工具生态" class="headerlink" title="1. 开源工具生态"></a>1. 开源工具生态</h3><p>现在构建RAG系统已经有了丰富的开源工具支持：</p>
+<h2 id="七-构建自己的rag系统"><a class="markdownIt-Anchor" href="#七-构建自己的rag系统"></a> 七、构建自己的RAG系统</h2>
+<h3 id="1-开源工具生态"><a class="markdownIt-Anchor" href="#1-开源工具生态"></a> 1. 开源工具生态</h3>
+<p>现在构建RAG系统已经有了丰富的开源工具支持：</p>
 <ul>
-<li><strong>LangChain&#x2F;LlamaIndex</strong>：提供RAG框架和组件</li>
+<li><strong>LangChain/LlamaIndex</strong>：提供RAG框架和组件</li>
 <li><strong>嵌入模型</strong>：BERT、Sentence-Transformers、OpenAI Embeddings等</li>
 <li><strong>向量数据库</strong>：Chroma、FAISS、Pinecone、Weaviate等</li>
 <li><strong>LLM选择</strong>：开源模型(LLaMA、Mistral)或API服务(OpenAI、Claude)</li>
 </ul>
-<h3 id="2-实现简易RAG系统"><a href="#2-实现简易RAG系统" class="headerlink" title="2. 实现简易RAG系统"></a>2. 实现简易RAG系统</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> langchain.document_loaders <span class="hljs-keyword">import</span> DirectoryLoader<br><span class="hljs-keyword">from</span> langchain.text_splitter <span class="hljs-keyword">import</span> RecursiveCharacterTextSplitter<br><span class="hljs-keyword">from</span> langchain.embeddings <span class="hljs-keyword">import</span> HuggingFaceEmbeddings<br><span class="hljs-keyword">from</span> langchain.vectorstores <span class="hljs-keyword">import</span> Chroma<br><span class="hljs-keyword">from</span> langchain.llms <span class="hljs-keyword">import</span> OpenAI<br><span class="hljs-keyword">from</span> langchain.chains <span class="hljs-keyword">import</span> RetrievalQA<br><br><span class="hljs-comment"># 1. 加载文档</span><br>loader = DirectoryLoader(<span class="hljs-string">&#x27;./documents/&#x27;</span>, glob=<span class="hljs-string">&quot;**/*.pdf&quot;</span>)<br>documents = loader.load()<br><br><span class="hljs-comment"># 2. 文档分块</span><br>text_splitter = RecursiveCharacterTextSplitter(<br>    chunk_size=<span class="hljs-number">1000</span>,<br>    chunk_overlap=<span class="hljs-number">200</span><br>)<br>chunks = text_splitter.split_documents(documents)<br><br><span class="hljs-comment"># 3. 创建嵌入和向量存储</span><br>embeddings = HuggingFaceEmbeddings(model_name=<span class="hljs-string">&quot;sentence-transformers/all-MiniLM-L6-v2&quot;</span>)<br>vectorstore = Chroma.from_documents(chunks, embeddings)<br><br><span class="hljs-comment"># 4. 创建检索器</span><br>retriever = vectorstore.as_retriever(search_kwargs=&#123;<span class="hljs-string">&quot;k&quot;</span>: <span class="hljs-number">5</span>&#125;)<br><br><span class="hljs-comment"># 5. 设置LLM和检索链</span><br>llm = OpenAI(temperature=<span class="hljs-number">0</span>)<br>qa_chain = RetrievalQA.from_chain_type(<br>    llm=llm,<br>    chain_type=<span class="hljs-string">&quot;stuff&quot;</span>,<br>    retriever=retriever<br>)<br><br><span class="hljs-comment"># 6. 查询</span><br>query = <span class="hljs-string">&quot;碳排放量计算方法有哪些？&quot;</span><br>response = qa_chain.run(query)<br><span class="hljs-built_in">print</span>(response)<br></code></pre></td></tr></table></figure>
-
-<h3 id="3-评估与优化"><a href="#3-评估与优化" class="headerlink" title="3. 评估与优化"></a>3. 评估与优化</h3><p>构建RAG系统后，重要的是对其进行评估和优化：</p>
+<h3 id="2-实现简易rag系统"><a class="markdownIt-Anchor" href="#2-实现简易rag系统"></a> 2. 实现简易RAG系统</h3>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> langchain.document_loaders <span class="hljs-keyword">import</span> DirectoryLoader<br><span class="hljs-keyword">from</span> langchain.text_splitter <span class="hljs-keyword">import</span> RecursiveCharacterTextSplitter<br><span class="hljs-keyword">from</span> langchain.embeddings <span class="hljs-keyword">import</span> HuggingFaceEmbeddings<br><span class="hljs-keyword">from</span> langchain.vectorstores <span class="hljs-keyword">import</span> Chroma<br><span class="hljs-keyword">from</span> langchain.llms <span class="hljs-keyword">import</span> OpenAI<br><span class="hljs-keyword">from</span> langchain.chains <span class="hljs-keyword">import</span> RetrievalQA<br><br><span class="hljs-comment"># 1. 加载文档</span><br>loader = DirectoryLoader(<span class="hljs-string">&#x27;./documents/&#x27;</span>, glob=<span class="hljs-string">&quot;**/*.pdf&quot;</span>)<br>documents = loader.load()<br><br><span class="hljs-comment"># 2. 文档分块</span><br>text_splitter = RecursiveCharacterTextSplitter(<br>    chunk_size=<span class="hljs-number">1000</span>,<br>    chunk_overlap=<span class="hljs-number">200</span><br>)<br>chunks = text_splitter.split_documents(documents)<br><br><span class="hljs-comment"># 3. 创建嵌入和向量存储</span><br>embeddings = HuggingFaceEmbeddings(model_name=<span class="hljs-string">&quot;sentence-transformers/all-MiniLM-L6-v2&quot;</span>)<br>vectorstore = Chroma.from_documents(chunks, embeddings)<br><br><span class="hljs-comment"># 4. 创建检索器</span><br>retriever = vectorstore.as_retriever(search_kwargs=&#123;<span class="hljs-string">&quot;k&quot;</span>: <span class="hljs-number">5</span>&#125;)<br><br><span class="hljs-comment"># 5. 设置LLM和检索链</span><br>llm = OpenAI(temperature=<span class="hljs-number">0</span>)<br>qa_chain = RetrievalQA.from_chain_type(<br>    llm=llm,<br>    chain_type=<span class="hljs-string">&quot;stuff&quot;</span>,<br>    retriever=retriever<br>)<br><br><span class="hljs-comment"># 6. 查询</span><br>query = <span class="hljs-string">&quot;碳排放量计算方法有哪些？&quot;</span><br>response = qa_chain.run(query)<br><span class="hljs-built_in">print</span>(response)<br></code></pre></td></tr></table></figure>
+<h3 id="3-评估与优化"><a class="markdownIt-Anchor" href="#3-评估与优化"></a> 3. 评估与优化</h3>
+<p>构建RAG系统后，重要的是对其进行评估和优化：</p>
 <ul>
 <li><strong>检索评估</strong>：计算召回率、精度等指标</li>
 <li><strong>回答质量评估</strong>：由人类或自动化方式评估准确性、相关性</li>
 <li><strong>用户反馈循环</strong>：根据实际使用情况持续优化系统</li>
 </ul>
-<h2 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h2><p>RAG技术代表了AI系统从”闭卷考试”到”开卷考试”的关键转变，它解决了LLM在知识时效性、专业性和可靠性方面的核心限制。</p>
+<h2 id="结语"><a class="markdownIt-Anchor" href="#结语"></a> 结语</h2>
+<p>RAG技术代表了AI系统从&quot;闭卷考试&quot;到&quot;开卷考试&quot;的关键转变，它解决了LLM在知识时效性、专业性和可靠性方面的核心限制。</p>
 <p>随着检索技术、大语言模型的持续进步，以及多代理协作、多模态理解等方向的发展，RAG将进一步改变我们与AI系统交互的方式，使AI能够提供更加精确、可靠且透明的回答。</p>
 <p>无论是企业知识管理、专业领域应用，还是个人助手，RAG都展现出巨大的应用潜力。通过深入理解RAG的本质、技术细节和实现方法，我们能够构建更加实用、强大的AI应用，让人工智能真正成为人类知识获取和处理的得力助手。</p>
 
@@ -1986,6 +2012,8 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
+        <a href="/tags/LLM/" class="print-no-link">#LLM</a>
+      
         <a href="/tags/RAG/" class="print-no-link">#RAG</a>
       
         <a href="/tags/%E6%A3%80%E7%B4%A2%E5%A2%9E%E5%BC%BA%E7%94%9F%E6%88%90/" class="print-no-link">#检索增强生成</a>
@@ -1993,8 +2021,6 @@
         <a href="/tags/AI%E6%8A%80%E6%9C%AF/" class="print-no-link">#AI技术</a>
       
         <a href="/tags/%E7%9F%A5%E8%AF%86%E5%BA%93/" class="print-no-link">#知识库</a>
-      
-        <a href="/tags/LLM/" class="print-no-link">#LLM</a>
       
     </div>
   
@@ -2073,34 +2099,6 @@
             </div>
 
             
-  
-  
-    <article id="comments" lazyload>
-      
-  <div class="disqus" style="width:100%">
-    <div id="disqus_thread"></div>
-    
-      <script type="text/javascript">
-        var disqus_config = function() {
-          this.page.url = 'http://xcq.ink/2023/09/11/RAG-%E4%B8%BAAI%E9%85%8D%E4%B8%8A%E5%A4%96%E9%83%A8%E8%AE%B0%E5%BF%86/';
-          this.page.identifier = '/2023/09/11/RAG-%E4%B8%BAAI%E9%85%8D%E4%B8%8A%E5%A4%96%E9%83%A8%E8%AE%B0%E5%BF%86/';
-        };
-        Fluid.utils.loadComments('#disqus_thread', function() {
-          var d = document, s = d.createElement('script');
-          s.src = '//' + 'fluid' + '.disqus.com/embed.js';
-          s.setAttribute('data-timestamp', new Date());
-          (d.head || d.body).appendChild(s);
-        });
-      </script>
-    
-    <noscript>Please enable JavaScript to view the comments</noscript>
-  </div>
-
-
-    </article>
-  
-
-
           </article>
         </div>
       </div>
