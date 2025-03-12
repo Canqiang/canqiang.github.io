@@ -27,7 +27,7 @@
 <meta property="og:description" content="深入浅出地解析MoE（Mixture of Experts）架构如何彻底改变大语言模型的设计，以及为什么它成为了Claude、Gemini和Mistral等顶尖AI模型的核心技术。">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2024-08-11T16:00:00.000Z">
-<meta property="article:modified_time" content="2025-03-12T07:15:53.916Z">
+<meta property="article:modified_time" content="2025-03-12T07:31:40.199Z">
 <meta property="article:author" content="Xander Xu">
 <meta property="article:tag" content="人工智能">
 <meta property="article:tag" content="LLM">
@@ -289,7 +289,7 @@
 <h2 id="什么是moe架构"><a class="markdownIt-Anchor" href="#什么是moe架构"></a> 什么是MoE架构？</h2>
 <p>MoE架构的核心思想非常优雅：<strong>将一个大模型分解为多个&quot;专家&quot;网络，但每次只激活其中的一小部分。</strong></p>
 <p>想象一个场景：你有一个复杂的问题需要解决，但不是找一个&quot;全能专家&quot;（这可能不存在），而是找到一个可以将你引导到合适专家那里的&quot;路由系统&quot;。</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs">┌─────────────┐<br>│   路由器    │<br>└──────┬──────┘<br>       │<br>       ▼<br>┌─────────────────────────────────────┐<br>│  ○      ○      ●      ●      ○     │<br>│专家1   专家2   专家3   专家4   专家5 │<br>└─────────────────────────────────────┘<br>           ↑      ↑<br>          被激活的专家<br></code></pre></td></tr></table></figure>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs">┌─────────────┐<br>│   路由器     │<br>└──────┬──────┘<br>       │<br>       ▼<br>┌─────────────────────────────────────┐<br>│  ○      ○      ●      ●      ○      │<br>│专家1   专家2   专家3   专家4   专家5   ｜<br>└─────────────────────────────────────┘<br>           ↑      ↑<br>          被激活的专家<br></code></pre></td></tr></table></figure>
 <p>在这个例子中，只有专家3和专家4被激活来处理当前输入，而其他专家保持&quot;休眠&quot;状态。</p>
 <h3 id="moe的数学表达"><a class="markdownIt-Anchor" href="#moe的数学表达"></a> MoE的数学表达</h3>
 <p>从数学角度看，MoE的计算可以表示为：</p>
@@ -309,7 +309,7 @@
     <rect width="600" height="350" fill="#ffffff"/>
     <!-- 横轴 -->
     <line x1="80" y1="280" x2="550" y2="280" stroke="#333" stroke-width="2"/>
-    <text x="315" y="315" font-family="Arial, sans-serif" font-size="16" text-anchor="middle" fill="#333">模型参数量</text>
+    <text x="315" y="310" font-family="Arial, sans-serif" font-size="16" text-anchor="middle" fill="#333">模型参数量</text>
     <!-- 刻度 -->
     <line x1="150" y1="280" x2="150" y2="285" stroke="#333" stroke-width="2"/>
     <text x="150" y="300" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#333">10B</text>
@@ -349,9 +349,10 @@
 <h2 id="moe在大语言模型中如何工作"><a class="markdownIt-Anchor" href="#moe在大语言模型中如何工作"></a> MoE在大语言模型中如何工作？</h2>
 <p>现代LLM中的MoE通常应用在Transformer架构的前馈网络(FFN)层：</p>
 
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 500" style="width:100%;max-width:700px;margin:30px auto;display:block;">
+<div>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 500" style="width:100%;max-width:700px;margin:30px auto;display:block;">
     <!-- 背景 -->
-    <rect width="700" height="500" fill="#ffffff"/>
+    <rect width="760" height="500" fill="#ffffff"/>
     <!-- 标题 -->
     <text x="350" y="40" font-family="Arial, sans-serif" font-size="20" font-weight="bold" text-anchor="middle" fill="#333">MoE架构在Transformer中的应用</text>
     <!-- 左侧：传统Transformer块 -->
@@ -388,47 +389,48 @@
     <rect x="420" y="360" width="160" height="50" rx="5" ry="5" fill="#fff" stroke="#333" stroke-width="1"/>
     <text x="500" y="390" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" fill="#333">Layer Norm</text>
     <!-- MoE放大图 -->
-    <rect x="440" y="270" width="30" height="70" fill="none" stroke="#0c0" stroke-width="1" stroke-dasharray="2,2"/>
-    <line x1="470" y1="305" x2="530" y2="305" stroke="#0c0" stroke-width="1" stroke-dasharray="2,2"/>
-    <circle cx="530" cy="305" r="5" fill="#0c0"/>
+    <rect x="640" y="270" width="30" height="70" fill="none" stroke="#0c0" stroke-width="1" stroke-dasharray="2,2"/>
+    <line x1="670" y1="305" x2="530" y2="305" stroke="#0c0" stroke-width="1" stroke-dasharray="2,2"/>
+    <circle cx="630" cy="305" r="5" fill="#0c0"/>
     <!-- MoE详情框 -->
-    <rect x="540" y="190" width="110" height="230" rx="10" ry="10" fill="#f0fff0" stroke="#0c0" stroke-width="1"/>
+    <rect x="640" y="190" width="110" height="230" rx="10" ry="10" fill="#f0fff0" stroke="#0c0" stroke-width="1"/>
     <!-- 路由器 -->
-    <rect x="550" y="200" width="90" height="30" rx="5" ry="5" fill="#FFD1DC" stroke="#333" stroke-width="1"/>
-    <text x="595" y="220" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#333">路由器</text>
+    <rect x="650" y="200" width="90" height="30" rx="5" ry="5" fill="#FFD1DC" stroke="#333" stroke-width="1"/>
+    <text x="695" y="220" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#333">路由器</text>
     <!-- 连接线 -->
-    <line x1="595" y1="230" x2="595" y2="245" stroke="#333" stroke-width="1"/>
-    <path d="M595,245 L565,260 L625,260 Z" fill="#f0f0f0" stroke="#333" stroke-width="1"/>
-    <text x="595" y="260" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#333">选择</text>
+    <line x1="695" y1="230" x2="695" y2="245" stroke="#333" stroke-width="1"/>
+    <path d="M695,245 L665,260 L725,260 Z" fill="#f0f0f0" stroke="#333" stroke-width="1"/>
+    <text x="695" y="260" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#333">选择</text>
     <!-- 专家们 -->
-    <line x1="565" y1="270" x2="565" y2="380" stroke="#333" stroke-width="1"/>
-    <line x1="595" y1="270" x2="595" y2="380" stroke="#333" stroke-width="1"/>
-    <line x1="625" y1="270" x2="625" y2="380" stroke="#333" stroke-width="1"/>
-    <circle cx="565" cy="290" r="10" fill="#d4d4ff" stroke="#333" stroke-width="1"/>
-    <text x="565" y="293" font-family="Arial, sans-serif" font-size="8" text-anchor="middle" fill="#333">E1</text>
-    <circle cx="595" cy="290" r="10" fill="#d4d4ff" stroke="#333" stroke-width="1"/>
-    <text x="595" y="293" font-family="Arial, sans-serif" font-size="8" text-anchor="middle" fill="#333">E2</text>
-    <circle cx="625" cy="290" r="10" fill="#ffcccc" stroke="#333" stroke-width="1"/>
-    <text x="625" y="293" font-family="Arial, sans-serif" font-size="8" text-anchor="middle" fill="#333">E3</text>
-    <circle cx="565" cy="320" r="10" fill="#d4d4ff" stroke="#333" stroke-width="1"/>
-    <text x="565" y="323" font-family="Arial, sans-serif" font-size="8" text-anchor="middle" fill="#333">E4</text>
-    <circle cx="595" cy="320" r="10" fill="#ffcccc" stroke="#333" stroke-width="1"/>
-    <text x="595" y="323" font-family="Arial, sans-serif" font-size="8" text-anchor="middle" fill="#333">E5</text>
-    <circle cx="625" cy="320" r="10" fill="#d4d4ff" stroke="#333" stroke-width="1"/>
-    <text x="625" y="323" font-family="Arial, sans-serif" font-size="8" text-anchor="middle" fill="#333">E6</text>
-    <circle cx="565" cy="350" r="10" fill="#d4d4ff" stroke="#333" stroke-width="1"/>
-    <text x="565" y="353" font-family="Arial, sans-serif" font-size="8" text-anchor="middle" fill="#333">E7</text>
-    <circle cx="595" cy="350" r="10" fill="#d4d4ff" stroke="#333" stroke-width="1"/>
-    <text x="595" y="353" font-family="Arial, sans-serif" font-size="8" text-anchor="middle" fill="#333">E8</text>
-    <circle cx="625" cy="350" r="10" fill="#d4d4ff" stroke="#333" stroke-width="1"/>
-    <text x="625" y="353" font-family="Arial, sans-serif" font-size="8" text-anchor="middle" fill="#333">E9</text>
+    <line x1="665" y1="270" x2="665" y2="380" stroke="#333" stroke-width="1"/>
+    <line x1="695" y1="270" x2="695" y2="380" stroke="#333" stroke-width="1"/>
+    <line x1="725" y1="270" x2="725" y2="380" stroke="#333" stroke-width="1"/>
+    <circle cx="665" cy="290" r="10" fill="#d4d4ff" stroke="#333" stroke-width="1"/>
+    <text x="665" y="293" font-family="Arial, sans-serif" font-size="8" text-anchor="middle" fill="#333">E1</text>
+    <circle cx="695" cy="290" r="10" fill="#d4d4ff" stroke="#333" stroke-width="1"/>
+    <text x="695" y="293" font-family="Arial, sans-serif" font-size="8" text-anchor="middle" fill="#333">E2</text>
+    <circle cx="725" cy="290" r="10" fill="#ffcccc" stroke="#333" stroke-width="1"/>
+    <text x="725" y="293" font-family="Arial, sans-serif" font-size="8" text-anchor="middle" fill="#333">E3</text>
+    <circle cx="665" cy="320" r="10" fill="#d4d4ff" stroke="#333" stroke-width="1"/>
+    <text x="665" y="323" font-family="Arial, sans-serif" font-size="8" text-anchor="middle" fill="#333">E4</text>
+    <circle cx="695" cy="320" r="10" fill="#ffcccc" stroke="#333" stroke-width="1"/>
+    <text x="695" y="323" font-family="Arial, sans-serif" font-size="8" text-anchor="middle" fill="#333">E5</text>
+    <circle cx="725" cy="320" r="10" fill="#d4d4ff" stroke="#333" stroke-width="1"/>
+    <text x="725" y="323" font-family="Arial, sans-serif" font-size="8" text-anchor="middle" fill="#333">E6</text>
+    <circle cx="665" cy="350" r="10" fill="#d4d4ff" stroke="#333" stroke-width="1"/>
+    <text x="665" y="353" font-family="Arial, sans-serif" font-size="8" text-anchor="middle" fill="#333">E7</text>
+    <circle cx="695" cy="350" r="10" fill="#d4d4ff" stroke="#333" stroke-width="1"/>
+    <text x="695" y="353" font-family="Arial, sans-serif" font-size="8" text-anchor="middle" fill="#333">E8</text>
+    <circle cx="725" cy="350" r="10" fill="#d4d4ff" stroke="#333" stroke-width="1"/>
+    <text x="725" y="353" font-family="Arial, sans-serif" font-size="8" text-anchor="middle" fill="#333">E9</text>
     <!-- 激活标记 -->
-    <text x="595" y="380" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#333">红色=激活</text>
+    <text x="695" y="400" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#333">红色=激活</text>
     <!-- 箭头 -->
     <path d="M300,305 L390,305" stroke="#333" stroke-width="2" fill="none"/>
     <polygon points="390,305 380,300 380,310" fill="#333"/>
     <text x="345" y="295" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" fill="#333">替换</text>
 </svg>
+</div>
 
 <h3 id="moe的实现步骤"><a class="markdownIt-Anchor" href="#moe的实现步骤"></a> MoE的实现步骤</h3>
 <ol>
